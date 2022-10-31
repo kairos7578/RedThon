@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<link rel="stylesheet" href="{{url_for('static', filename='bootstrap.min.css') }}">
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -7,7 +8,40 @@
 <body>
     {% extends 'header.html'%}
     {% block header %}
-    <h2>신나는 파이썬!!!</h2>
+    <h2>신나는 파이썬!!!44</h2>
+    <a class="nav-link" href="{{ url_for('register') }}">회원가입=</a> 
+    
+
+    <!-- 원정선 추가 시작 -->
+    <div class="container my-3">
+        <table class="table">
+            <thead>
+            <tr class="thead-dark">
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성일시</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if question_list %}
+            {% for question in question_list %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>
+                    <a href="{{url_for('question.detail', question_id=question.id)}}">{{ question.subject }}</a>
+                </td>
+                <td>{{question.create_date}}</td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="3">질문이 없습니다.</td>
+            </tr>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+    <!-- 원정선 추가 끝 -->
     {% endblock %}
 </body>
 </html>
