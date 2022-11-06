@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset='utf-8' />
+        <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no' />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        <script defer src="https://pyscript.net/alpha/pyscript.js"></script> 
+    </head>
+<body>
+    <py-script>
+        def function_pwfind(*args):
+            username = Element("username")
+            un_status = Element("un_status")
+
+            userid = Element("userid")
+            ui_status = Element("ui_status")
+
+            quiz = Element("quiz")
+            quiz_status = Element("quiz_status")
+            
+            if username.value == "" :
+                un_status.element.innerText = "ⓘ 이름을 입력해주세요."
+            elif userid.value == "" :
+                ui_status.element.innerText = "ⓘ 아이디를 입력해주세요."
+            elif quiz.value == "" :
+                quiz_status.element.innerText = "ⓘ 회원가입 시 입력했던 보물 제 1호를 적어주세요."
+         
+    </py-script>
+    <main class = "container">
+        <div class = "container">
+            <div class="row mt-5">
+                <h3>비밀번호 찾기</h3>
+            </div>
+
+            <div class="col-12">
+                <br>
+                <form method="POST" >
+                    <div class="form-group">
+                        <label for="username">이름</label>
+                        <input type="text" class="form-control" id="username" placeholder="이름" name="username"/>
+                        <span id="un_status" style="color:red;font-size:12px;"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="userid">아이디</label>
+                        <input type="text" class="form-control" id="userid" placeholder="아이디" name="userid"/>
+                        <span id="ui_status" style="color:red;font-size:12px;"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="quiz">자신의 보물 제 1호는?</label>
+                        <input type="text" class="form-control" id="quiz" placeholder="자신의 보물 제 1호는?" name="quiz"/>
+                        <span id="quiz_status" style="color:red;font-size:12px;"></span>
+                    </div>
+
+                    <button type="submit" pys-onClick ="function_pwfind" class="btn btn-primary" id="test" style="background-color: #D94925; border-color:#D94925">찾기</button>
+                </form>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

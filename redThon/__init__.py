@@ -1,46 +1,19 @@
-from flask import Flask, redirect, render_template, request
-#류재범 추가: DB 연동
+from flask import Flask, redirect, render_template, request, session
 from flaskext.mysql import MySQL
 from dotenv import load_dotenv
+from datetime import date, datetime, timedelta
+from redThon.pybo.forms import UserCreateForm
+import win32api
 import os
-
-#류재범 수정: 이걸 주석해야 서버가 열림 -_-; (원인 파악 중...)
-#from redThon.pybo.forms import UserCreateForm
+import string, random
 
 app = Flask(__name__)
 
-@app.route("/")
-def root():
-    return render_template('index.html', title = "main")
-
-@app.route("/header")
-def header():
-    return render_template('header.html', title = "header")
-
-@app.route("/register", methods=['GET', 'POST'])
-def register():
-    if request.method == 'GET':
-        print("여기111")
-        return render_template("register.html")
-    else:
-        return redirect('/')
-
-
-@app.route("/signup", methods=['GET', 'POST'])
-def signup():
-    form = UserCreateForm()
-    return render_template('auth/signup.html', form=form)
-
-
-#def create_app() :
-    #블루프린트
-#    import auth_views
-#    app.register_blueprint(auth_views.bp)
-#    return app
-
-
 #류재범 추가: DB 연동
 load_dotenv(verbose=True)
+
+app.secret_key = os.getenv('REDTHON_SECRET_KEY') #세션 사용을 위한 시크릿 키 설정
+app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(minutes=10) # 로그인 지속시간 설정 현재 10분
 
 mysql = MySQL()
 app.config['MYSQL_DATABASE_USER'] = os.getenv('REDTHON_DATABASE_USER')
@@ -49,8 +22,137 @@ app.config['MYSQL_DATABASE_DB'] = os.getenv('REDTHON_DATABASE_DB')
 app.config['MYSQL_DATABASE_HOST'] = os.getenv('REDTHON_DATABASE_HOST')
 mysql.init_app(app)
 
-db = mysql.connect()
-cursor = db.cursor();
-cursor.execute("SELECT * FROM test_table WHERE 1")
-connect_test = cursor.fetchone()
-print(connect_test)
+@app.route("/", methods=['GET', 'POST'])
+def root():
+    print("로그인 상태 체크: %s" % (session_check()))
+    if session_check():
+        return render_template('test_image.html', title = "mainmap")
+    else:
+        return render_template("index.html")
+@app.route("/mainmap")
+def mainmap():
+    return render_template('test_image.html', title = "mainmap")
+
+@app.route("/header")
+def header():
+    return render_template('header.html', title = "header")
+
+@app.route("/register", methods=['GET', 'POST'])
+def register():
+    if request.method == 'GET':
+        return render_template("register.html")
+    else:
+        username = request.form.get('username')
+        userid = request.form.get('userid')
+        password = request.form.get('password')
+        quiz = request.form.get('quiz')
+        age = request.form.get('age')
+
+        db = mysql.connect()
+        #유효성 검사
+        cursor = db.cursor()
+        cursor.execute("SELECT idx FROM member WHERE user_id = '%s'" % (userid))
+        id_check = cursor.fetchone()
+        if id_check is not None:
+            print("아이디 중복")
+            print(id_check)
+            return redirect('/register')
+
+        if username == "" or userid == "" or password == "" or quiz == "" or age == "":
+            print("빈 값이 있음")
+            return redirect('/register')
+
+        #회원가입
+        cursor = db.cursor()
+        cursor.execute("INSERT INTO member SET user_id = '%s', user_name = '%s', user_pw = md5('%s'), user_quiz = '%s', user_age = '%s', datetime = '%s'" % (userid, username, password, quiz, age, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+        db.commit()
+
+        #확인
+        cursor = db.cursor()
+        cursor.execute("SELECT idx FROM member WHERE user_id = '%s' and user_pw = md5('%s')" % (userid, password))
+        register_check = cursor.fetchone()
+        if register_check is not None:
+            print("회원가입 성공")
+            return redirect('/')
+        else:
+            print("회원가입 실패")
+            return redirect('/register')
+
+@app.route("/idfind", methods=['GET', 'POST'])
+def idfind():
+    if request.method == 'GET':
+        return render_template('id_find.html', title = "idfind")
+    else:
+        return "아이디는 0000 입니다." #방법1)하나의 페이지 생성됨 > '되돌아기' 버튼 필요 -> 메인으로 이동 해야함...
+                                      #방법2)하나의 페이지가 새로 띄워지는게 아니라, id_find.html페이지에서 밑에 "문구" 나타나는 형식으로 처리
+
+    
+@app.route("/pwfind", methods=['GET', 'POST'])
+def pwfind():
+    if request.method == 'GET':
+        return render_template('pw_find.html', title = "pwfind")
+    else:
+        return "비밀번호는 0000 입니다." #방법1)하나의 페이지 생성됨 > '되돌아기' 버튼 필요 -> 메인으로 이동 해야함...
+                                        #방법2)하나의 페이지가 새로 띄워지는게 아니라, id_find.html페이지에서 밑에 "문구" 나타나는 형식으로 처리
+
+
+
+@app.route("/login", methods=['GET', 'POST'])
+def login():
+    userid = request.form.get('loginId')
+    userpw = request.form.get('password')
+    
+    db = mysql.connect()
+    #유효성 검사
+    if userid == "" or userpw == "":
+            print("빈 값이 있음")
+            return redirect('/')
+    
+    #로그인 시도
+    cursor = db.cursor()
+    cursor.execute("SELECT idx FROM member WHERE user_id = '%s' and user_pw = md5('%s')" % (userid, userpw))
+    login_check = cursor.fetchone()
+    if login_check is not None:
+        print("로그인 성공")
+        #세션 설정 후 메인으로 이동
+        letters_set = string.ascii_letters
+        random_list = random.sample(letters_set,30)
+        token_result = ''.join(random_list)
+        print("랜덤 로그인 토큰: %s" % (token_result))
+
+        cursor = db.cursor()
+        cursor.execute("INSERT INTO session SET user_id = '%s', session = '%s', datetime = '%s'" % (userid, token_result, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+        db.commit()
+
+        session["userId"] = userid
+        session["loginToken"] = token_result
+
+        return redirect('/')
+    else:
+        print("로그인 실패(아디 비번 불일치)")
+        return redirect('/')
+
+@app.route("/logout", methods=['GET', 'POST'])
+def logout():
+    session.pop('userId', None)
+    session.pop('loginToken', None)
+    return redirect('/')    
+
+def session_check():
+    if 'userId' in session and 'loginToken' in session:
+        db = mysql.connect()
+        cursor = db.cursor()
+        cursor.execute("SELECT idx FROM session WHERE user_id = '%s' and session = '%s'" % (session["userId"], session["loginToken"]))
+        session_check = cursor.fetchone()
+        if session_check is None:
+            return 0
+        else:
+            return 1
+    else:
+        return 0
+
+#def create_app() :
+    #블루프린트
+#    import auth_views
+#    app.register_blueprint(auth_views.bp)
+#    return app

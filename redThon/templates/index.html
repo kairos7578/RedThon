@@ -1,5 +1,104 @@
 <!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>RedThon</title>
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css" />
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>    
+  <style>
+    td, th {
+      border-bottom:none;
+      padding : 0px;
+    }
+    input:not([type=checkbox],[type=radio]), select, textarea {
+      margin-bottom: 0.3rem;
+    }
+    .links a{
+      font-size: 14px;
+      font-weight:700;
+    }
+  </style>
+  </head>
+  <body>
+    <py-script>
+      import js
+      from js import document
+      
+      # html ID "input_text"와 "output_text" 와 연결된 객체 생성
+      input_text = Element("input_text")
+      output_text = Element("output_text")
+
+      # html 에서 생성한 ID "add_text" 의 버튼이 눌렸을 때 호출될 pys-onClick 인자로 설정된 함수 생성
+      def function_add_text(*args):
+        loginId = Element("loginId")
+        js.alert("비회원 참여 기능은 회원부터 구현 완료 후 구현 예정")
+        if loginId.value == "123" :
+          js.alert("456")
+      
+  
+      def function_login(*args):
+        login_form = Element("login_form")
+        loginId = Element("loginId")
+        password = Element("password")
+        status = Element("login_status")
+        
+        if loginId.value == "" :
+          status.element.innerText = "ⓘ 아이디를 입력해주세요."
+          #js.alert("아이디를 입력해주세요.")
+          return
+        elif password.value == "" :
+          status.element.innerText = "ⓘ 비밀번호를 입력해주세요."
+          #js.alert("비밀번호를 입력해주세요.")
+          return
+        elif password.value == "123" :
+          status.element.innerText = "ⓘ 아이디 혹은 비밀번호를 잘못 입력하셨습니다."
+          #js.alert("아이디 혹은 비밀번호를 잘못 입력하셨습니다.")
+          return
+ 
+        login_form.element.submit()
+
+    </py-script>    
+    <main class = "container"> <!--py-script쓰려면 main이 있어야 함!-->
+      <center>
+      <img src="../static/img/redthon_logo.png" width="20%">
+
+      <div style="width:35%;margin-top:10px;">
+        <form id="login_form" method="POST" action="/login">
+        <table cellpadding="0" cellspacing="0" style="height:100%;border-collapse: collapse;border-spacing: 0;margin-bottom:0">
+          <tr>
+            <td>
+              <input id = "loginId" name="loginId" type="text" placeholder="아이디" >
+            </td>
+            <td rowspan="2" style="padding:9px;height:100%;">
+              <button type="button" id="btn_login" pys-onClick ="function_login" class="btn btn-primary" style="height:100%;background-color: #D94925;border:0;" >로그인</button>
+              <!--<button type="submit" class="btn btn-primary" style="height:100%;background-color: #D94925;border:0;" onclick="window.location.href='/mainmap'">로그인</button>-->
+            </td>
+          </tr> 
+          <tr>
+            <td> <input id = "password" name="password" type="password" placeholder="비밀번호"> </td>
+          </tr>
+        </table>  
+        <span id="login_status" style="color:red;"></span>
+        </form>
+        
+        <div class="links" float="right" style="text-align:right;margin-top: 10px;margin-bottom: 15px; color:gray;">
+          <a href="{{ url_for('idfind') }}">아이디 찾기</a> | <a href="{{ url_for('pwfind') }}">비밀번호 찾기</a> | <a href="{{ url_for('register') }}">회원가입</a>
+        </div> 
+     
+        <button id = "add_text" pys-onClick ="function_add_text" style="border:1px solid #D94925; color:#D94925;background-color: white;">비회원으로 참여하기</button>
+      </div> 
+      </center>
+    </main>    
+  </body>
+</html>
+
+<!-- //////////////////////////////////////////////////////////// -->
+<!--
+<!DOCTYPE html>
 <link rel="stylesheet" href="{{url_for('static', filename='bootstrap.min.css') }}">
+<script defer src="https://pyscript.net/latest/pyscript.js"></script>
+<script defer src="https://pyscript.net/alpha/pyscript.js"></script>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -9,10 +108,24 @@
     {% extends 'header.html'%}
     {% block header %}
     <h2>신나는 파이썬!!!44</h2>
+
+    <py-button id="thebuttonid" label="run Python" type="button" pys-onClick="show_output"></py-button>
+    <div id="output_div" style="margin-top: 10px;margin-bottom: 10px;">123</div>
+
+    
+<br>
+<br>
+
+<py-script>
+
+    def show_output(*args, **kwargs):
+            output = Element("output_div")
+            output.write("You Clicked Me!")
+</py-script>
+
     <a class="nav-link" href="{{ url_for('register') }}">회원가입=</a> 
     
 
-    <!-- 원정선 추가 시작 -->
     <div class="container my-3">
         <table class="table">
             <thead>
@@ -41,7 +154,8 @@
             </tbody>
         </table>
     </div>
-    <!-- 원정선 추가 끝 -->
+ 
     {% endblock %}
 </body>
 </html>
+-->
