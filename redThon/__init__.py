@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template, request, session
+from flask import Flask, redirect, render_template, request, session, flash
 from flaskext.mysql import MySQL
 from dotenv import load_dotenv
 from datetime import date, datetime, timedelta
@@ -54,12 +54,11 @@ def register():
         cursor.execute("SELECT idx FROM member WHERE user_id = '%s'" % (userid))
         id_check = cursor.fetchone()
         if id_check is not None:
-            print("아이디 중복")
-            print(id_check)
+            flash("이미 가입한 아이디가 있습니다.")
             return redirect('/register')
 
         if username == "" or userid == "" or password == "" or quiz == "" or age == "":
-            print("빈 값이 있음")
+            flash("모두 입력해주세요.")
             return redirect('/register')
 
         #회원가입
@@ -72,10 +71,10 @@ def register():
         cursor.execute("SELECT idx FROM member WHERE user_id = '%s' and user_pw = md5('%s')" % (userid, password))
         register_check = cursor.fetchone()
         if register_check is not None:
-            print("회원가입 성공")
+            flash("회원가입 성공")
             return redirect('/')
         else:
-            print("회원가입 실패")
+            flash("회원가입 실패")
             return redirect('/register')
 
 @app.route("/idfind", methods=['GET', 'POST'])
@@ -105,7 +104,7 @@ def login():
     db = mysql.connect()
     #유효성 검사
     if userid == "" or userpw == "":
-            print("빈 값이 있음")
+            flash("아이디와 비밀번호를 모두 입력해주세요.")
             return redirect('/')
     
     #로그인 시도
@@ -113,7 +112,7 @@ def login():
     cursor.execute("SELECT idx FROM member WHERE user_id = '%s' and user_pw = md5('%s')" % (userid, userpw))
     login_check = cursor.fetchone()
     if login_check is not None:
-        print("로그인 성공")
+        flash("로그인 성공")
         #세션 설정 후 메인으로 이동
         letters_set = string.ascii_letters
         random_list = random.sample(letters_set,30)
@@ -129,7 +128,7 @@ def login():
 
         return redirect('/')
     else:
-        print("로그인 실패(아디 비번 불일치)")
+        flash("로그인 실패(아디 비번 불일치)")
         return redirect('/')
 
 @app.route("/logout", methods=['GET', 'POST'])
