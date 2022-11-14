@@ -11,6 +11,9 @@
     </head>
 <body>
     <py-script>
+        import js
+        from js import document
+        
         def function_pwfind(*args):
             username = Element("username")
             un_status = Element("un_status")
@@ -23,10 +26,16 @@
             
             if username.value == "" :
                 un_status.element.innerText = "ⓘ 이름을 입력해주세요."
+                return
             elif userid.value == "" :
                 ui_status.element.innerText = "ⓘ 아이디를 입력해주세요."
+                return
             elif quiz.value == "" :
                 quiz_status.element.innerText = "ⓘ 회원가입 시 입력했던 보물 제 1호를 적어주세요."
+                return
+
+            pw_find_form = Element("pw_find_form")
+            pw_find_form.element.submit()
          
     </py-script>
     <main class = "container">
@@ -37,7 +46,7 @@
 
             <div class="col-12">
                 <br>
-                <form method="POST" >
+                <form method="POST" id="pw_find_form">
                     <div class="form-group">
                         <label for="username">이름</label>
                         <input type="text" class="form-control" id="username" placeholder="이름" name="username"/>
@@ -54,7 +63,7 @@
                         <span id="quiz_status" style="color:red;font-size:12px;"></span>
                     </div>
 
-                    <button type="submit" pys-onClick ="function_pwfind" class="btn btn-primary" id="test" style="background-color: #D94925; border-color:#D94925">찾기</button>
+                    <button type="button" pys-onClick ="function_pwfind" class="btn btn-primary" id="test" style="background-color: #D94925; border-color:#D94925">찾기</button>
                 </form>
             </div>
         </div>

@@ -8,6 +8,7 @@ import win32api
 import os
 import string, random
 import json
+import hashlib
 
 app = Flask(__name__)
 
@@ -84,8 +85,23 @@ def idfind():
     if request.method == 'GET':
         return render_template('id_find.html', title = "idfind")
     else:
-        return "아이디는 0000 입니다." #방법1)하나의 페이지 생성됨 > '되돌아기' 버튼 필요 -> 메인으로 이동 해야함...
-                                      #방법2)하나의 페이지가 새로 띄워지는게 아니라, id_find.html페이지에서 밑에 "문구" 나타나는 형식으로 처리
+        username = request.form.get('username')
+        quiz = request.form.get('quiz')
+
+        db = mysql.connect()
+
+        #이름과 보물 1호로 아이디 서치
+        cursor = db.cursor()
+        cursor.execute("SELECT user_id FROM member WHERE user_name = '%s' and user_quiz = '%s'" % (username, quiz))
+        find_check = cursor.fetchone()
+        if find_check is not None:
+            flash("아이디는 %s 입니다." % (find_check["user_id"]))
+            return redirect("/")
+        else:
+            flash("아이디를 찾을 수 없습니다.")
+            return redirect("/")
+        #방법1)하나의 페이지 생성됨 > '되돌아기' 버튼 필요 -> 메인으로 이동 해야함...
+        #방법2)하나의 페이지가 새로 띄워지는게 아니라, id_find.html페이지에서 밑에 "문구" 나타나는 형식으로 처리
 
     
 @app.route("/pwfind", methods=['GET', 'POST'])
@@ -93,8 +109,26 @@ def pwfind():
     if request.method == 'GET':
         return render_template('pw_find.html', title = "pwfind")
     else:
-        return "비밀번호는 0000 입니다." #방법1)하나의 페이지 생성됨 > '되돌아기' 버튼 필요 -> 메인으로 이동 해야함...
-                                        #방법2)하나의 페이지가 새로 띄워지는게 아니라, id_find.html페이지에서 밑에 "문구" 나타나는 형식으로 처리
+        userid = request.form.get('userid')
+        username = request.form.get('username')
+        quiz = request.form.get('quiz')
+
+        db = mysql.connect()
+
+        #아이디와 이름과 보물 1호로 비밀번호 서치
+        cursor = db.cursor()
+        cursor.execute("SELECT user_pw FROM member WHERE user_id = '%s' and user_name = '%s' and user_quiz = '%s'" % (userid, username, quiz))
+        find_check = cursor.fetchone()
+        if find_check is not None:
+            for i in range(123):
+                pw = find_check["user_pw"].replace(hashlib.md5(chr(i).encode()).hexdigest(), chr(i))
+            flash("비밀번호는 %s 입니다." % (pw))
+            return redirect("/")
+        else:
+            flash("비밀번호를 찾을 수 없습니다.")
+            return redirect("/")
+        #방법1)하나의 페이지 생성됨 > '되돌아기' 버튼 필요 -> 메인으로 이동 해야함...
+        #방법2)하나의 페이지가 새로 띄워지는게 아니라, id_find.html페이지에서 밑에 "문구" 나타나는 형식으로 처리
 
 @app.route("/curriculum", methods=['GET', 'POST'])
 def curriculum():

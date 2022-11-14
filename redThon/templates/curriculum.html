@@ -12,7 +12,25 @@
     
     <!--{{cl}}-->
     <form method="POST" action="/curriculum_add">
-        <input type="num" value="" placeholder="카드 타입"/><input type="text" value="" placeholder="카드 이름"/> <input type="submit" value="카드 추가하기"/>
+        카드타입(1 = 설명, 2 = 문제):
+        <select name="card_type">
+            <option>1</option>
+            <option>2</option>
+        </select>
+        <br/>
+        <input type="number" name="card_level" min="1" max="10" placeholder="스테이지" style="width:120px"/>
+        <input type="text" name="card_name" placeholder="카드 이름"/>
+        <input type="text" name="card_front" placeholder="카드 앞면 설명"/>
+        <div id="type1_form">
+            <input type="text" name="card_back" placeholder="카드 뒷면 설명"/>
+        </div>
+        <div id="type2_form">
+            <input type="text" name="card_content" placeholder="문제 입력"/>
+            <input type="text" name="card_content" placeholder="정답 유무"/>
+            <input type="button" id="back_problem_add" placeholder="문제 추가하기"/>
+        </div>
+        <input type="text" name="card_text" placeholder="카드 추가 설명"/>
+        <input type="submit" value="카드 추가하기"/>
     </form>
     <br/><br/><br/>
     <table id="card_list" class="table table-bordered">
