@@ -95,7 +95,10 @@ def register():
 @app.route("/idfind", methods=['GET', 'POST'])
 def idfind():
     if request.method == 'GET':
-        return render_template('id_find.html', title = "idfind")
+        if session_check():
+            return render_template('test_image.html', title = "mainmap")
+        else:
+            return render_template('id_find.html', title = "idfind")
     else:
         username = request.form.get('username')
         quiz = request.form.get('quiz')
@@ -119,7 +122,10 @@ def idfind():
 @app.route("/pwfind", methods=['GET', 'POST'])
 def pwfind():
     if request.method == 'GET':
-        return render_template('pw_find.html', title = "pwfind")
+        if session_check():
+            return render_template('test_image.html', title = "mainmap")
+        else:
+            return render_template('id_find.html', title = "idfind")
     else:
         userid = request.form.get('userid')
         username = request.form.get('username')
@@ -189,6 +195,11 @@ def logout():
     session.pop('userId', None)
     session.pop('loginToken', None)
     return redirect('/')    
+
+#류재범 추가
+@app.route("/game", methods=["GET", "POST"])
+def game():
+    return render_template("/game.html")
 
 def session_check():
     if 'userId' in session and 'loginToken' in session:
