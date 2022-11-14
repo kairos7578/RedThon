@@ -19,6 +19,13 @@
       font-weight:700;
     }
   </style>
+  {%with messages = get_flashed_messages()%}
+  {%if messages %}
+    <script type="text/javascript">
+      alert("{{messages[-1]}}");
+    </script>
+    {%endif%}
+  {%endwith%}
   </head>
   <body>
     <py-script>
@@ -32,13 +39,13 @@
       # html 에서 생성한 ID "add_text" 의 버튼이 눌렸을 때 호출될 pys-onClick 인자로 설정된 함수 생성
       def function_add_text(*args):
         loginId = Element("loginId")
-        js.alert("123")
-        js.alert(loginId.value)
+        js.alert("비회원 참여 기능은 회원부터 구현 완료 후 구현 예정")
         if loginId.value == "123" :
           js.alert("456")
       
   
       def function_login(*args):
+        login_form = Element("login_form")
         loginId = Element("loginId")
         password = Element("password")
         status = Element("login_status")
@@ -46,13 +53,17 @@
         if loginId.value == "" :
           status.element.innerText = "ⓘ 아이디를 입력해주세요."
           #js.alert("아이디를 입력해주세요.")
+          return
         elif password.value == "" :
           status.element.innerText = "ⓘ 비밀번호를 입력해주세요."
           #js.alert("비밀번호를 입력해주세요.")
+          return
         elif password.value == "123" :
           status.element.innerText = "ⓘ 아이디 혹은 비밀번호를 잘못 입력하셨습니다."
           #js.alert("아이디 혹은 비밀번호를 잘못 입력하셨습니다.")
+          return
  
+        login_form.element.submit()
 
     </py-script>    
     <main class = "container"> <!--py-script쓰려면 main이 있어야 함!-->
@@ -60,19 +71,19 @@
       <img src="../static/img/redthon_logo.png" width="20%">
 
       <div style="width:35%;margin-top:10px;">
-        <form id="login_form" method="POST" >
+        <form id="login_form" method="POST" action="/login">
         <table cellpadding="0" cellspacing="0" style="height:100%;border-collapse: collapse;border-spacing: 0;margin-bottom:0">
           <tr>
             <td>
-              <input id = "loginId" type="text" placeholder="아이디" >
+              <input id = "loginId" name="loginId" type="text" placeholder="아이디" >
             </td>
             <td rowspan="2" style="padding:9px;height:100%;">
-              <button id = "btn_login" pys-onClick ="function_login" class="btn btn-primary" style="height:100%;background-color: #D94925;border:0;" >로그인</button>
+              <button type="button" id="btn_login" pys-onClick ="function_login" class="btn btn-primary" style="height:100%;background-color: #D94925;border:0;" >로그인</button>
               <!--<button type="submit" class="btn btn-primary" style="height:100%;background-color: #D94925;border:0;" onclick="window.location.href='/mainmap'">로그인</button>-->
             </td>
           </tr> 
           <tr>
-            <td> <input id = "password" type="text" placeholder="비밀번호"> </td>
+            <td> <input id = "password" name="password" type="password" placeholder="비밀번호"> </td>
           </tr>
         </table>  
         <span id="login_status" style="color:red;"></span>
