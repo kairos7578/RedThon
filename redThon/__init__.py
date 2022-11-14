@@ -3,9 +3,11 @@ from flaskext.mysql import MySQL
 from dotenv import load_dotenv
 from datetime import date, datetime, timedelta
 from redThon.pybo.forms import UserCreateForm
+from pymysql.cursors import DictCursor
 import win32api
 import os
 import string, random
+import json
 
 app = Flask(__name__)
 
@@ -15,7 +17,7 @@ load_dotenv(verbose=True)
 app.secret_key = os.getenv('REDTHON_SECRET_KEY') #세션 사용을 위한 시크릿 키 설정
 app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(minutes=10) # 로그인 지속시간 설정 현재 10분
 
-mysql = MySQL()
+mysql = MySQL(cursorclass=DictCursor)
 app.config['MYSQL_DATABASE_USER'] = os.getenv('REDTHON_DATABASE_USER')
 app.config['MYSQL_DATABASE_PASSWORD'] = os.getenv('REDTHON_DATABASE_PASSWORD')
 app.config['MYSQL_DATABASE_DB'] = os.getenv('REDTHON_DATABASE_DB')
@@ -94,7 +96,19 @@ def pwfind():
         return "비밀번호는 0000 입니다." #방법1)하나의 페이지 생성됨 > '되돌아기' 버튼 필요 -> 메인으로 이동 해야함...
                                         #방법2)하나의 페이지가 새로 띄워지는게 아니라, id_find.html페이지에서 밑에 "문구" 나타나는 형식으로 처리
 
+@app.route("/curriculum", methods=['GET', 'POST'])
+def curriculum():
+    print("카드 목록 들어옴")
+    db = mysql.connect()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM card WHERE 1")
+    card_list = json.dumps(cursor.fetchall(), ensure_ascii=False)
+    return render_template('curriculum.html', title = "curriculum", cl = card_list)
 
+@app.route("/curriculum_add", methods=['GET', 'POST'])
+def curriculum_add():
+    print("카드 추가 들어옴")
+    return redirect('/curriculum')
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
