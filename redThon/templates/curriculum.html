@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset='utf-8' />
+        <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no' />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+        <link rel="stylesheet" href="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+        {%with messages = get_flashed_messages()%}
+        {%if messages %}
+            <script type="text/javascript">
+            alert("{{messages[-1]}}");
+            </script>
+            {%endif%}
+        {%endwith%}
+    </head>
+<body>
+    <h1>스테이지 카드 관리 페이지</h1>
+    
+    <!--{{cl}}-->
+    <form method="POST" action="/curriculum_add">
+        카드타입(1 = 설명 카드, 2 = 문제 카드):
+        <select name="card_type" id="card_type" onchange="type_change();">
+            <option value="1">1</option>
+            <option value="2">2</option>
+        </select>
+        <br/>
+        <!--
+        <div id="type2_form" style="display:none;">
+            <input type="text" name="card_content" placeholder="문제 입력"/>
+            <input type="text" name="card_content" placeholder="정답 유무"/>
+            <input type="button" id="back_problem_add" value="문제 추가하기"/>
+        </div>
+        -->
+        <input type="number" name="card_level" placeholder="적용 스테이지" style="width:120px"/>
+        <input type="text" name="card_name" placeholder="카드 이름(메모)"/>
+        <input type="text" name="card_front" placeholder="카드 앞면 설명"/>
+        <span id="type1_form">
+            <input type="text" name="card_back" placeholder="카드 뒷면 설명"/>
+        </span>
+        <input type="text" name="card_text" placeholder="카드 추가 설명"/>
+        <input type="submit" pys-onClick ="function_curriculum_add" id="test" value="카드 추가하기"/>
+    </form>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+<script src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<script>
+    //var json = '{{cl|safe}}';
+    var json = '';
+
+    function type_change() {
+        if($("#card_type").val() == 1) {
+            $("#type1_form").show();
+            $("#type2_form").hide();
+        } else {
+            $("#type1_form").hide();
+            $("#type2_form").show();
+        }
+    }
+</script>
+</html>

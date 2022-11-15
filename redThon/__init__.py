@@ -6,6 +6,7 @@ from redThon.pybo.forms import UserCreateForm
 from pymysql.cursors import DictCursor
 import os
 import string, random
+import json
 
 app = Flask(__name__)
 
@@ -203,6 +204,73 @@ def logout():
 def game():
     return render_template("/game.html")
 
+#류재범 추가
+@app.route("/curriculum", methods=["GET", "POST"])
+def curriculum():
+    print("카드 목록 들어옴")
+    db = mysql.connect()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM card WHERE 1")
+    card_list = json.dumps(cursor.fetchall(), ensure_ascii=False)
+    return render_template('curriculum.html', title = "curriculum", cl = card_list)
+
+@app.route("/curriculum_add", methods=['GET', 'POST'])
+def curriculum_add():
+    card_type = request.form.get('card_type')
+    card_level = request.form.get('card_level')
+    card_name = request.form.get('card_name')
+    card_front = request.form.get('card_front')
+    card_back = request.form.get('card_back')
+    card_text = request.form.get('card_text')
+    
+    if(card_type is None or (card_type != "1" and card_type != "2")):
+        flash("타입 에러")
+        return redirect('/curriculum')
+
+    if(card_type == "1"):
+        #유효성 검사
+        if(card_level is None or card_level == ""):
+            flash("적용 스테이지를 입력해 주세요")
+            return redirect('/curriculum')
+        elif(card_name is None or card_name == ""):
+            flash("카드 이름을 입력해 주세요")
+            return redirect('/curriculum')
+        elif(card_front is None or card_front == ""):
+            flash("카드 앞면 설명을 입력해 주세요")
+            return redirect('/curriculum')
+        elif(card_back is None or card_back == ""):
+            flash("카드 뒷면 설명을 입력해 주세요")
+            return redirect('/curriculum')
+        elif(card_text is None or card_text == ""):
+            flash("카드 추가 설명을 입력해 주세요")
+            return redirect('/curriculum')
+        
+        #type 1 add
+        db = mysql.connect()
+        cursor = db.cursor()
+        cursor.execute("INSERT INTO card SET card_type = '%s', card_level = '%s', card_name = '%s', card_front = '%s', card_back = '%s', card_text = '%s', datetime = '%s'" % (card_type, card_level, card_name, card_front, card_back, card_text, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+        db.commit()
+
+        flash("설명 카드가 추가되었습니다.")
+        return redirect('/curriculum')
+
+    elif(card_type == "2"):
+        #type 2 add
+        print("type2 들어옴")
+    
+    return redirect('/curriculum')
+
+    """
+    elif(card_level is None or card_level == ""):
+        flash("적용 스테이지를 입력하세요.")
+        return redirect('/curriculum')
+    elif(card_level is None or card_level == ""):
+    elif(card_level is None or card_level == ""):
+    elif(card_level is None or card_level == ""):
+    else:
+        return redirect('/curriculum')
+    """
+
 def session_check():
     if 'userId' in session and 'loginToken' in session:
         db = mysql.connect()
@@ -221,5 +289,3 @@ def session_check():
 #    import auth_views
 #    app.register_blueprint(auth_views.bp)
 #    return app
-
-
