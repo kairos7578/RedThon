@@ -11,22 +11,41 @@
     </head>
 <body>
     <py-script>
+        import js
+        from js import document
+        
         def function_pwfind(*args):
             username = Element("username")
             un_status = Element("un_status")
+            password = Element("password") 
+            re_password = Element("re_password")
 
             userid = Element("userid")
             ui_status = Element("ui_status")
+            pw_status = Element("pw_status")
+            repw_status = Element("repw_status")
 
             quiz = Element("quiz")
             quiz_status = Element("quiz_status")
             
             if username.value == "" :
                 un_status.element.innerText = "ⓘ 이름을 입력해주세요."
+                return
             elif userid.value == "" :
                 ui_status.element.innerText = "ⓘ 아이디를 입력해주세요."
+                return
             elif quiz.value == "" :
                 quiz_status.element.innerText = "ⓘ 회원가입 시 입력했던 보물 제 1호를 적어주세요."
+                return
+            elif password.value == "" :
+                pw_status.element.innerText = "ⓘ 비밀번호를 입력해주세요."
+                return
+            elif password.value != re_password.value :
+                repw_status.element.innerText = "ⓘ 비밀번호가 일치하지 않습니다."
+                return
+
+            pw_find_form = Element("pw_find_form")
+            pw_find_form.element.submit()
          
     </py-script>
     <main class = "container">
@@ -37,7 +56,7 @@
 
             <div class="col-12">
                 <br>
-                <form method="POST" >
+                <form method="POST" id="pw_find_form">
                     <div class="form-group">
                         <label for="username">이름</label>
                         <input type="text" class="form-control" id="username" placeholder="이름" name="username"/>
@@ -53,8 +72,18 @@
                         <input type="text" class="form-control" id="quiz" placeholder="자신의 보물 제 1호는?" name="quiz"/>
                         <span id="quiz_status" style="color:red;font-size:12px;"></span>
                     </div>
+                    <div class="form-group">
+                        <label for="password">변경 비밀번호</label>
+                        <input type="password" class="form-control" id="password" placeholder="변경 할 비밀번호" name="password"/>
+                        <span id="pw_status" style="color:red;font-size:12px;"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="re_password">변경 비밀번호 확인</label>
+                        <input type="password" class="form-control" id="re_password" placeholder="변경 할 비밀번호 확인" name="re_password"/>
+                        <span id="repw_status" style="color:red;font-size:12px;"></span>
+                    </div>
 
-                    <button type="submit" pys-onClick ="function_pwfind" class="btn btn-primary" id="test" style="background-color: #D94925; border-color:#D94925">찾기</button>
+                    <button type="button" pys-onClick ="function_pwfind" class="btn btn-primary" id="test" style="background-color: #D94925; border-color:#D94925">찾기</button>
                 </form>
             </div>
         </div>

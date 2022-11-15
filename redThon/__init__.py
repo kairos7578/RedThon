@@ -6,9 +6,6 @@ from redThon.pybo.forms import UserCreateForm
 from pymysql.cursors import DictCursor
 import os
 import string, random
-import json
-import hashlib
-#import win32api
 
 app = Flask(__name__)
 
@@ -18,7 +15,7 @@ load_dotenv(verbose=True)
 app.secret_key = os.getenv('REDTHON_SECRET_KEY') #세션 사용을 위한 시크릿 키 설정
 app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(minutes=10) # 로그인 지속시간 설정 현재 10분
 
-mysql = MySQL()
+mysql = MySQL(cursorclass=DictCursor)
 app.config['MYSQL_DATABASE_USER'] = os.getenv('REDTHON_DATABASE_USER')
 app.config['MYSQL_DATABASE_PASSWORD'] = os.getenv('REDTHON_DATABASE_PASSWORD')
 app.config['MYSQL_DATABASE_DB'] = os.getenv('REDTHON_DATABASE_DB')
@@ -96,7 +93,7 @@ def register():
 def idfind():
     if request.method == 'GET':
         if session_check():
-            return render_template('test_image.html', title = "mainmap")
+            return redirect('/')
         else:
             return render_template('id_find.html', title = "idfind")
     else:
@@ -123,13 +120,14 @@ def idfind():
 def pwfind():
     if request.method == 'GET':
         if session_check():
-            return render_template('test_image.html', title = "mainmap")
+            return redirect('/')
         else:
-            return render_template('id_find.html', title = "idfind")
+            return render_template('pw_find.html', title = "idfind")
     else:
         userid = request.form.get('userid')
         username = request.form.get('username')
         quiz = request.form.get('quiz')
+        password = request.form.get('password')
 
         db = mysql.connect()
 
@@ -138,12 +136,15 @@ def pwfind():
         cursor.execute("SELECT user_pw FROM member WHERE user_id = '%s' and user_name = '%s' and user_quiz = '%s'" % (userid, username, quiz))
         find_check = cursor.fetchone()
         if find_check is not None:
-            for i in range(123):
-                pw = find_check["user_pw"].replace(hashlib.md5(chr(i).encode()).hexdigest(), chr(i))
-            flash("비밀번호는 %s 입니다." % (pw))
+            #류재범 수정
+            # 비밀번호 찾기 -> 변경으로 수정
+            cursor = db.cursor()
+            cursor.execute("UPDATE member SET user_pw = md5('%s') WHERE user_id = '%s' and user_name = '%s' and user_quiz = '%s'" % (password, userid, username, quiz))
+            db.commit()
+            flash("비밀번호가 변경 되었습니다.")
             return redirect("/")
         else:
-            flash("비밀번호를 찾을 수 없습니다.")
+            flash("비밀번호를 변경할 수 없습니다.(정보 불일치)")
             return redirect("/")
         #방법1)하나의 페이지 생성됨 > '되돌아기' 버튼 필요 -> 메인으로 이동 해야함...
         #방법2)하나의 페이지가 새로 띄워지는게 아니라, id_find.html페이지에서 밑에 "문구" 나타나는 형식으로 처리
@@ -194,6 +195,7 @@ def login():
 def logout():
     session.pop('userId', None)
     session.pop('loginToken', None)
+    flash("로그아웃 되었습니다.")
     return redirect('/')    
 
 #류재범 추가
