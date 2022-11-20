@@ -6,26 +6,26 @@
     <title>RedThon</title>
     <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css" />
     <script defer src="https://pyscript.net/alpha/pyscript.js"></script>    
-  <style>
-    td, th {
-      border-bottom:none;
-      padding : 0px;
-    }
-    input:not([type=checkbox],[type=radio]), select, textarea {
-      margin-bottom: 0.3rem;
-    }
-    .links a{
-      font-size: 14px;
-      font-weight:700;
-    }
-  </style>
-  {%with messages = get_flashed_messages()%}
-  {%if messages %}
-    <script type="text/javascript">
-      alert("{{messages[-1]}}");
-    </script>
-    {%endif%}
-  {%endwith%}
+    <style>
+      td, th {
+        border-bottom:none;
+        padding : 0px;
+      }
+      input:not([type=checkbox],[type=radio]), select, textarea {
+        margin-bottom: 0.3rem;
+      }
+      .links a{
+        font-size: 14px;
+        font-weight:700;
+      }
+    </style>
+    {%with messages = get_flashed_messages()%}
+    {%if messages %}
+      <script type="text/javascript">
+        alert("{{messages[-1]}}");
+      </script>
+      {%endif%}
+    {%endwith%}
   </head>
   <body>
     <py-script>
@@ -58,10 +58,6 @@
           status.element.innerText = "ⓘ 비밀번호를 입력해주세요."
           #js.alert("비밀번호를 입력해주세요.")
           return
-        elif password.value == "123" :
-          status.element.innerText = "ⓘ 아이디 혹은 비밀번호를 잘못 입력하셨습니다."
-          #js.alert("아이디 혹은 비밀번호를 잘못 입력하셨습니다.")
-          return
  
         login_form.element.submit()
 
@@ -89,80 +85,14 @@
         <span id="login_status" style="color:red;"></span>
         </form>
         
-        <div class="links" float="right" style="text-align:right;margin-top: 10px;margin-bottom: 15px; color:gray;">
+        <!-- <div class="links" float="right" style="text-align:right;margin-top: 10px;margin-bottom: 15px; color:gray;"> -->
+        <div class="links" style="margin-top: 10px;margin-bottom: 15px; color:gray;">
           <a href="{{ url_for('idfind') }}">아이디 찾기</a> | <a href="{{ url_for('pwfind') }}">비밀번호 찾기</a> | <a href="{{ url_for('register') }}">회원가입</a>
         </div> 
      
-        <button id = "add_text" pys-onClick ="function_add_text" style="border:1px solid #D94925; color:#D94925;background-color: white;">비회원으로 참여하기</button>
+        <!-- <button id = "add_text" pys-onClick ="function_add_text" style="border:1px solid #D94925; color:#D94925;background-color: white;">비회원으로 참여하기</button> -->
       </div> 
       </center>
     </main>    
   </body>
 </html>
-
-<!-- //////////////////////////////////////////////////////////// -->
-<!--
-<!DOCTYPE html>
-<link rel="stylesheet" href="{{url_for('static', filename='bootstrap.min.css') }}">
-<script defer src="https://pyscript.net/latest/pyscript.js"></script>
-<script defer src="https://pyscript.net/alpha/pyscript.js"></script>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>{{title}}</title>
-</head>
-<body>
-    {% extends 'header.html'%}
-    {% block header %}
-    <h2>신나는 파이썬!!!44</h2>
-
-    <py-button id="thebuttonid" label="run Python" type="button" pys-onClick="show_output"></py-button>
-    <div id="output_div" style="margin-top: 10px;margin-bottom: 10px;">123</div>
-
-    
-<br>
-<br>
-
-<py-script>
-
-    def show_output(*args, **kwargs):
-            output = Element("output_div")
-            output.write("You Clicked Me!")
-</py-script>
-
-    <a class="nav-link" href="{{ url_for('register') }}">회원가입=</a> 
-    
-
-    <div class="container my-3">
-        <table class="table">
-            <thead>
-            <tr class="thead-dark">
-                <th>번호</th>
-                <th>제목</th>
-                <th>작성일시</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% if question_list %}
-            {% for question in question_list %}
-            <tr>
-                <td>{{ loop.index }}</td>
-                <td>
-                    <a href="{{url_for('question.detail', question_id=question.id)}}">{{ question.subject }}</a>
-                </td>
-                <td>{{question.create_date}}</td>
-            </tr>
-            {% endfor %}
-            {% else %}
-            <tr>
-                <td colspan="3">질문이 없습니다.</td>
-            </tr>
-            {% endif %}
-            </tbody>
-        </table>
-    </div>
- 
-    {% endblock %}
-</body>
-</html>
--->

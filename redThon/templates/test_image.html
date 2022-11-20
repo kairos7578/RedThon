@@ -8,166 +8,167 @@
     </script>
 </head>
 <body>
-    <input type="button" onclick="location.href='/logout';" value="임시 로그아웃 버튼" style="width:200px;position:fixed;"/>
     <div style="background-image: url('../static/img/background.png');background-repeat: repeat;width: 100%;height: 100%;"></div>
     <!-- 기본 이미지들 -->
     <img src="../static/img/way.png" 
     style="position: absolute;  left: 50%; top: 53%; 
     transform: translate(-50%, -50%);
-    alt:way imege error; width:35%; height:70%;"><br>
-    <img id="userIcon" src="../static/img/userIcon.png" 
+    alt:way imege error; width:35%; height:70%;">
+
+    <img id="logoutIcon" onclick="location.href='/logout';" src="../static/img/logoutIcon.png" 
     style="position: absolute;  right: 20%; top: 5%;" 
-    width=5.8% height=10%; height:100px;"><br>
+    width=5.8% height=10%; height:100px;">
+
     <img id="wordBook" src="../static/img/wordBook.png" 
     style="position: absolute;  right: 28%; top: 5%;" 
-    width=5% height=12%; height: 100px;"><br>
+    width=5% height=12%; height: 100px;">
     <img id="gingerMan0" src="../static/img/gingerMan.png" 
     style="position: absolute;  left: 60%; top: 77%;" 
-    width=6% height=15%;"><br>
+    width=6% height=15%;">
     <img src="../static/img/cookieHouse.png" 
     style="position: absolute;  left: 19%; top: -5%;" 
-    width=20% height=40% alt ="cookieHouse.png"><br>
+    width=20% height=40% alt ="cookieHouse.png">
 
     <!-- 클리어 안 된 기본 쿠키  -->
-    <a href="{{ url_for('cardstudy') }}"><img id="cookie1" src="../static/img/cookie1.png" onClick="move_cookie1()"
+    <a href="{{ url_for('cardstudy', stage=1) }}"><img id="cookie1" src="../static/img/cookie1.png" onClick="move_cookie1()"
     style="position: absolute;  left: 50%; top: 80%;" 
-    width=6% height=12% alt ="cookie1.png"></a><br>
+    width=6% height=12% alt ="cookie1.png"></a>
     <img id="cookie2" src="../static/img/cookie2.png" onClick="move_cookie2()"
     style="position: absolute;  left: 40%; top: 80%;" 
-    width=6% height=12% alt ="cookie2.png"><br>
+    width=6% height=12% alt ="cookie2.png">
     <a href="{{ url_for('game') }}"><img id="cookie3" src="../static/img/cookie3.png" onClick="move_cookie3()"
     style="position: absolute;  left: 31%; top: 70%;" 
-    width=8% height=15% alt ="cookie3.png"></a><br>
+    width=8% height=15% alt ="cookie3.png"></a>
     <img id="cookie4" src="../static/img/cookie4.png" onClick="move_cookie4()"
     style="position: absolute;  left: 42%; top: 61%;" 
-    width=7% height=14% alt ="cookie4.png"><br>
+    width=7% height=14% alt ="cookie4.png">
     <img id="cookie5" src="../static/img/cookie5.png" onClick="move_cookie5()"
     style="position: absolute;  left: 51%; top: 63%;" 
-    width=6% height=12%  alt ="cookie5.png"><br>
+    width=6% height=12%  alt ="cookie5.png">
     <a href="{{ url_for('game') }}"><img id="cookie6" src="../static/img/cookie6.png" onClick="move_cookie6()"
     style="position: absolute;  left: 60%; top: 56%;" 
-    width=9% height=15% alt ="cookie6.png"></a><br>
+    width=9% height=15% alt ="cookie6.png"></a>
     <img id="cookie7" src="../static/img/cookie7.png" onClick="move_cookie7()"
     style="position: absolute;  left: 49%; top: 46%;" 
-    width=8% height=14% alt ="cookie7.png"><br>
+    width=8% height=14% alt ="cookie7.png">
     <img id="cookie8" src="../static/img/cookie8.png" onClick="move_cookie8()"
     style="position: absolute;  left: 40%; top: 48%;" 
-    width=7% height=12.5% alt ="cookie8.png"><br>
+    width=7% height=12.5% alt ="cookie8.png">
     <a href="{{ url_for('game') }}"><img id="cookie9" src="../static/img/cookie9.png" onClick="move_cookie9()"
     style="position: absolute;  left: 30%; top: 39%;" 
-    width=8% height=15% alt ="cookie9.png"></a><br>
+    width=8% height=15% alt ="cookie9.png"></a>
     <img id="cookie10" src="../static/img/cookie10.png" onClick="move_cookie10()"
     style="position: absolute;  left: 40%; top: 30%;" 
-    width=6.5% height=13%  alt ="cookie10.png"><br>
+    width=6.5% height=13%  alt ="cookie10.png">
     <img id="cookie11" src="../static/img/cookie11.png" onClick="move_cookie11()"
     style="position: absolute;  left: 50%; top: 32%;" 
-    width=6% height=12%  alt ="cookie11.png"><br>
+    width=6% height=12%  alt ="cookie11.png">
     <a href="{{ url_for('game') }}"><img id="cookie12" src="../static/img/cookie12.png" onClick="move_cookie12()"
     style="position: absolute;  left: 58%; top: 30%;" 
-    width=9.5% height=17%  alt ="cookie12.png"></a><br>
+    width=9.5% height=17%  alt ="cookie12.png"></a>
     <img id="cookie13" src="../static/img/cookie13.png" onClick="move_cookie13()"
     style="position: absolute; left: 57%; top: 15%;" 
-    width=7% height=13%  alt ="cookie13.png"><br>
+    width=7% height=13%  alt ="cookie13.png">
     <img id="cookie14" src="../static/img/cookie14.png" onClick="move_cookie14()"
     style="position: absolute;  left: 46%; top: 13%;" 
-    width=7% height=14%  alt ="cookie14.png"><br>
+    width=7% height=14%  alt ="cookie14.png">
     <img id="cookie15" src="../static/img/cookie15.png" onClick="move_cookie15()"
     style="position: absolute; left: 37%; top: 15%;" 
-    width=7% height=12.5%  alt ="cookie15.png"><br>
+    width=7% height=12.5%  alt ="cookie15.png">
 
     <!-- 클리어 된 초코 쿠키  -->
     <img id="cookie1-1" src="../static/img/cookie1-1.png"
     style="position: absolute;  left: 50%; top: 80%;" 
-    width=6% height=12% alt ="cookie1.png"><br>
+    width=6% height=12% alt ="cookie1.png">
     <img id="cookie2-1" src="../static/img/cookie2-1.png" 
     style="position: absolute;  left: 40%; top: 80%;" 
-    width=6% height=12% alt ="cookie2.png"><br>
+    width=6% height=12% alt ="cookie2.png">
     <img id="cookie3-1" src="../static/img/cookie3-1.png"
     style="position: absolute;  left: 31%; top: 70%;" 
-    width=8% height=15% alt ="cookie3.png"><br>
+    width=8% height=15% alt ="cookie3.png">
     <img id="cookie4-1" src="../static/img/cookie4-1.png"
     style="position: absolute;  left: 42%; top: 61%;" 
-    width=7% height=14% alt ="cookie4.png"><br>
+    width=7% height=14% alt ="cookie4.png">
     <img id="cookie5-1" src="../static/img/cookie5-1.png"
     style="position: absolute;  left: 51%; top: 63%;" 
-    width=6% height=12%  alt ="cookie5.png"><br>
+    width=6% height=12%  alt ="cookie5.png">
     <img id="cookie6-1" src="../static/img/cookie6-1.png"
     style="position: absolute;  left: 60%; top: 56%;" 
-    width=9% height=15% alt ="cookie6.png"><br>
+    width=9% height=15% alt ="cookie6.png">
     <img id="cookie7-1" src="../static/img/cookie7-1.png"
     style="position: absolute;  left: 50%; top: 46%;" 
-    width=7% height=14% alt ="cookie7.png"><br>
+    width=7% height=14% alt ="cookie7.png">
     <img id="cookie8-1" src="../static/img/cookie8-1.png"
     style="position: absolute;  left: 40%; top: 48%;" 
-    width=7% height=12.5% alt ="cookie8.png"><br>
+    width=7% height=12.5% alt ="cookie8.png">
     <img id="cookie9-1" src="../static/img/cookie9-1.png"
     style="position: absolute;  left: 30%; top: 39%;" 
-    width=8% height=15% alt ="cookie9.png"><br>
+    width=8% height=15% alt ="cookie9.png">
     <img id="cookie10-1" src="../static/img/cookie10-1.png"
     style="position: absolute;  left: 40%; top: 30%;" 
-    width=6.5% height=13%  alt ="cookie10.png"><br>
+    width=6.5% height=13%  alt ="cookie10.png">
     <img id="cookie11-1" src="../static/img/cookie11-1.png"
     style="position: absolute;  left: 50%; top: 32%;" 
-    width=6% height=12%  alt ="cookie11.png"><br>
+    width=6% height=12%  alt ="cookie11.png">
     <img id="cookie12-1" src="../static/img/cookie12-1.png"
     style="position: absolute;  left: 58%; top: 30%;" 
-    width=9.5% height=17%  alt ="cookie12.png"><br>
+    width=9.5% height=17%  alt ="cookie12.png">
     <img id="cookie13-1" src="../static/img/cookie13-1.png"
     style="position: absolute; left: 57%; top: 15%;" 
-    width=7% height=13%  alt ="cookie13.png"><br>
+    width=7% height=13%  alt ="cookie13.png">
     <img id="cookie14-1" src="../static/img/cookie14-1.png"
     style="position: absolute;  left: 46%; top: 13%;" 
-    width=7% height=14%  alt ="cookie14.png"><br>
+    width=7% height=14%  alt ="cookie14.png">
     <img id="cookie15-1" src="../static/img/cookie15-1.png"
     style="position: absolute; left: 37%; top: 15%;" 
-    width=7% height=12.5%  alt ="cookie15.png"><br>
+    width=7% height=12.5%  alt ="cookie15.png">
 
     <!-- 각 강 별 진저맨 위치  -->
     <img id="gingerMan1" src="../static/img/gingerMan.png" 
     style="position: absolute;  left: 50%; top: 73%;" 
-    width=6% height=15%;"><br>
+    width=6% height=15%;">
     <img id="gingerMan2" src="../static/img/gingerMan.png" 
     style="position: absolute;  left: 41%; top: 73%;" 
-    width=6% height=15%;"><br>
+    width=6% height=15%;">
     <img id="gingerMan3" src="../static/img/gingerMan.png" 
     style="position: absolute;  left: 32%; top: 63%;" 
-    width=6% height=15%;"><br>
+    width=6% height=15%;">
     <img id="gingerMan4" src="../static/img/gingerMan.png" 
     style="position: absolute;  left: 42.5%; top: 55%;" 
-    width=6% height=15%;"><br>
+    width=6% height=15%;">
     <img id="gingerMan5" src="../static/img/gingerMan.png" 
     style="position: absolute;  left: 52%; top: 56%;" 
-    width=6% height=15%;"><br>
+    width=6% height=15%;">
     <img id="gingerMan6" src="../static/img/gingerMan.png" 
     style="position: absolute;  left: 61.5%; top: 50%;" 
-    width=6% height=15%;"><br>
+    width=6% height=15%;">
     <img id="gingerMan7" src="../static/img/gingerMan.png" 
     style="position: absolute;  left: 51%; top: 40%;" 
-    width=6% height=15%;"><br>
+    width=6% height=15%;">
     <img id="gingerMan8" src="../static/img/gingerMan.png" 
     style="position: absolute;  left: 40.5%; top: 41%;" 
-    width=6% height=15%;"><br>
+    width=6% height=15%;">
     <img id="gingerMan9" src="../static/img/gingerMan.png" 
     style="position: absolute;  left: 31%; top: 33%;" 
-    width=6% height=15%;"><br>
+    width=6% height=15%;">
     <img id="gingerMan10" src="../static/img/gingerMan.png" 
     style="position: absolute;  left: 40%; top: 24%;" 
-    width=6% height=15%;"><br>
+    width=6% height=15%;">
     <img id="gingerMan11" src="../static/img/gingerMan.png" 
     style="position: absolute;  left: 50%; top: 25%;" 
-    width=6% height=15%;"><br>
+    width=6% height=15%;">
     <img id="gingerMan12" src="../static/img/gingerMan.png" 
     style="position: absolute;  left: 60.5%; top: 25%;" 
-    width=6% height=15%;"><br>
+    width=6% height=15%;">
     <img id="gingerMan13" src="../static/img/gingerMan.png" 
     style="position: absolute;  left: 57.5%; top: 8%;" 
-    width=6% height=15%;"><br>
+    width=6% height=15%;">
     <img id="gingerMan14" src="../static/img/gingerMan.png" 
     style="position: absolute;  left: 47%; top: 7%;" 
-    width=6% height=15%;"><br>
+    width=6% height=15%;">
     <img id="gingerMan15" src="../static/img/gingerMan.png" 
     style="position: absolute;  left: 37.5%; top: 7%;" 
-    width=6% height=15%;"><br>
+    width=6% height=15%;">
 
     <!-- 클릭마다 강 별 진저맨 위치 변경 및 쿠키색 변경  -->
     <script>
@@ -438,21 +439,6 @@
         def function_add_number(*args):
           output_text.element.innerText = input_text.value
       </py-script>    
-    <main class = "container">
-        <div>
-            <button onclick="move_once()">move_once</button>
-        </div>
-    </main>  
-    <script>
-        function move_once() {
-            if (num == 1) {
-                console.log(num);
-            }
-            else {
-                
-            }
-        }
-        
-    </script>
+
  
 </body>

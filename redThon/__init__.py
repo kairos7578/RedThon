@@ -44,7 +44,34 @@ def mainmap():
 
 @app.route("/cardstudy")
 def cardstudy():
-    return render_template('cardStudy.html', title = "mainmap")
+    #print(request.args["stage"])
+    #스테이지 따라문제 카드 가져오기
+    if(request.args["stage"] != "" and request.args["stage"] is not None):
+        print("문제 함수 들어옴")
+        db = mysql.connect()
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM card WHERE card_level = '%s'" % (request.args["stage"]))
+        card = cursor.fetchall()
+        for row in card:
+            if(row['card_type'] == 2):
+                #문제카드 있으면 가져오기
+                cursor2 = db.cursor()
+                cursor2.execute("SELECT * FROM card_back_problem WHERE card_no = '%s'" % (row["idx"]))
+                cp = cursor2.fetchall()
+                row.update(card_problem=cp)
+                print(row['card_problem'])
+            #추가 설명 이미지 가져오기
+
+
+        """
+        cursor = db.cursor()
+                cursor.execute("SELECT * FROM card_back_problem WHERE card_no = '%s'" % (row["idx"]))
+                card_problem = cursor.fetchall()
+                for row2 in card_problem:
+                    print(row2["card_content"])
+        """
+
+    return render_template('cardStudy.html', title = "mainmap", card=card)
 
 @app.route("/header")
 def header():
@@ -197,7 +224,7 @@ def logout():
     session.pop('userId', None)
     session.pop('loginToken', None)
     flash("로그아웃 되었습니다.")
-    return redirect('/')    
+    return redirect('/')
 
 #류재범 추가
 @app.route("/game", methods=["GET", "POST"])

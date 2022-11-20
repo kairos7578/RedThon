@@ -4,148 +4,196 @@
     <meta charset="UTF-8">
     <title>{{title}}</title>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
-    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css" />
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
     <!-- Link Swiper's CSS -->
     <link rel="stylesheet" href="../static/swiper.min.css">
+    <script src="../static/swiper.min.js"></script>
     <style>
     .swiper-container {
         width: 100%;
         height: 100%;
         
     }
-    .swiper-slide2 {
-        text-align: center;
-        background: #fff;
 
-        /* Center slide text vertically */
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: -webkit-flex;
+    body,html {
+        position: relative;
+        height: 100%; 
+        margin: auto; /* 화면 축소시 스크롤 방지 */
+        background-image : url(../static/img/background.png);
+        background-repeat: repeat;
+    }
+
+    .front2, .back2 {
+        z-index:999;
+        position: absolute;
+        left: 50%; top: 53%;
+        width: 80%; 
+        height: 80%;
+        backface-visibility: hidden;
         display: flex;
-        -webkit-box-pack: center;
-        -ms-flex-pack: center;
-        -webkit-justify-content: center;
+        visibility:hidden;
         justify-content: center;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        -webkit-align-items: center;
+        align-items: center;
+        color: #fff;
+        transform: translate(-50%, -50%);
+    }
+        
+    .front2 {
+        background: tomato; 
+    }
+        
+    .image_text_front, .image_text_back {
+        color: white;
+        position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);transition: .4s;transform-style: preserve-3d;
+        z-index:999;
+        word-break:keep-all;
+        text-align:center;
+        display:table-cell;
+        vertical-align:middle;
+        font-weight:bold;
+        font-size:80px;
+    }
+
+    .image_text_back {
+        font-size:30px;
+    }
+
+    .hint {
+        width: 100%; 
+        height: 100%; 
+        position: relative;
+        transition: .4s;
+        transform-style: preserve-3d;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 80%;
+        height: 80%;
+        border-radius: 20px;
+        background-color : green;
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
         align-items: center;
     }
-    
-    	body,html {
-    	 position: relative;
-        height: 100%; 
-		    margin: auto; /* 화면 축소시 스크롤 방지 */
-		    background: lightblue; 
-		}
-		
-		.middle2 {
-		  /* 이하 필수 설정 */
-		  position: absolute;
-		  left: 50%; top: 50%;
-		  transform: translate(-50%, -50%);
-		  text-align: center;
-		}
 
-        .flip2 { 
-        	min-width: 430px;
-            width: 24.43%;
-            height: 500px;
-            position: relative;
-            perspective: 1100px;
-            float:left;
-            margin: 2px;
-          }
-          
-          .card3 {
-            position: relative;
-            transition: .4s;
-            transform-style: preserve-3d;
-          } 
-          
-          .card4 {
-          	width: 100%; 
-            height: 100%; 
-            position: relative;
-            transition: .4s;
-            transform-style: preserve-3d;
-          } 
-          
-          .front, .back {
-            position: absolute;
-            width: 100%; 
-            height: 100%;
-            backface-visibility: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #fff;
-          }
-          
-          .front2, .back {
-            z-index:999;
-            position: absolute;
-            left: 50%; top: 53%;
-            width: 80%; 
-            height: 80%;
-            backface-visibility: hidden;
-            display: flex;
-            visibility:hidden;
-            justify-content: center;
-            align-items: center;
-            color: #fff;
-            transform: translate(-50%, -50%);
-          }
-          
-          .front2 {
-            background: tomato; 
-          }
-          
-          .back { 
-            background: royalblue; 
-            transform: rotateY(180deg);
-          }
+    .card {
+        width: 100%; 
+        height: 100%; 
+        position: relative;
+        transition: .4s;
+        transform-style: preserve-3d;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 35%;
+        height: 60%;
+        background-image: url(../static/img/wordCard-1.png);
+        background-size: 100% 100%;
+        background-repeat: repeat;
+    } 
+
+
+    .front, .back {
+        position: absolute;
+        margin-left: 10%;
+        margin-right: 10%;
+        width: 80%;
+        height: 100%;
+        backface-visibility: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+    }
+
+    .back { 
+        transform: rotateY(180deg);
+    }
+    
+    .btn_detail {
+        width:10%; height:10%;transform:none;position:absolute;top:85%;left:95%
+    }
 
     </style>
 </head>
 <body>
+    <py-script>
+        import js
+        from js import document
 
-  <!-- Swiper -->
-  <!-- 
-    <div class="swiper-container">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide">Slide 1</div>
-            <div class="swiper-slide">Slide 2</div>
-            <div class="swiper-slide">Slide 3</div>
-            <div class="swiper-slide">Slide 4</div>
-            <div class="swiper-slide">Slide 5</div>
-            <div class="swiper-slide">Slide 6</div>
-            <div class="swiper-slide">Slide 7</div>
-            <div class="swiper-slide">Slide 8</div>
-            <div class="swiper-slide">Slide 9</div>
-            <div class="swiper-slide">Slide 10</div> 
-        </div>
+        def function_close_hint(*args):
+            #js.alert("창 닫기")
+            pageNum = Element("pageNum")
+            wordBook = Element("wordBook")
+            backIcon = Element("backIcon")
 
-        <div class="swiper-pagination"></div>
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
-    </div>
- -->
- 
-    <!-- Swiper JS -->
-    <script src="../static/swiper.min.js"></script>
+            hintEle = js.document.getElementById("hint"+pageNum.value)
+            hintEle.style.display = "none"
+
+            wordBookEle = js.document.getElementById("wordBook")
+            wordBookEle.style.zIndex = 11
+
+            backEle = js.document.getElementById("backIcon")
+            backEle.style.zIndex = 11
+            
+            swiper_btnEleNext = js.document.getElementsByClassName("swiper-button-next")
+            swiper_btnEleNext[0].style.zIndex = 10
+            swiper_btnElePrev = js.document.getElementsByClassName("swiper-button-prev")
+            swiper_btnElePrev[0].style.zIndex = 10
+            swiper_pageEle = js.document.getElementsByClassName("swiper-pagination")
+            swiper_pageEle[0].style.zIndex = 10
+     
+            #"block"
+
+        def function_btn_detail(*args):
+            #js.alert("상세보기")
+            js.event.preventDefault();
+            js.event.stopPropagation();
+            pageNum = Element("pageNum")
+            wordBook = Element("wordBook")
+            backIcon = Element("backIcon")
+
+            hintEle = js.document.getElementById("hint"+pageNum.value)
+            hintEle.style.display = "block"
+
+            wordBookEle = js.document.getElementById("wordBook")
+            wordBookEle.style.zIndex = 9
+
+            backEle = js.document.getElementById("backIcon")
+            backEle.style.zIndex = 9
+
+            swiper_btnEleNext = js.document.getElementsByClassName("swiper-button-next")
+            swiper_btnEleNext[0].style.zIndex = 0
+            swiper_btnElePrev = js.document.getElementsByClassName("swiper-button-prev")
+            swiper_btnElePrev[0].style.zIndex = 0
+            swiper_pageEle = js.document.getElementsByClassName("swiper-pagination")
+            swiper_pageEle[0].style.zIndex = 0
+
+        def function_card(*args):
+            pageNum = Element("pageNum")
+
+            js.alert("카드클릭!")
+            #js.alert(pageNum.value);
+
+            hintEle = js.document.getElementById("card"+pageNum.value)
+            hintEle_css = js.window.getComputedStyle(hintEle).transform
+
+            if "matrix3d" in hintEle_css:
+                js.alert("앞면!")
+                hintEle.style.transform = "translate(-50%, -50%)"
+            elif "matrix" in hintEle_css:
+                js.alert("뒷면!")    
+                hintEle.style.transform = "translate(-50%, -50%) rotateY(180deg)"
+            #js.alert(hintEle) 
+
     
-    
-<!-- 
-    <div class="middle">
-		<h1>CENTER-ALIGNED</h1>
-	    <hr color=lightblue>
-	    <p>vertically & horizontally</p>
-	</div>
- -->	
-  <!-- <img src="<c:out value="${cdnDomain}" />/mobile_new/img/age19.png"  style="position: absolute;  left: 50%; top: 53%; transform: translate(-50%, -50%);width:35%; height:70%;"><br>  -->
-    
+    </py-script>
+
+ <!-- 북마크 시작 -->
    <div class="front2" style="overflow-y:scroll;">
    	Scroll test<br>11<br>12<br>13<br>7<br>11<br>12<br>13<br>
    	2<br>11<br>12<br>13<br>7<br>11<br>12<br>13<br>
@@ -155,46 +203,85 @@
    	6<br>11<br>12<br>13<br>7<br>11<br>12<br>13<br>
    	7<br>11<br>12<br>13<br>
    </div> 
-    
-   <img id="userIcon" src="../static/img/userIcon.png"   style="z-index:5;position: absolute;  right: 20%; top: 5%;height:100px;transition: .4s;transform-style: preserve-3d;" width=5.8% height=10%;>
-   <img id="wordBook" src="../static/img/wordBook.png" style="z-index:5;position: absolute;  right: 28%; top: 5%; height: 100px;transition: .4s;transform-style: preserve-3d;" width=5% height=12%;>
-	
-	<div class="swiper-container">
+<!-- 북마크 끝 ! -->
+
+   <img id="wordBook" src="../static/img/wordBook.png" style="z-index:11;position: absolute;  right: 25%; top: 5%; height: 100px;transition: .4s;transform-style: preserve-3d;" width=6% height=12%;>
+   <a href="{{ url_for('root') }}"><img id="backIcon" src="../static/img/backIcon.png" style="z-index:11;position: absolute;  right: 23%; bottom: 5%; height: 100px;transition: .4s;transform-style: preserve-3d;" width=7% height=12%;></a>
+
+    <!-- 카드 순번 hidden값으로 저장 / id구분할때 사용 ex.card0, card1, card2 -->
+    <input id = "pageNum" name="pageNum" type="hidden" value="0"> 
+	<div class="swiper-container" style="z-index:9">
         <div class="swiper-wrapper">
-        
- 
-			<!-- 카드 시작 -->
+            <!-- ==================== 카드 시작 ==================== -->
+            {% for row in card %}
+            {% if(row['card_type'] == 1) %}
+            <!-- ==================== [1. 일반문제유형] ==================== -->
+            <div class="swiper-slide"> <!-- middle -->
+                <div class="flip {{row['idx']}}" style="z-index:900"> 
+                    <!-- 힌트 > 칠판모양 예정-->
+                    <div id="hint{{row['idx']}}" class="hint {{row['idx']}}" style="display:none;">
+                        <div class="image_text_back">
+                        <img src="../static/img/chap01/1-1.png" style="width:70%;height:70%;"><br>
+                        {{row['card_text']}}
+                        </div>
+
+                        <!-- <img id="cookie1-1" onclick="closeHint()" src="../static/img/cookie1_bak.png" style="position: absolute; right: 0%; top: 0%;" width=10% height=10% alt ="cookie1.png"> -->
+                        <img id="closeHint{{row['idx']}}" pys-onClick ="function_close_hint" src="../static/img/cookie1_bak.png" style="position: absolute; right: 0%; top: 0%;" width=10% height=10% alt ="cookie1.png">
+                    </div> 
+
+                    <div id="card{{row['idx']}}" class="card {{row['idx']}}" pys-onClick ="function_card">
+                        <!-- 앞면 -->
+                        <div class="front" style="font-size:30px;">{{row['card_front']}}</div>
+                        <!-- 뒷면 -->
+                        <div class="back"> 
+                            <div class="image_text_back">
+                                <img src="../static/img/chap01/1-1.png" style="width:50%;height:50%;"><br> {{row['card_back']}}
+                            </div>
+                            <img id="btn_detail{{row['idx']}}" class="btn_detail" pys-onClick ="function_btn_detail" src="../static/img/detail.png" >
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <!-- ==================== [2. 선택check문제유형] ==================== -->
 			<div class="swiper-slide"> <!-- middle -->
-		        <div class="flip 1">  
-		            <div class="card 1">
-		                <!-- 앞면 -->
-		                <img src="../static/img/wordCard.png"  style="position: absolute; left: 50%; top: 53%; transform: translate(-50%, -50%);transition: .4s;transform-style: preserve-3d;width:35%; height:60%;">
-		                <!-- <div class="front">Question</div>  -->
-		                
-		                <!-- 뒷면 -->
-		                <img src="../static/img/wordCard.png"  style="position: absolute; left: 50%; top: 53%; transform: translate(-50%, -50%);transition: .4s;transform-style: preserve-3d;width:35%; height:60%;">  
-		                <!-- <div class="back">answer</div>  -->
-		            </div>
+		        <div class="flip {{row['idx']}}">  
+		            <!-- 힌트 > 칠판모양 예정-->
+                    <div id="hint{{row['idx']}}" class="hint {{row['idx']}}" style="display:none;">
+                        <div class="image_text_back">
+                        <img src="../static/img/chap01/1-1.png" style="width:70%;height:70%;"><br>
+                        {{row['card_text']}}
+                        </div>
+
+                        <img id="closeHint{{row['idx']}}" pys-onClick ="function_close_hint" src="../static/img/cookie1_bak.png" style="position: absolute; right: 0%; top: 0%;" width=10% height=10% alt ="cookie1.png">
+                    </div> 
+
+                    <div id="card{{row['idx']}}" class="card {{row['idx']}}" pys-onClick ="function_card">
+                        <!-- 앞면 -->
+                        <div class="front" style="flex-direction:column; font-size:18px;">
+                            {{row['card_front']}} <br><br>
+                            {% for row2 in row['card_problem'] %}
+                            <div>
+                                <input type="radio" id="ra{{row2['idx']}}" name="sel_answer" value="ra{{row2['idx']}}">
+                                <label for="ra{{row2['idx']}}">{{row2['card_content']}}</label>
+                            </div>
+                            {% endfor %}
+    
+                        </div>
+                        <!-- 뒷면 -->
+                        <div class="back"> 
+                            
+                            <div class="image_text_back" style="font-size:18px;">
+                                {{row['card_back']}}
+                            </div>
+                            <img id="btn_detail{{row['idx']}}" class="btn_detail" pys-onClick ="function_btn_detail" src="../static/img/detail.png" >
+                        </div>
+                    </div>
 		        </div>
 		    </div>
-			<!-- 카드 끝 -->
-			
-			<!-- 카드 시작 -->
-			<div class="swiper-slide"> <!-- middle -->
-		        <div class="flip 2">  
-		            <div class="card 2">
-		                <!-- 앞면 -->
-		                <img src="../static/img/wordCard.png"  style="position: absolute; left: 50%; top: 53%; transform: translate(-50%, -50%);transition: .4s;transform-style: preserve-3d;width:35%; height:60%;"> 
-		                <!-- <div class="front">Question</div>  -->
-		                
-		                <!-- 뒷면 -->
-		                <img src="../static/img/wordCard.png"  style="position: absolute; left: 50%; top: 53%; transform: translate(-50%, -50%);transition: .4s;transform-style: preserve-3d;width:35%; height:60%;">  
-		                <!-- <div class="back">answer</div>  -->
-		            </div>
-		        </div>
-		    </div>
-			<!-- 카드 끝 -->
-			
+            {% endif %}
+            {% endfor %}
+			<!-- ==================== 카드 끝 ==================== -->
 		
 		</div>
         <!-- Add Pagination -->
@@ -203,62 +290,19 @@
         <div class="swiper-button-next" style="right:20%"></div>
         <div class="swiper-button-prev" style="left:20%"></div>
     </div>
-	
-    <script>
-    var swiper = new Swiper('.swiper-container', {
-        pagination: '.swiper-pagination',
-        paginationClickable: true,
-        nextButton: '.swiper-button-next',
-        prevButton: '.swiper-button-prev',
-        spaceBetween: 30
-    });
-    
-        var game_status = false;
-        var click_count = 0;
-        var click_element = Array();
-        var total_click = 0;
-        var double_check = true;
-        var success_num = 0;
-        var click_status = 0;
-        
-        $("#userIcon").click(function(){
-        	alert("userIcon!!");
+  
+    <script>  
+        var swiper = new Swiper('.swiper-container', {
+            pagination: '.swiper-pagination',
+            paginationClickable: true,
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev',
+            spaceBetween: 30
         });
-        
-        $("#wordBook").click(function(){ //북마크 팝업
-        	alert("wordBook!!");
-        	$(".front2").css('visibility','visible');
-        	//$(".front2").show();
+        swiper.on('transitionEnd', function() {
+            $('#pageNum').attr('value',swiper.realIndex);
+            //alert("paging:"+ swiper.realIndex); //'now index :::', swiper.pagination); //  swiper.realIndex);
         });
-
-        $(".front2").click(function(){
-        	alert("팝업 종료!");
-        	$(this).css('visibility','hidden');
-        	
-        });
-        
-        // 카드 리스트 여러개일때 처리..
-        $(".card").click(function(){
-        	var transform_css = $(this).children('img').css("transform");
-        	
-        	if(transform_css.includes('matrix3d')){//click_status == 1) {
-            	alert("2");
-             	$(this).children('img').css("transform", "translate(-50%, -50%)"); // => 2
-                //click_element.push($(this));
-             	//click_status = 0;
-            }else if(transform_css.includes('matrix')){//click_status == 0) {
-                alert("1");
-                $(this).children('img').css("position", "absolute");
-                $(this).children('img').css("left", "50%");
-                $(this).children('img').css("top", "53%");
-                
-            	$(this).children('img').css("transform", "translate(-50%, -50%) rotateY(180deg)"); // => 1 í
-            	//$(this).children('img').css("transform", "translate(-50%, -50%)");
-                //click_element.push($(this));
-            	//click_status = 1;
-            }  
-        });
-
     </script>
 </body>
 </html>
