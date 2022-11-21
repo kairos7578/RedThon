@@ -14,7 +14,7 @@ app = Flask(__name__)
 load_dotenv(verbose=True)
 
 app.secret_key = os.getenv('REDTHON_SECRET_KEY') #세션 사용을 위한 시크릿 키 설정
-app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(minutes=10) # 로그인 지속시간 설정 현재 10분
+app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(minutes=100) # 로그인 지속시간 설정 현재 100분
 
 mysql = MySQL(cursorclass=DictCursor)
 app.config['MYSQL_DATABASE_USER'] = os.getenv('REDTHON_DATABASE_USER')

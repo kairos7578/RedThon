@@ -176,17 +176,17 @@
         def function_card(*args):
             pageNum = Element("pageNum")
 
-            js.alert("카드클릭!")
+            #js.alert("카드클릭!")
             #js.alert(pageNum.value);
 
             hintEle = js.document.getElementById("card"+pageNum.value)
             hintEle_css = js.window.getComputedStyle(hintEle).transform
 
             if "matrix3d" in hintEle_css:
-                js.alert("앞면!")
+                #js.alert("앞면!")
                 hintEle.style.transform = "translate(-50%, -50%)"
             elif "matrix" in hintEle_css:
-                js.alert("뒷면!")    
+                #js.alert("뒷면!")    
                 hintEle.style.transform = "translate(-50%, -50%) rotateY(180deg)"
             #js.alert(hintEle) 
 
@@ -217,19 +217,19 @@
             {% if(row['card_type'] == 1) %}
             <!-- ==================== [1. 일반문제유형] ==================== -->
             <div class="swiper-slide"> <!-- middle -->
-                <div class="flip {{row['idx']}}" style="z-index:900"> 
+                <div class="flip {{row['idx'] - 1}}" style="z-index:900"> 
                     <!-- 힌트 > 칠판모양 예정-->
-                    <div id="hint{{row['idx']}}" class="hint {{row['idx']}}" style="display:none;">
+                    <div id="hint{{row['idx'] - 1}}" class="hint {{row['idx'] - 1}}" style="display:none;">
                         <div class="image_text_back">
                         <img src="../static/img/chap01/1-1.png" style="width:70%;height:70%;"><br>
                         {{row['card_text']}}
                         </div>
 
                         <!-- <img id="cookie1-1" onclick="closeHint()" src="../static/img/cookie1_bak.png" style="position: absolute; right: 0%; top: 0%;" width=10% height=10% alt ="cookie1.png"> -->
-                        <img id="closeHint{{row['idx']}}" pys-onClick ="function_close_hint" src="../static/img/cookie1_bak.png" style="position: absolute; right: 0%; top: 0%;" width=10% height=10% alt ="cookie1.png">
+                        <img id="closeHint{{row['idx'] - 1}}" pys-onClick ="function_close_hint" src="../static/img/cookie1_bak.png" style="position: absolute; right: 0%; top: 0%;" width=10% height=10% alt ="cookie1.png">
                     </div> 
 
-                    <div id="card{{row['idx']}}" class="card {{row['idx']}}" pys-onClick ="function_card">
+                    <div id="card{{row['idx'] - 1}}" class="card {{row['idx'] - 1}}" pys-onClick ="function_card">
                         <!-- 앞면 -->
                         <div class="front" style="font-size:30px;">{{row['card_front']}}</div>
                         <!-- 뒷면 -->
@@ -237,7 +237,7 @@
                             <div class="image_text_back">
                                 <img src="../static/img/chap01/1-1.png" style="width:50%;height:50%;"><br> {{row['card_back']}}
                             </div>
-                            <img id="btn_detail{{row['idx']}}" class="btn_detail" pys-onClick ="function_btn_detail" src="../static/img/detail.png" >
+                            <img id="btn_detail{{row['idx'] - 1}}" class="btn_detail" pys-onClick ="function_btn_detail" src="../static/img/detail.png" >
                         </div>
                     </div>
                 </div>
@@ -245,18 +245,18 @@
             {% else %}
             <!-- ==================== [2. 선택check문제유형] ==================== -->
 			<div class="swiper-slide"> <!-- middle -->
-		        <div class="flip {{row['idx']}}">  
+		        <div class="flip {{row['idx'] - 1}}">  
 		            <!-- 힌트 > 칠판모양 예정-->
-                    <div id="hint{{row['idx']}}" class="hint {{row['idx']}}" style="display:none;">
+                    <div id="hint{{row['idx'] - 1}}" class="hint {{row['idx'] - 1}}" style="display:none;">
                         <div class="image_text_back">
                         <img src="../static/img/chap01/1-1.png" style="width:70%;height:70%;"><br>
                         {{row['card_text']}}
                         </div>
 
-                        <img id="closeHint{{row['idx']}}" pys-onClick ="function_close_hint" src="../static/img/cookie1_bak.png" style="position: absolute; right: 0%; top: 0%;" width=10% height=10% alt ="cookie1.png">
+                        <img id="closeHint{{row['idx'] - 1}}" pys-onClick ="function_close_hint" src="../static/img/cookie1_bak.png" style="position: absolute; right: 0%; top: 0%;" width=10% height=10% alt ="cookie1.png">
                     </div> 
 
-                    <div id="card{{row['idx']}}" class="card {{row['idx']}}" pys-onClick ="function_card">
+                    <div id="card{{row['idx'] - 1}}" class="card {{row['idx'] - 1}}" pys-onClick ="function_card">
                         <!-- 앞면 -->
                         <div class="front" style="flex-direction:column; font-size:18px;">
                             {{row['card_front']}} <br><br>
@@ -274,7 +274,7 @@
                             <div class="image_text_back" style="font-size:18px;">
                                 {{row['card_back']}}
                             </div>
-                            <img id="btn_detail{{row['idx']}}" class="btn_detail" pys-onClick ="function_btn_detail" src="../static/img/detail.png" >
+                            <img id="btn_detail{{row['idx'] - 1}}" class="btn_detail" pys-onClick ="function_btn_detail" src="../static/img/detail.png" >
                         </div>
                     </div>
 		        </div>
