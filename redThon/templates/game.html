@@ -51,9 +51,9 @@
 
           .card_lobby {
             position:fixed;
-            width:1000px;
-            height:1200px;
-            background-image: url('../static/img/background.png');
+            width:100%;
+            height:100%;
+           /* background-image: url('../static/img/background.png'); */
             text-align:center;
             color:white;
           }
@@ -68,9 +68,20 @@
           .card_lobby_content {
             color:black;
           }
+
+          body,html {
+            position: relative;
+            height: 100%; 
+            margin: auto; /* 화면 축소시 스크롤 방지 */
+            background-image : url(../static/img/background.png);
+            background-repeat: repeat;
+        }
     </style>
 </head>
 <body>
+    <!-- 뒤로가기 -->
+    <a href="{{ url_for('root') }}"><img id="backIcon" src="../static/img/backIcon.png" style="z-index:11;position: absolute;  right: 23%; bottom: 5%; height: 100px;transition: .4s;transform-style: preserve-3d;" width=7% height=12%;></a>
+
     <!-- 카드게임 로비-->
     <div class="card_lobby">
         <div class="card_lobby_subject">카드 뒤집기 게임!</div>
@@ -83,7 +94,7 @@
             <button onclick="game_start();">게임 시작</button>
             <button onclick="alert('작업 예정');">랭킹 보기</button>
         </div>
-        <div class="card_lobby_skip"><button onclick="location.href='/';">건너뛰기</button></div>
+        <!-- <div class="card_lobby_skip"><button onclick="location.href='/';">건너뛰기</button></div> -->
     </div>
     <!-- 카드게임 -->
     <div class="card_main" style="display:none;width:850px;height:1200px;float:left;">

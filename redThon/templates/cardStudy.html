@@ -72,11 +72,14 @@
         width: 80%;
         height: 80%;
         border-radius: 20px;
-        background-color : green;
+        /* background-color : green;*/
         z-index: 9999;
         display: flex;
         justify-content: center;
         align-items: center;
+        background-image: url(../static/img/classBoard.png);
+        background-size: 100% 100%;
+        background-repeat: repeat;
     }
 
     .card {
@@ -98,6 +101,7 @@
 
 
     .front, .back {
+        font-weight : bold;
         position: absolute;
         margin-left: 10%;
         margin-right: 10%;
@@ -220,13 +224,13 @@
                 <div class="flip {{row['idx'] - 1}}" style="z-index:900"> 
                     <!-- 힌트 > 칠판모양 예정-->
                     <div id="hint{{row['idx'] - 1}}" class="hint {{row['idx'] - 1}}" style="display:none;">
-                        <div class="image_text_back">
+                        <div class="image_text_back" style="top:45%">
                         <img src="../static/img/chap01/1-1.png" style="width:70%;height:70%;"><br>
                         {{row['card_text']}}
                         </div>
 
                         <!-- <img id="cookie1-1" onclick="closeHint()" src="../static/img/cookie1_bak.png" style="position: absolute; right: 0%; top: 0%;" width=10% height=10% alt ="cookie1.png"> -->
-                        <img id="closeHint{{row['idx'] - 1}}" pys-onClick ="function_close_hint" src="../static/img/cookie1_bak.png" style="position: absolute; right: 0%; top: 0%;" width=10% height=10% alt ="cookie1.png">
+                        <img id="closeHint{{row['idx'] - 1}}" pys-onClick ="function_close_hint" src="../static/img/exit_Icon.png" style="position: absolute; right: 5%; top: 7%;" width=8% height=8% alt ="cookie1.png">
                     </div> 
 
                     <div id="card{{row['idx'] - 1}}" class="card {{row['idx'] - 1}}" pys-onClick ="function_card">
@@ -248,12 +252,12 @@
 		        <div class="flip {{row['idx'] - 1}}">  
 		            <!-- 힌트 > 칠판모양 예정-->
                     <div id="hint{{row['idx'] - 1}}" class="hint {{row['idx'] - 1}}" style="display:none;">
-                        <div class="image_text_back">
+                        <div class="image_text_back" style="top:45%">
                         <img src="../static/img/chap01/1-1.png" style="width:70%;height:70%;"><br>
                         {{row['card_text']}}
                         </div>
 
-                        <img id="closeHint{{row['idx'] - 1}}" pys-onClick ="function_close_hint" src="../static/img/cookie1_bak.png" style="position: absolute; right: 0%; top: 0%;" width=10% height=10% alt ="cookie1.png">
+                        <img id="closeHint{{row['idx'] - 1}}" pys-onClick ="function_close_hint" src="../static/img/exit_Icon.png" style="position: absolute; right: 5%; top: 7%;" width=8% height=8% alt ="cookie1.png">
                     </div> 
 
                     <div id="card{{row['idx'] - 1}}" class="card {{row['idx'] - 1}}" pys-onClick ="function_card">
