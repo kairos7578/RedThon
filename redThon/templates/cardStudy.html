@@ -285,9 +285,10 @@
                                 {% for row2 in row['card_problem'] %}
                                 {% if(row2['card_success'] == 1) %}
                                 <div>
-                                    <label for="ra{{row2['idx']}}">{{row2['card_content']}}</label>
+                                    <label for="ra{{row2['idx']}}">{{loop.index}}번: {{row2['card_content']}}</label>
                                 </div>
                                 {% endif %}
+                                
                                 {% endfor %}
                             </div>
                             <img id="btn_detail{{row['idx'] - 1}}" class="btn_detail" pys-onClick ="function_btn_detail" src="../static/img/detail.png" >
