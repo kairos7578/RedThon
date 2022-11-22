@@ -72,7 +72,7 @@
         width: 80%;
         height: 80%;
         border-radius: 20px;
-        /* background-color : green;*/
+        /* background-color : green; */
         z-index: 9999;
         display: flex;
         justify-content: center;
@@ -225,7 +225,9 @@
                     <!-- 힌트 > 칠판모양 예정-->
                     <div id="hint{{row['idx'] - 1}}" class="hint {{row['idx'] - 1}}" style="display:none;">
                         <div class="image_text_back" style="top:45%">
-                        <img src="../static/img/chap01/1-1.png" style="width:70%;height:70%;"><br>
+                        {% for row2 in row['card_image'] %}
+                            <img src="{{row2['src']}}" style="width:70%;height:70%;"><br>
+                        {% endfor %}
                         {{row['card_text']}}
                         </div>
 
@@ -239,7 +241,8 @@
                         <!-- 뒷면 -->
                         <div class="back"> 
                             <div class="image_text_back">
-                                <img src="../static/img/chap01/1-1.png" style="width:50%;height:50%;"><br> {{row['card_back']}}
+                                <!--<img src="../static/img/chap01/1-1.png" style="width:50%;height:50%;"><br>-->
+                                {{row['card_back']}}
                             </div>
                             <img id="btn_detail{{row['idx'] - 1}}" class="btn_detail" pys-onClick ="function_btn_detail" src="../static/img/detail.png" >
                         </div>
@@ -253,7 +256,9 @@
 		            <!-- 힌트 > 칠판모양 예정-->
                     <div id="hint{{row['idx'] - 1}}" class="hint {{row['idx'] - 1}}" style="display:none;">
                         <div class="image_text_back" style="top:45%">
-                        <img src="../static/img/chap01/1-1.png" style="width:70%;height:70%;"><br>
+                        {% for row2 in row['card_image'] %}
+                            <img src="{{row2['src']}}" style="width:70%;height:70%;"><br>
+                        {% endfor %}
                         {{row['card_text']}}
                         </div>
 
@@ -276,7 +281,13 @@
                         <div class="back"> 
                             
                             <div class="image_text_back" style="font-size:18px;">
-                                {{row['card_back']}}
+                                {% for row2 in row['card_problem'] %}
+                                {% if(row2['card_success'] == 1) %}
+                                <div>
+                                    <label for="ra{{row2['idx']}}">{{row2['card_content']}}</label>
+                                </div>
+                                {% endif %}
+                                {% endfor %}
                             </div>
                             <img id="btn_detail{{row['idx'] - 1}}" class="btn_detail" pys-onClick ="function_btn_detail" src="../static/img/detail.png" >
                         </div>

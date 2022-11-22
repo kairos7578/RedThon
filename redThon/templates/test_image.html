@@ -33,9 +33,9 @@
     <a href="{{ url_for('cardstudy', stage=1) }}"><img id="cookie1" src="../static/img/cookie1.png" onClick="move_cookie1()"
     style="position: absolute;  left: 50%; top: 80%;" 
     width=6% height=12% alt ="cookie1.png"></a>
-    <img id="cookie2" src="../static/img/cookie2.png" onClick="move_cookie2()"
+    <a href="{{ url_for('cardstudy', stage=2) }}"><img id="cookie2" src="../static/img/cookie2.png" onClick="move_cookie2()"
     style="position: absolute;  left: 40%; top: 80%;" 
-    width=6% height=12% alt ="cookie2.png">
+    width=6% height=12% alt ="cookie2.png"></a>
     <a href="{{ url_for('game') }}"><img id="cookie3" src="../static/img/cookie3.png" onClick="move_cookie3()"
     style="position: absolute;  left: 31%; top: 70%;" 
     width=8% height=15% alt ="cookie3.png"></a>

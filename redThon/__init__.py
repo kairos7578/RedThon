@@ -59,9 +59,12 @@ def cardstudy():
                 cursor2.execute("SELECT * FROM card_back_problem WHERE card_no = '%s'" % (row["idx"]))
                 cp = cursor2.fetchall()
                 row.update(card_problem=cp)
-                print(row['card_problem'])
-            #추가 설명 이미지 가져오기
 
+            #추가 설명 이미지 가져오기
+            cursor3 = db.cursor()
+            cursor3.execute("SELECT * FROM card_image WHERE card_num = '%s'" % (row["idx"]))
+            ci = cursor3.fetchall()
+            row.update(card_image=ci)
 
         """
         cursor = db.cursor()
