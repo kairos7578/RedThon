@@ -267,20 +267,21 @@
 
                     <div id="card{{row['idx'] - 1}}" class="card {{row['idx'] - 1}}" pys-onClick ="function_card">
                         <!-- 앞면 -->
-                        <div class="front" style="flex-direction:column; font-size:18px;">
-                            {{row['card_front']}} <br><br>
-                            {% for row2 in row['card_problem'] %}
+                        <div class="front" style="flex-direction:column; font-size:18px;text-align:left;">
                             <div>
-                                <input type="radio" id="ra{{row2['idx']}}" name="sel_answer" value="ra{{row2['idx']}}">
-                                <label for="ra{{row2['idx']}}">{{row2['card_content']}}</label>
+                                {{row['card_front']}} <br><br>
+                                {% for row2 in row['card_problem'] %}
+                                <div>
+                                    <input type="radio" id="ra{{row2['idx']}}" name="sel_answer" value="ra{{row2['idx']}}">
+                                    <label for="ra{{row2['idx']}}">{{row2['card_content']}}</label>
+                                </div>
+                                {% endfor %}
                             </div>
-                            {% endfor %}
-    
                         </div>
                         <!-- 뒷면 -->
                         <div class="back"> 
                             
-                            <div class="image_text_back" style="font-size:18px;">
+                            <div class="image_text_back" style="font-size:25px;">
                                 {% for row2 in row['card_problem'] %}
                                 {% if(row2['card_success'] == 1) %}
                                 <div>
