@@ -76,6 +76,14 @@ def cardstudy():
 
     return render_template('cardStudy.html', title = "mainmap", card=card)
 
+@app.route("/finalStudy1")
+def finalStudy1():
+    return render_template('finalStudy1.html', title = "final1")
+
+@app.route("/finalStudy2")
+def finalStudy2():
+    return render_template('finalStudy2.html', title = "final2")
+
 @app.route("/header")
 def header():
     return render_template('header.html', title = "header")
