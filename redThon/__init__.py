@@ -50,7 +50,7 @@ def cardstudy():
         print("문제 함수 들어옴")
         db = mysql.connect()
         cursor = db.cursor()
-        cursor.execute("SELECT * FROM card WHERE card_level = '%s'" % (request.args["stage"]))
+        cursor.execute("SELECT * FROM card WHERE card_level = '%s' ORDER BY card_temp asc" % (request.args["stage"]))
         card = cursor.fetchall()
         for row in card:
             if(row['card_type'] == 2):

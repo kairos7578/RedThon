@@ -221,30 +221,30 @@
             {% if(row['card_type'] == 1) %}
             <!-- ==================== [1. 일반문제유형] ==================== -->
             <div class="swiper-slide"> <!-- middle -->
-                <div class="flip {{row['idx'] - 1}}" style="z-index:900"> 
+                <div class="flip {{loop.index - 1}}" style="z-index:900"> 
                     <!-- 힌트 > 칠판모양 예정-->
-                    <div id="hint{{row['idx'] - 1}}" class="hint {{row['idx'] - 1}}" style="display:none;">
+                    <div id="hint{{loop.index - 1}}" class="hint {{loop.index - 1}}" style="display:none;">
                         <div class="image_text_back" style="top:45%">
                         {% for row2 in row['card_image'] %}
                             <img src="{{row2['src']}}" style="width:70%;height:70%;"><br>
                         {% endfor %}
-                        {{row['card_text']}}
+                        {{row['card_text']|safe}}
                         </div>
 
                         <!-- <img id="cookie1-1" onclick="closeHint()" src="../static/img/cookie1_bak.png" style="position: absolute; right: 0%; top: 0%;" width=10% height=10% alt ="cookie1.png"> -->
-                        <img id="closeHint{{row['idx'] - 1}}" pys-onClick ="function_close_hint" src="../static/img/exit_Icon.png" style="position: absolute; right: 5%; top: 7%;" width=8% height=8% alt ="cookie1.png">
+                        <img id="closeHint{{loop.index - 1}}" pys-onClick ="function_close_hint" src="../static/img/exit_Icon.png" style="position: absolute; right: 5%; top: 7%;" width=8% height=8% alt ="cookie1.png">
                     </div> 
 
-                    <div id="card{{row['idx'] - 1}}" class="card {{row['idx'] - 1}}" pys-onClick ="function_card">
+                    <div id="card{{loop.index - 1}}" class="card {{loop.index - 1}}" pys-onClick ="function_card">
                         <!-- 앞면 -->
-                        <div class="front" style="font-size:30px;">{{row['card_front']}}</div>
+                        <div class="front" style="font-size:30px;">{{row['card_front']|safe}}</div>
                         <!-- 뒷면 -->
                         <div class="back"> 
                             <div class="image_text_back">
                                 <!--<img src="../static/img/chap01/1-1.png" style="width:50%;height:50%;"><br>-->
-                                {{row['card_back']}}
+                                {{row['card_back']|safe}}
                             </div>
-                            <img id="btn_detail{{row['idx'] - 1}}" class="btn_detail" pys-onClick ="function_btn_detail" src="../static/img/detail.png" >
+                            <img id="btn_detail{{loop.index - 1}}" class="btn_detail" pys-onClick ="function_btn_detail" src="../static/img/detail.png" >
                         </div>
                     </div>
                 </div>
@@ -252,28 +252,28 @@
             {% else %}
             <!-- ==================== [2. 선택check문제유형] ==================== -->
 			<div class="swiper-slide"> <!-- middle -->
-		        <div class="flip {{row['idx'] - 1}}">  
+		        <div class="flip {{loop.index - 1}}">  
 		            <!-- 힌트 > 칠판모양 예정-->
-                    <div id="hint{{row['idx'] - 1}}" class="hint {{row['idx'] - 1}}" style="display:none;">
+                    <div id="hint{{loop.index - 1}}" class="hint {{loop.index - 1}}" style="display:none;">
                         <div class="image_text_back" style="top:45%">
                         {% for row2 in row['card_image'] %}
                             <img src="{{row2['src']}}" style="width:70%;height:70%;"><br>
                         {% endfor %}
-                        {{row['card_text']}}
+                        {{row['card_text']|safe}}
                         </div>
 
-                        <img id="closeHint{{row['idx'] - 1}}" pys-onClick ="function_close_hint" src="../static/img/exit_Icon.png" style="position: absolute; right: 5%; top: 7%;" width=8% height=8% alt ="cookie1.png">
+                        <img id="closeHint{{loop.index - 1}}" pys-onClick ="function_close_hint" src="../static/img/exit_Icon.png" style="position: absolute; right: 5%; top: 7%;" width=8% height=8% alt ="cookie1.png">
                     </div> 
 
-                    <div id="card{{row['idx'] - 1}}" class="card {{row['idx'] - 1}}" pys-onClick ="function_card">
+                    <div id="card{{loop.index - 1}}" class="card {{loop.index - 1}}" pys-onClick ="function_card">
                         <!-- 앞면 -->
                         <div class="front" style="flex-direction:column; font-size:18px;text-align:left;">
                             <div>
-                                {{row['card_front']}} <br><br>
+                                {{row['card_front']|safe}} <br><br>
                                 {% for row2 in row['card_problem'] %}
                                 <div>
                                     <input type="radio" id="ra{{row2['idx']}}" name="sel_answer" value="ra{{row2['idx']}}">
-                                    <label for="ra{{row2['idx']}}">{{row2['card_content']}}</label>
+                                    <label for="ra{{row2['idx']}}">{{row2['card_content']|safe}}</label>
                                 </div>
                                 {% endfor %}
                             </div>
@@ -285,13 +285,13 @@
                                 {% for row2 in row['card_problem'] %}
                                 {% if(row2['card_success'] == 1) %}
                                 <div>
-                                    <label for="ra{{row2['idx']}}">{{loop.index}}번: {{row2['card_content']}}</label>
+                                    <label for="ra{{row2['idx']}}">{{loop.index}}번: {{row2['card_content']|safe}}</label>
                                 </div>
                                 {% endif %}
                                 
                                 {% endfor %}
                             </div>
-                            <img id="btn_detail{{row['idx'] - 1}}" class="btn_detail" pys-onClick ="function_btn_detail" src="../static/img/detail.png" >
+                            <img id="btn_detail{{loop.index - 1}}" class="btn_detail" pys-onClick ="function_btn_detail" src="../static/img/detail.png" >
                         </div>
                     </div>
 		        </div>
