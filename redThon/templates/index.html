@@ -5,8 +5,13 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>RedThon</title>
     <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css" />
+    <link rel="stylesheet" href="../static/font_style.css">
     <script defer src="https://pyscript.net/alpha/pyscript.js"></script>    
     <style>
+      * {
+        font-family: "BMJUA";
+      }
+
       td, th {
         border-bottom:none;
         padding : 0px;
@@ -15,8 +20,7 @@
         margin-bottom: 0.3rem;
       }
       .links a{
-        font-size: 14px;
-        font-weight:700;
+        font-size: 20px;
       }
     </style>
     {%with messages = get_flashed_messages()%}
@@ -71,7 +75,7 @@
         <table cellpadding="0" cellspacing="0" style="height:100%;border-collapse: collapse;border-spacing: 0;margin-bottom:0">
           <tr>
             <td>
-              <input id = "loginId" name="loginId" type="text" placeholder="아이디" >
+              <input id = "loginId" name="loginId" type="text" placeholder="아이디" style="font-family:'맑은고딕';">
             </td>
             <td rowspan="2" style="padding:9px;height:100%;">
               <button type="button" id="btn_login" pys-onClick ="function_login" class="btn btn-primary" style="height:100%;background-color: #D94925;border:0;" >로그인</button>
@@ -79,7 +83,7 @@
             </td>
           </tr> 
           <tr>
-            <td> <input id = "password" name="password" type="password" placeholder="비밀번호"> </td>
+            <td> <input id = "password" name="password" type="password" placeholder="비밀번호" style="font-family:'맑은고딕';"> </td>
           </tr>
         </table>  
         <span id="login_status" style="color:red;"></span>
