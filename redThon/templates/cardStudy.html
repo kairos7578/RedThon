@@ -245,7 +245,9 @@
                         <!-- 뒷면 -->
                         <div class="back"> 
                             <div class="image_text_back">
-                                <!--<img src="../static/img/chap01/1-1.png" style="width:50%;height:50%;"><br>-->
+                                {% for row3 in row['card_back_image'] %}
+                                    <img src="{{row3['src']}}" style="width:70%;height:70%;"><br>
+                                {% endfor %}
                                 {{row['card_back']|safe}}
                             </div>
                             <img id="btn_detail{{loop.index - 1}}" class="btn_detail" pys-onClick ="function_btn_detail" src="../static/img/detail.png" >
@@ -286,6 +288,10 @@
                         <div class="back"> 
                             
                             <div class="image_text_back" style="font-size:25px;">
+                                {% for row3 in row['card_back_image'] %}
+                                    <img src="{{row3['src']}}" style="width:70%;height:70%;"><br>
+                                {% endfor %}
+                                
                                 {% for row2 in row['card_problem'] %}
                                 {% if(row2['card_success'] == 1) %}
                                 <div>
