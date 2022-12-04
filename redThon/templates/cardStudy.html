@@ -386,7 +386,11 @@
                                 {% endfor %}
                                 {{row['card_back']|safe}}
                             </div>
-                            <img id="btn_detail{{loop.index - 1}}" class="btn_detail" pys-onClick ="function_btn_detail" src="../static/img/detail.png" >
+
+                            <!-- 추가 설명이 있을 때에만 추가 -->
+                            {% if row['card_text'] != '' %}
+                            <img id="btn_detail{{loop.index - 1}}" class="btn_detail" pys-onClick ="function_btn_detail" src="../static/img/detail.png" style="cursor:pointer">
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -437,7 +441,10 @@
                                 
                                 {% endfor %}
                             </div>
+                            <!-- 추가 설명이 있을 때에만 추가 -->
+                            {% if row['card_text'] != '' %}
                             <img id="btn_detail{{loop.index - 1}}" class="btn_detail" pys-onClick ="function_btn_detail" src="../static/img/detail.png" >
+                            {% endif %}
                         </div>
                     </div>
 		        </div>
