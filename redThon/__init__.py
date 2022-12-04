@@ -82,6 +82,46 @@ def cardstudy():
 
     return render_template('cardStudy.html', title = "mainmap", card=card)
 
+@app.route("/bookmark")
+def bookmark():
+    #print(request.args["stage"])
+    #스테이지 따라문제 카드 가져오기
+    if(request.args["stage"] != "" and request.args["stage"] is not None):
+        print("문제 함수 들어옴")
+        db = mysql.connect()
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM card WHERE card_level = '%s' ORDER BY card_temp asc" % (request.args["stage"]))
+        card = cursor.fetchall()
+        for row in card:
+            if(row['card_type'] == 2):
+                #문제카드 있으면 가져오기
+                cursor2 = db.cursor()
+                cursor2.execute("SELECT * FROM card_back_problem WHERE card_no = '%s'" % (row["idx"]))
+                cp = cursor2.fetchall()
+                row.update(card_problem=cp)
+
+            #뒷장 설명 이미지 가져오기
+            cursor4 = db.cursor()
+            cursor4.execute("SELECT * FROM card_back_image WHERE card_num = '%s'" % (row["idx"]))
+            bci = cursor4.fetchall()
+            row.update(card_back_image=bci)
+
+            #추가 설명 이미지 가져오기
+            cursor3 = db.cursor()
+            cursor3.execute("SELECT * FROM card_image WHERE card_num = '%s'" % (row["idx"]))
+            ci = cursor3.fetchall()
+            row.update(card_image=ci)
+
+        """
+        cursor = db.cursor()
+                cursor.execute("SELECT * FROM card_back_problem WHERE card_no = '%s'" % (row["idx"]))
+                card_problem = cursor.fetchall()
+                for row2 in card_problem:
+                    print(row2["card_content"])
+        """
+
+    return render_template('bookmark.html', title = "bookmark", card=card)
+
 @app.route("/finalStudy1")
 def finalStudy1():
     return render_template('finalStudy1.html', title = "final1")
@@ -89,6 +129,10 @@ def finalStudy1():
 @app.route("/finalStudy2")
 def finalStudy2():
     return render_template('finalStudy2.html', title = "final2")
+
+@app.route("/finalStudy3")
+def finalStudy3():
+    return render_template('finalStudy3.html', title = "final2")
 
 @app.route("/header")
 def header():

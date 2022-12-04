@@ -4,12 +4,19 @@
     <meta charset="UTF-8">
     <title>{{title}}</title>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css" />
-    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css">
+    <!-- <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css" /> -->
+    <!-- <script defer src="https://pyscript.net/alpha/pyscript.js"></script> -->
     <!-- Link Swiper's CSS -->
-    <link rel="stylesheet" href="../static/swiper.min.css">
+    <!-- <link rel="stylesheet" href="../static/swiper.min.css"> -->
+    <script defer="" src="https://pyscript.net/latest/pyscript.js"></script>
+    <link rel="stylesheet" href="../static/font_style.css">
     <script src="../static/swiper.min.js"></script>
     <style>
+    * {
+        font-family: "GODO";
+    }
+
     .container {
         width: 100%;
         height: 100%; 
@@ -149,12 +156,25 @@
         width:10%; height:10%;transform:none;position:absolute;top:85%;left:95%
     }
 
+    .answer_input{
+        border:1px solid gray;
+        border-radius: 0.5rem;
+        width:40%;
+        padding:8px;
+        margin:3px
+    }
+
     </style>
 </head>
 <body>
     <py-script>
         import js
         from js import document
+
+        #js.alert("안녕 ? ")
+        #btnRun = js.document.getElementById("btnRun")
+        #btnRun.className = 'absolute repl-play-button'
+
 
         def function_close_hint(*args):
             #js.alert("창 닫기")
@@ -243,23 +263,26 @@
         <div class="wrapper" style="text-align:center">
             <div class="card"> 
                 <div style="margin-bottom: 10px;">
-                    <span style="font-size: 35px;font-weight:bold;">단어 맞추기 게임</span><br>
-                    <span>ROUND 1. 이름 학년 반 변수에 담아 출력하기</span>
+                    <span style="font-size: 35px;font-weight:bold;">소스코드 완성하기</span><br>
+                    <span>ROUND 3. 홍길동의 성적구하기</span>
                 </div>
                 <div style="background-color: #fff; height:92%;">
                     <!--문제영역-->
-                    <div style="border:1px solid green">
-                        <img id="final01" src="../static/img/final01/rou1.png" style="width:100%;height:40%">
+                    <div style="display:inline-block;width:40%;height:80%;">
+                        <img id="final01" src="../static/img/final03/round3-2.png" style="width:100%;height:100%">
+                    </div>
+
+                    <div style="text-align:left;width:60%;float:right;font-weight: normal">
+                        <py-repl>
+                            
+                        </py-repl>
                     </div>
                     
                     <!--답안영역-->
-                    <div>
-                        <div style="border:1px solid red;margin-top:20px;margin-bottom: 20px;">Q.노란색 네모에는 무엇이 들어가야할까요?</div>
-                        <div style="width:100%"> 
-                            <div class="cookie2" style="display:inline-block">print</div>
-                            <div class="cookie2" style="display:inline-block">input</div>
-                            <div class="cookie2" style="display:inline-block">if</div>
-                            <div class="cookie2" style="display:inline-block">elif</div>
+                    <div style="display: inline-block;text-align:left;width:100%;">
+                        <div style="margin:10px;">Q.왼쪽 카드 코드의 실행결과는 위와 같을 때, 빈칸에 들어가야할 코드의 내용을 입력해보세요!</div>
+                        <div style="margin-left:10px;width:100%;float:left;"> 
+                            <textarea rows="3" style="width: 95%;"></textarea>
                         </div>  
                     </div>
                 </div>    
