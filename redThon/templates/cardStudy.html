@@ -74,7 +74,7 @@
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
-        width: 80%;
+        width: 60%;
         height: 80%;
         border-radius: 20px;
         /* background-color : green; */
@@ -324,7 +324,7 @@
         <div id="flip0" class="flip 0" style="z-index:900;"> 
             <!-- 힌트 > 칠판모양 예정-->
             <div id="hint0" class="hint 0" style="display:none;">
-                <div class="image_text_back">
+                <div class="image_text_back" >
                 <img src="../static/img/chap01/1-1.png" style="width:70%;height:70%;"><br>
                 a = 10 으로 코드를 작성하면 a 라는 상자에 10이라는 값이 저장되어요 
                 </div>
@@ -368,7 +368,7 @@
                 <div class="flip {{loop.index - 1}}" style="z-index:900"> 
                     <!-- 힌트 > 칠판모양 예정-->
                     <div id="hint{{loop.index - 1}}" class="hint {{loop.index - 1}}" style="display:none;">
-                        <div class="image_text_back" style="top:45%">
+                        <div class="image_text_back" style="top:45%;width:90%">
                         {% for row2 in row['card_image'] %}
                             <img src="{{row2['src']}}" style="width:70%;height:70%;"><br>
                         {% endfor %}
@@ -376,7 +376,7 @@
                         </div>
 
                         <!-- <img id="cookie1-1" onclick="closeHint()" src="../static/img/cookie1_bak.png" style="position: absolute; right: 0%; top: 0%;" width=10% height=10% alt ="cookie1.png"> -->
-                        <img id="closeHint{{loop.index - 1}}" pys-onClick ="function_close_hint" src="../static/img/exit_Icon.png" style="position: absolute; right: 5%; top: 7%;" width=8% height=8% alt ="cookie1.png">
+                        <img id="closeHint{{loop.index - 1}}" pys-onClick ="function_close_hint" src="../static/img/exit_Icon.png" style="position: absolute; right: 5%; top: 7%;z-index:9999" width=8% height=8% alt ="cookie1.png">
                     </div> 
 
                     <div id="card{{loop.index - 1}}" class="card {{loop.index - 1}}" pys-onClick ="function_card">
@@ -413,14 +413,14 @@
 		        <div class="flip {{loop.index - 1}}">  
 		            <!-- 힌트 > 칠판모양 예정-->
                     <div id="hint{{loop.index - 1}}" class="hint {{loop.index - 1}}" style="display:none;">
-                        <div class="image_text_back" style="top:45%">
+                        <div class="image_text_back" style="top:45%;width:90%">
                         {% for row2 in row['card_image'] %}
                             <img src="{{row2['src']}}" style="width:70%;height:70%;"><br>
                         {% endfor %}
                         {{row['card_text']|safe}}
                         </div>
 
-                        <img id="closeHint{{loop.index - 1}}" pys-onClick ="function_close_hint" src="../static/img/exit_Icon.png" style="position: absolute; right: 5%; top: 7%;" width=8% height=8% alt ="cookie1.png">
+                        <img id="closeHint{{loop.index - 1}}" pys-onClick ="function_close_hint" src="../static/img/exit_Icon.png" style="position: absolute; right: 5%; top: 7%;z-index:9999" width=8% height=8% alt ="cookie1.png">
                     </div> 
 
                     <div id="card{{loop.index - 1}}" class="card {{loop.index - 1}}" pys-onClick ="function_card">
