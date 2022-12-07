@@ -394,7 +394,7 @@
                         <div class="back"> 
                             <div class="image_text_back">
                                 {% for row3 in row['card_back_image'] %}
-                                    <img src="{{row3['src']}}" style="width:70%;height:70%;"><br>
+                                    <img src="{{row3['src']}}" style="width:100%;height:70%;"><br>
                                 {% endfor %}
                                 {{row['card_back']|safe}}
                             </div>
@@ -447,7 +447,7 @@
                             
                             <div class="image_text_back" style="font-size:25px;">
                                 {% for row3 in row['card_back_image'] %}
-                                    <img src="{{row3['src']}}" style="width:70%;height:70%;"><br>
+                                    <img src="{{row3['src']}}" style="width:100%;height:70%;"><br>
                                 {% endfor %}
                                 
                                 {% for row2 in row['card_problem'] %}
