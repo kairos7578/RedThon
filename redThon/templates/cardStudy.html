@@ -191,7 +191,13 @@
             js.alert("북마크!DB에 저장!")
             pageNum = Element("pageNum")
             btn_mark = js.document.getElementById("btn_mark"+pageNum.value)
-            btn_mark.src = "../static/img/heart_on.png"
+            card_no = Element("card_no_"+pageNum.value)
+
+            #js.alert(card_no.value)
+            
+            #btn_mark.src = "../static/img/heart_on.png"
+            #btn_mark.src = "../static/img/heart_off.png"
+
 
         def function_btn_detail(*args):
             #js.alert("상세보기")
@@ -355,6 +361,7 @@
         <div class="swiper-wrapper">
             <!-- ==================== 카드 시작 ==================== -->
             {% for row in card %}
+            <input type="hidden" id="card_no_{{loop.index - 1}}" name="card_no_{{loop.index - 1}}" value="{{row['idx']}}"/>
             {% if(row['card_type'] == 1) %}
             <!-- ==================== [1. 일반문제유형] ==================== -->
             <div class="swiper-slide"> <!-- middle -->
@@ -377,8 +384,13 @@
                         <div class="front" style="font-size:30px;">
                             {{row['card_front']|safe}}
                         </div>
-                        <img id="btn_mark{{loop.index - 1}}" src="../static/img/heart_off.png" pys-onClick ="function_btn_bookmark"  style="position: absolute; right: 8%; top: 9%;" width=8% height=8% alt ="heart_off.png">
-                        <!-- 뒷면 -->
+                        <!-- 북마크 -->
+                        {% if(row['bookmark'] == 'on') %}
+                            <img id="btn_mark{{loop.index - 1}}" src="../static/img/heart_on.png" onclick="function_btn_bookmark()"   style="position: absolute; right: 8%; top: 9%;" width=8% height=8% alt ="heart_off.png">
+                        {% else %}
+                            <img id="btn_mark{{loop.index - 1}}" src="../static/img/heart_off.png" onclick="function_btn_bookmark()"   style="position: absolute; right: 8%; top: 9%;" width=8% height=8% alt ="heart_off.png">
+                        {% endif %}
+                            <!-- 뒷면 -->
                         <div class="back"> 
                             <div class="image_text_back">
                                 {% for row3 in row['card_back_image'] %}
@@ -424,6 +436,12 @@
                                 {% endfor %}
                             </div>
                         </div>
+                        <!-- 북마크 -->
+                        {% if(row['bookmark'] == 'on') %}
+                            <img id="btn_mark{{loop.index - 1}}" src="../static/img/heart_on.png" onclick="function_btn_bookmark()"   style="position: absolute; right: 8%; top: 9%;" width=8% height=8% alt ="heart_off.png">
+                        {% else %}
+                            <img id="btn_mark{{loop.index - 1}}" src="../static/img/heart_off.png" onclick="function_btn_bookmark()"   style="position: absolute; right: 8%; top: 9%;" width=8% height=8% alt ="heart_off.png">
+                        {% endif %}
                         <!-- 뒷면 -->
                         <div class="back"> 
                             
@@ -473,6 +491,32 @@
             $('#pageNum').attr('value',swiper.realIndex);
             //alert("paging:"+ swiper.realIndex); //'now index :::', swiper.pagination); //  swiper.realIndex);
         });
+
+        function function_btn_bookmark() {
+            var btn_mark = $("#btn_mark"+$("#pageNum").val());
+            var card_no = $("#card_no_"+$("#pageNum").val()).val();
+
+            $.ajax({
+				type: "GET",
+				url: "/bookmark_add",
+				data: {
+					"card_no" : card_no
+				},
+				cache: false,
+				async: false,
+				success: function(result) {
+					if(result == "FAIL") {
+                        alert("ERROR");
+                    } else if(result == "ADD") {
+                        btn_mark.attr("src", "../static/img/heart_on.png");
+                    } else if(result == "DELETE") {
+                        btn_mark.attr("src", "../static/img/heart_off.png");
+                    } else {
+                        alert("?.?");
+                    }                    
+				}
+			});
+        }
     </script>
 </body>
 </html>

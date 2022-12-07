@@ -72,6 +72,15 @@ def cardstudy():
             ci = cursor3.fetchall()
             row.update(card_image=ci)
 
+            #북마크 있는지 체크
+            cursor5 = db.cursor()
+            cursor5.execute("SELECT card_no FROM bookmark WHERE user_id = '%s' and card_no = '%s'" % (session["userId"], row["idx"]))
+            bk = cursor5.fetchone()
+            if bk is not None:
+                row.update(bookmark='on')
+            else:
+                row.update(bookmark='off')
+
         """
         cursor = db.cursor()
                 cursor.execute("SELECT * FROM card_back_problem WHERE card_no = '%s'" % (row["idx"]))
@@ -81,6 +90,33 @@ def cardstudy():
         """
 
     return render_template('cardStudy.html', title = "mainmap", card=card)
+
+@app.route("/bookmark_add", methods=['GET', 'POST'])
+def bookmark_add():
+    #세션 체크
+    if session_check():
+        db = mysql.connect()
+        #이미 북마크가 있는지 검색
+        bookmark_ck = db.cursor()
+        bookmark_ck.execute("SELECT card_no FROM bookmark WHERE user_id = '%s' and card_no = '%s'" % (session["userId"], request.args["card_no"]))
+        ckck = bookmark_ck.fetchone()
+        print(ckck)
+        if ckck is not None:
+            #북마크가 있으므로 제거
+            db = mysql.connect()
+            cursor = db.cursor()
+            cursor.execute("DELETE FROM bookmark WHERE user_id = '%s' and card_no = '%s'" % (session["userId"], request.args["card_no"]))
+            db.commit()
+            return "DELETE"
+        else:
+            #북마크 추가
+            db = mysql.connect()
+            cursor = db.cursor()
+            cursor.execute("INSERT INTO bookmark SET user_id = '%s', card_no = '%s'" % (session["userId"], request.args["card_no"]))
+            db.commit()
+            return "ADD"
+    else:
+        return "FAIL"
 
 @app.route("/bookmark")
 def bookmark():
