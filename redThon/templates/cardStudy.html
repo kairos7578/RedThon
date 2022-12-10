@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <title>{{title}}</title>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css" />
-    <script defer src="https://pyscript.net/alpha/pyscript.js"></script> 
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css">
+    <!-- <script defer src="https://pyscript.net/alpha/pyscript.js"></script> -->
+    <script defer="" src="https://pyscript.net/latest/pyscript.js"></script>
     <!-- Link Swiper's CSS -->
     <link rel="stylesheet" href="../static/swiper.min.css">
     <link rel="stylesheet" href="../static/font_style.css">
@@ -45,7 +46,7 @@
     }
         
     .front2 {
-        background: white; 
+        background: #e8d5b7; 
     }
         
     .image_text_front, .image_text_back {
@@ -156,12 +157,22 @@
         width:10%; height:10%;transform:none;position:absolute;top:85%;left:95%
     }
 
+    [type=radio] {
+        border:5px solid brown;
+    }
+
+    .swiper-pagination-bullet {
+        width : 20px;
+        height : 20px;
+    }
+
     </style>
 </head>
 <body>
     <py-script>
         import js
-        from js import document
+        from js import document, setTimeout
+        from pyodide.ffi.wrappers import create_once_callable
 
         def function_close_hint(*args):
             #js.alert("창 닫기")
@@ -200,12 +211,12 @@
 
 
         def function_btn_detail(*args):
-            #js.alert("상세보기")
-            js.event.preventDefault();
-            js.event.stopPropagation();
+            js.alert("상세보기")
+            #js.event.preventDefault();
+            #js.event.stopPropagation();
             pageNum = Element("pageNum")
-            wordBook = Element("wordBook")
-            backIcon = Element("backIcon")
+            #wordBook = Element("wordBook")
+            #backIcon = Element("backIcon")
 
             hintEle = js.document.getElementById("hint"+pageNum.value)
             hintEle.style.display = "block"
@@ -223,7 +234,7 @@
             swiper_pageEle = js.document.getElementsByClassName("swiper-pagination")
             swiper_pageEle[0].style.zIndex = 0
 
-        def function_card(*args):
+        def function_card_type1(*args):
             pageNum = Element("pageNum")
 
             #js.alert("카드클릭!")
@@ -240,6 +251,31 @@
                 hintEle.style.transform = "translate(-50%, -50%) rotateY(180deg)"
             #js.alert(hintEle) 
 
+        def function_card_type2(*args):
+            pageNum = Element("pageNum")
+
+            #js.alert("카드클릭!")
+            #js.alert(pageNum.value);
+
+            hintEle = js.document.getElementById("card"+pageNum.value)
+            hintEle_css = js.window.getComputedStyle(hintEle).transform
+
+            if "matrix3d" in hintEle_css:
+                #js.alert("앞면!")
+                hintEle.style.transform = "translate(-50%, -50%)"
+            elif "matrix" in hintEle_css:
+                setTimeout(
+                    create_once_callable(
+                        lambda: callback(pageNum)
+                    ),
+                    1000
+                )
+            #js.alert(hintEle) 
+
+        def callback(pageNum) :
+            hintEle = js.document.getElementById("card"+pageNum.value)
+            hintEle.style.transform = "translate(-50%, -50%) rotateY(180deg)"
+            
         def function_bookcard(*args):
             pageNum = Element("pageNum")
 
@@ -271,18 +307,6 @@
             shadowEle = js.document.getElementById("shadow")
             shadowEle.style.visibility = "visible"
     
-        def function_wordBook(*args):
-            js.alert("북마크!")
-            bookmarkEle = js.document.getElementById("bookmarkDiv")
-            bookmarkEle.style.visibility = "visible"
-            
-
-        def function_close_pop(*args):
-            #js.alert("북마크 팝업 닫기")
-            bookmarkcardEle = js.document.getElementsByClassName("card_mini")
-            bookmarkEle = js.document.getElementById("bookmarkDiv")
-            bookmarkEle.style.visibility = "hidden"
-
         def function_bookMarkBack(*args):
             shadowEle = js.document.getElementById("shadow")
             shadowEle.style.visibility = "hidden"
@@ -290,17 +314,17 @@
     </py-script>
 
     <!-- 북마크 시작 -->
-    <div id="bookmarkDiv" class="front2" style="overflow-y:scroll;visibility: hidden;">
+    <div id="bookmarkDiv" class="front2" style="overflow-y:scroll;display:none;">
         <!-- <div id="shadow" class="front2" style="visibility: hidden;background:black;top:50%;width:100%;height:100%;opacity: 0.8;"></div> -->
-        <img id="closePop" pys-onClick ="function_close_pop" src="../static/img/exit_Icon.png" style="position: absolute; right: 1%; top: 3%;" width=8% height=8% alt ="cookie1.png">
+        <img id="closePop" onclick="close_pop()" src="../static/img/exit_Icon.png" style="position: absolute; right: 1%; top: 3%;" width=8% height=8% alt ="cookie1.png">
         <br><br><br>
         <!-- 카드 유형1 -->
-        <div id="bookMarkCard1" class="card_mini" pys-onClick ="function_bookMarkCardD">
+        <div id="bookMarkCard1" class="card_mini" py-click ="function_bookMarkCardD()">
              <div class="front" style="font-size:15px;">[1강 1번 카드]<br>int</div>
         </div>
 
         <!-- 카드 유형2 : 주관식문제일 경우.. -->
-        <div id="bookMarkCard2" class="card_mini" pys-onClick ="function_bookMarkCardD">
+        <div id="bookMarkCard2" class="card_mini" py-click ="function_bookMarkCardD()">
             <div class="front" style="flex-direction:column; font-size:15px;text-align:left;">
                 <div>
                     [1강 5번 카드]<br>
@@ -330,10 +354,10 @@
                 </div>
 
                 <!-- <img id="cookie1-1" onclick="closeHint()" src="../static/img/cookie1_bak.png" style="position: absolute; right: 0%; top: 0%;" width=10% height=10% alt ="cookie1.png"> -->
-                <img id="closeHint0" pys-onClick ="function_close_hint" src="../static/img/exit_Icon.png" style="position: absolute; right: 0%; top: 0%;" width=10% height=10% alt ="cookie1.png">
+                <img id="closeHint0" py-click ="function_close_hint()" src="../static/img/exit_Icon.png" style="position: absolute; right: 0%; top: 0%;" width=10% height=10% alt ="cookie1.png">
             </div> 
 
-            <div id="bookmarkcard0" class="bookmarkcard 0" pys-onClick ="function_bookcard">
+            <div id="bookmarkcard0" class="bookmarkcard 0" py-click ="function_bookcard()">
                 <!-- 앞면 -->
                 <div class="front" style="font-size:30px;">변수</div>
                 <!-- 뒷면 -->
@@ -342,18 +366,20 @@
                     <div class="image_text_back">
                         <img src="../static/img/chap01/1-1.png" style="width:50%;height:50%;"><br> 데이터 값을 저장하는 박스
                     </div>
-                    <img id="btn_detail0" class="btn_detail" pys-onClick ="function_btn_detail" src="../static/img/detail.png" >
+                    <img id="btn_detail0" class="btn_detail" py-click ="function_btn_detail()" src="../static/img/detail.png" >
                 </div>
             </div>
         </div>
-        <img id="backIcon" src="../static/img/backIcon.png" pys-onClick ="function_bookMarkBack" style="z-index:11;position: absolute;  right: 23%; bottom: 5%; height: 100px;transition: .4s;transform-style: preserve-3d;" width=7% height=12%;>
+        <img id="backIconTest" src="../static/img/backIcon.png" py-click ="function_bookMarkBack()" style="z-index:11;position: absolute;  right: 23%; bottom: 5%; height: 100px;transition: .4s;transform-style: preserve-3d;" width=7% height=12%;>
 		<!-- 확대카드 끝 -->
     </div> 
     <!-- 북마크 끝 ! -->
 
 
-   <img id="wordBook" pys-onClick ="function_wordBook" src="../static/img/wordBook.png" style="z-index:11;position: absolute;  right: 25%; top: 5%; height: 100px;transition: .4s;transform-style: preserve-3d;" width=6% height=12%;>
-   <a href="{{ url_for('root') }}"><img id="backIcon" src="../static/img/backIcon.png" style="z-index:11;position: absolute;  right: 23%; bottom: 5%; height: 100px;transition: .4s;transform-style: preserve-3d;" width=7% height=12%;></a>
+   <img id="wordBook" onclick="open_pop()" src="../static/img/wordBook.png" style="z-index:11;position: absolute;  right: 25%; top: 5%; height: 130px;transition: .4s;transform-style: preserve-3d;" width=5% height=12%;>
+   <a href="{{ url_for('root') }}"><img id="finishIcon"  src="../static/img/finishIcon.png" style="display:none;z-index:11;position: absolute;  right: 23%; bottom: 5%; height: 140px;transition: .4s;transform-style: preserve-3d;" width=6% height=12%;></a>
+
+   <a href="{{ url_for('root') }}"><img id="backIcon"  src="../static/img/backIcon.png" style="z-index:11;position: absolute;  right: 23%; bottom: 5%; height: 100px;transition: .4s;transform-style: preserve-3d;" width=6% height=12%;></a>
 
     <!-- 카드 순번 hidden값으로 저장 / id구분할때 사용 ex.card0, card1, card2 -->
     <input id = "pageNum" name="pageNum" type="hidden" value="0"> 
@@ -376,12 +402,12 @@
                         </div>
 
                         <!-- <img id="cookie1-1" onclick="closeHint()" src="../static/img/cookie1_bak.png" style="position: absolute; right: 0%; top: 0%;" width=10% height=10% alt ="cookie1.png"> -->
-                        <img id="closeHint{{loop.index - 1}}" pys-onClick ="function_close_hint" src="../static/img/exit_Icon.png" style="position: absolute; right: 5%; top: 7%;z-index:9999" width=8% height=8% alt ="cookie1.png">
+                        <img id="closeHint{{loop.index - 1}}" py-click ="function_close_hint()" src="../static/img/exit_Icon.png" style="position: absolute; right: 5%; top: 7%;z-index:9999" width=8% height=8% alt ="cookie1.png">
                     </div> 
 
-                    <div id="card{{loop.index - 1}}" class="card {{loop.index - 1}}" pys-onClick ="function_card">
+                    <div id="card{{loop.index - 1}}" class="card {{loop.index - 1}}" py-click ="function_card_type1()">
                         <!-- 앞면 -->
-                        <div class="front" style="font-size:30px;">
+                        <div class="front" style="font-size:40px;">
                             {{row['card_front']|safe}}
                         </div>
                         <!-- 북마크 -->
@@ -392,7 +418,7 @@
                         {% endif %}
                             <!-- 뒷면 -->
                         <div class="back"> 
-                            <div class="image_text_back">
+                            <div class="image_text_back" >
                                 {% for row3 in row['card_back_image'] %}
                                     <img src="{{row3['src']}}" style="width:100%;height:70%;"><br>
                                 {% endfor %}
@@ -401,7 +427,7 @@
 
                             <!-- 추가 설명이 있을 때에만 추가 -->
                             {% if row['card_text'] != '' %}
-                            <img id="btn_detail{{loop.index - 1}}" class="btn_detail" pys-onClick ="function_btn_detail" src="../static/img/detail.png" style="cursor:pointer">
+                            <img id="btn_detail{{loop.index - 1}}" class="btn_detail" py-click ="function_btn_detail()" src="../static/img/detail.png" style="cursor:pointer">
                             {% endif %}
                         </div>
                     </div>
@@ -420,16 +446,18 @@
                         {{row['card_text']|safe}}
                         </div>
 
-                        <img id="closeHint{{loop.index - 1}}" pys-onClick ="function_close_hint" src="../static/img/exit_Icon.png" style="position: absolute; right: 5%; top: 7%;z-index:9999" width=8% height=8% alt ="cookie1.png">
+                        <img id="closeHint{{loop.index - 1}}" py-click ="function_close_hint()" src="../static/img/exit_Icon.png" style="position: absolute; right: 5%; top: 7%;z-index:9999" width=8% height=8% alt ="cookie1.png">
                     </div> 
 
-                    <div id="card{{loop.index - 1}}" class="card {{loop.index - 1}}" pys-onClick ="function_card">
+                    <div id="card{{loop.index - 1}}" class="card {{loop.index - 1}}" py-click ="function_card_type2()">
                         <!-- 앞면 -->
-                        <div class="front" style="flex-direction:column; font-size:18px;text-align:left;">
+                        <div class="front" style="flex-direction:column; font-size:28px;text-align:left;">
                             <div>
+                                
                                 {{row['card_front']|safe}} <br><br>
                                 {% for row2 in row['card_problem'] %}
-                                <div>
+                                <div> 
+                                    <img id="correctIcon_ra{{row2['idx']}}" src="../static/img/correctIcon.png" style="display:none;position: absolute;top:38%;right:35%;z-index:9999" width=30% height=0% >
                                     <input type="radio" id="ra{{row2['idx']}}" name="sel_answer" value="ra{{row2['idx']}}">
                                     <label for="ra{{row2['idx']}}">{{row2['card_content']|safe}}</label>
                                 </div>
@@ -445,7 +473,7 @@
                         <!-- 뒷면 -->
                         <div class="back"> 
                             
-                            <div class="image_text_back" style="font-size:25px;">
+                            <div class="image_text_back" style="width:100%;font-size:30px;font-weight:bold;">
                                 {% for row3 in row['card_back_image'] %}
                                     <img src="{{row3['src']}}" style="width:100%;height:70%;"><br>
                                 {% endfor %}
@@ -453,7 +481,7 @@
                                 {% for row2 in row['card_problem'] %}
                                 {% if(row2['card_success'] == 1) %}
                                 <div>
-                                    <label for="ra{{row2['idx']}}">{{loop.index}}번: {{row2['card_content']|safe}}</label>
+                                    <label for="ra{{row2['idx']}}" style="font-weight : bold;">{{loop.index}}번: {{row2['card_content']|safe}}</label>
                                 </div>
                                 {% endif %}
                                 
@@ -461,7 +489,7 @@
                             </div>
                             <!-- 추가 설명이 있을 때에만 추가 -->
                             {% if row['card_text'] != '' %}
-                            <img id="btn_detail{{loop.index - 1}}" class="btn_detail" pys-onClick ="function_btn_detail" src="../static/img/detail.png" >
+                            <img id="btn_detail{{loop.index - 1}}" class="btn_detail" py-click ="function_btn_detail()" src="../static/img/detail.png" >
                             {% endif %}
                         </div>
                     </div>
@@ -491,6 +519,10 @@
             $('#pageNum').attr('value',swiper.realIndex);
             //alert("paging:"+ swiper.realIndex); //'now index :::', swiper.pagination); //  swiper.realIndex);
         });
+        swiper.on('reachEnd', function () { //마지막 페이지
+            $("#finishIcon").show();
+            $("#backIcon").hide(); 
+        });
 
         function function_btn_bookmark() {
             var btn_mark = $("#btn_mark"+$("#pageNum").val());
@@ -517,6 +549,28 @@
 				}
 			});
         }
+
+        
+        //radio 버튼 클릭 이벤트 
+        $("input:radio[name=sel_answer]").click(function(){
+            var value = $("input[type=radio][name=sel_answer]:checked").val();
+            alert(value);
+            if($("input:radio[name=sel_answer]:checked").val()){
+                //답안 맞는지 체크 후 data-correct = true 이면
+                alert("선택?");
+                $("#correctIcon_ra1").show();
+            }
+        });
+        
+
+        function open_pop(){
+            $("#bookmarkDiv").show();
+        }
+
+        function close_pop(){
+            $("#bookmarkDiv").hide();
+        }
+
     </script>
 </body>
 </html>

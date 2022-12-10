@@ -8,8 +8,13 @@
     <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
     <!-- Link Swiper's CSS -->
     <link rel="stylesheet" href="../static/swiper.min.css">
+    <link rel="stylesheet" href="../static/font_style.css">
     <script src="../static/swiper.min.js"></script>
     <style>
+    * {
+        font-family: "GODO";
+    }
+
     .container {
         width: 100%;
         height: 100%; 
@@ -36,7 +41,7 @@
         visibility:hidden;
         justify-content: center;
         align-items: center;
-        color: #fff;
+        color: #e8d5b7;
         transform: translate(-50%, -50%);
     }
         
@@ -112,7 +117,7 @@
         margin:10px;
     } 
 
-    .cookie2 {
+    .cookieMini {
         background-image: url(../static/img/wordCard-1.png);
         background-size: 100% 100%;
         background-repeat: repeat;
@@ -138,7 +143,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        color: #fff;
+        color: #e8d5b7;
     }
 
     .back { 
@@ -154,74 +159,36 @@
 <body>
     <py-script>
         import js
-        from js import document
+        from js import document, setTimeout
+        from pyodide import create_once_callable
 
-        def function_close_hint(*args):
-            #js.alert("창 닫기")
-            pageNum = Element("pageNum")
-            wordBook = Element("wordBook")
-            backIcon = Element("backIcon")
+        def callback(chk) :
+            if chk == 1 :
+                correctEle = js.document.getElementById("correctIcon")
+                correctEle.style.visibility = "hidden"
+            elif chk == 0 :
+                wrongEle = js.document.getElementById("wrongIcon")
+                wrongEle.style.visibility = "hidden"
 
-            hintEle = js.document.getElementById("hint"+pageNum.value)
-            hintEle.style.display = "none"
-
-            wordBookEle = js.document.getElementById("wordBook")
-            wordBookEle.style.zIndex = 11
-
-            backEle = js.document.getElementById("backIcon")
-            backEle.style.zIndex = 11
-            
-            swiper_btnEleNext = js.document.getElementsByClassName("swiper-button-next")
-            swiper_btnEleNext[0].style.zIndex = 10
-            swiper_btnElePrev = js.document.getElementsByClassName("swiper-button-prev")
-            swiper_btnElePrev[0].style.zIndex = 10
-            swiper_pageEle = js.document.getElementsByClassName("swiper-pagination")
-            swiper_pageEle[0].style.zIndex = 10
-     
-            #"block"
-
-        def function_btn_detail(*args):
-            #js.alert("상세보기")
-            js.event.preventDefault();
-            js.event.stopPropagation();
-            pageNum = Element("pageNum")
-            wordBook = Element("wordBook")
-            backIcon = Element("backIcon")
-
-            hintEle = js.document.getElementById("hint"+pageNum.value)
-            hintEle.style.display = "block"
-
-            wordBookEle = js.document.getElementById("wordBook")
-            wordBookEle.style.zIndex = 9
-
-            backEle = js.document.getElementById("backIcon")
-            backEle.style.zIndex = 9
-
-            swiper_btnEleNext = js.document.getElementsByClassName("swiper-button-next")
-            swiper_btnEleNext[0].style.zIndex = 0
-            swiper_btnElePrev = js.document.getElementsByClassName("swiper-button-prev")
-            swiper_btnElePrev[0].style.zIndex = 0
-            swiper_pageEle = js.document.getElementsByClassName("swiper-pagination")
-            swiper_pageEle[0].style.zIndex = 0
-
-        def function_card(*args):
-            pageNum = Element("pageNum")
-
-            #js.alert("카드클릭!")
-            #js.alert(pageNum.value);
-
-            hintEle = js.document.getElementById("card"+pageNum.value)
-            hintEle_css = js.window.getComputedStyle(hintEle).transform
-
-            if "matrix3d" in hintEle_css:
-                #js.alert("앞면!")
-                hintEle.style.transform = "translate(-50%, -50%)"
-            elif "matrix" in hintEle_css:
-                #js.alert("뒷면!")    
-                hintEle.style.transform = "translate(-50%, -50%) rotateY(180deg)"
-            #js.alert(hintEle) 
-
-    
+        def function_correct(*args):
+            correctEle = js.document.getElementById("correctIcon")
+            correctEle.style.visibility = "visible"
+            setTimeout(
+                create_once_callable(
+                    lambda: callback(1)
+                ),
+                1000
+            )
+        
+        def function_wrong(*args):
+            wrongEle = js.document.getElementById("wrongIcon")
+            wrongEle.style.visibility = "visible"
+            setTimeout(
+                create_once_callable(
+                    lambda: callback(0)
+                ),
+                1000
+            )
     </py-script>
 
  <!-- 북마크 시작 -->
@@ -236,8 +203,9 @@
    </div> 
 <!-- 북마크 끝 ! -->
 
-    <img id="wordBook" src="../static/img/wordBook.png" style="z-index:11;position: absolute;  right: 15%; top: 5%; height: 100px;transition: .4s;transform-style: preserve-3d;" width=6% height=12%;>
-    <a href="{{ url_for('root') }}"><img id="backIcon" src="../static/img/backIcon.png" style="z-index:11;position: absolute;  right: 10%; bottom: 5%; height: 100px;transition: .4s;transform-style: preserve-3d;" width=7% height=12%;></a>
+    <img id="wordBook" src="../static/img/wordBook.png" style="z-index:11;position: absolute;  right: 15%; top: 2%; height: 130px;transition: .4s;transform-style: preserve-3d;" width=5% height=12%;>
+    <a href="{{ url_for('root') }}"><img id="backIcon" src="../static/img/backIcon.png" style="z-index:11;position: absolute;  right: 10%; bottom: 5%; height: 120px;transition: .4s;transform-style: preserve-3d;" width=6% height=12%;></a>
+    <a href="{{ url_for('root') }}"><img id="finishIcon"  src="../static/img/finishIcon.png" style="z-index:11;position: absolute;  right: 18%; bottom: 5%; height: 140px;transition: .4s;transform-style: preserve-3d;" width=6% height=12%;></a>
 
     <div class="container" style="z-index:9">
         <div class="wrapper" style="text-align:center">
@@ -246,20 +214,23 @@
                     <span style="font-size: 35px;font-weight:bold;">단어 맞추기 게임</span><br>
                     <span>ROUND 1. 이름 학년 반 변수에 담아 출력하기</span>
                 </div>
-                <div style="background-color: #fff; height:92%;">
+                <div style="background-color: #e8d5b7; height:92%;">
+                    <img id="correctIcon" src="../static/img/correctIcon.png" style="visibility: hidden;position: absolute;top:30%;right:35%;z-index:9999" width=30% height=0% >
+                    <img id="wrongIcon" src="../static/img/incorrectIcon.png" style="visibility: hidden;position: absolute;top:27%;right:35%;z-index:9999" width=30% height=0% >
+                                         
                     <!--문제영역-->
-                    <div style="border:1px solid green">
-                        <img id="final01" src="../static/img/final01/rou1.png" style="width:100%;height:40%">
+                    <div>
+                        <img id="final01" src="../static/img/final01/fr01.png" style="width:100%;height:40%">
                     </div>
                     
                     <!--답안영역-->
                     <div>
-                        <div style="border:1px solid red;margin-top:20px;margin-bottom: 20px;">Q.노란색 네모에는 무엇이 들어가야할까요?</div>
+                        <div style="margin-top:20px;margin-bottom: 20px;">Q.노란색 네모에는 무엇이 들어가야할까요?</div>
                         <div style="width:100%"> 
-                            <div class="cookie2" style="display:inline-block">print</div>
-                            <div class="cookie2" style="display:inline-block">input</div>
-                            <div class="cookie2" style="display:inline-block">if</div>
-                            <div class="cookie2" style="display:inline-block">elif</div>
+                            <div id="cookie1" class="cookieMini" style="display:inline-block" pys-onClick ="function_correct">print</div>
+                            <div id="cookie2" class="cookieMini" style="display:inline-block" pys-onClick ="function_wrong">input</div>
+                            <div id="cookie3" class="cookieMini" style="display:inline-block" pys-onClick ="function_wrong">if</div>
+                            <div id="cookie4" class="cookieMini" style="display:inline-block" pys-onClick ="function_wrong">elif</div>
                         </div>  
                     </div>
                 </div>    

@@ -12,12 +12,13 @@
     <script defer="" src="https://pyscript.net/latest/pyscript.js"></script>
     <link rel="stylesheet" href="../static/font_style.css">
     <script src="../static/swiper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.21.2/full/pyodide.js"></script>
     <style>
     * {
         font-family: "GODO";
     }
 
-    .container {
+    .div_container {
         width: 100%;
         height: 100%; 
     }
@@ -163,87 +164,121 @@
         padding:8px;
         margin:3px
     }
-
+    .button {
+        background-color: #683810;
+        border: none;
+        color: white;
+        padding: 10px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
     </style>
 </head>
-<body>
+<body class="container">
     <py-script>
         import js
-        from js import document
+        from js import document, setTimeout
+        from pyodide.ffi.wrappers import create_once_callable
 
-        #js.alert("안녕 ? ")
-        #btnRun = js.document.getElementById("btnRun")
-        #btnRun.className = 'absolute repl-play-button'
+        def callback(chk) :
+            if chk == 1 :
+                correctEle = js.document.getElementById("correctIcon")
+                correctEle.style.visibility = "hidden"
+            elif chk == 0 :
+                wrongEle = js.document.getElementById("wrongIcon")
+                wrongEle.style.visibility = "hidden"
+                
+        def answer_chk(num):
+            if num == 1 :
+                an1 = pageNum = Element("answer1")
+                if (an1.value).strip() == "if" : 
+                    correctEle = js.document.getElementById("correctIcon")
+                    correctEle.style.visibility = "visible"
+                    setTimeout(
+                        create_once_callable(
+                            lambda: callback(1)
+                        ),
+                        1000
+                    )
+                else:
+                    wrongEle = js.document.getElementById("wrongIcon")
+                    wrongEle.style.visibility = "visible"
+                    an1.clear()
+                    setTimeout(
+                        create_once_callable(
+                            lambda: callback(0)
+                        ),
+                        1000
+                    )
+            elif num == 2 :
+                an2 = pageNum = Element("answer2")
+                if (an2.value).strip() == "elif" : 
+                    correctEle = js.document.getElementById("correctIcon")
+                    correctEle.style.visibility = "visible"
+                    setTimeout(
+                        create_once_callable(
+                            lambda: callback(1)
+                        ),
+                        1000
+                    )
+                else:
+                    wrongEle = js.document.getElementById("wrongIcon")
+                    wrongEle.style.visibility = "visible"
+                    an2.clear()
+                    setTimeout(
+                        create_once_callable(
+                            lambda: callback(0)
+                        ),
+                        1000
+                    )
+            elif num == 3 :
+                an3 = pageNum = Element("answer3")
+                if (an3.value).strip() == "elif" : 
+                    correctEle = js.document.getElementById("correctIcon")
+                    correctEle.style.visibility = "visible"
+                    setTimeout(
+                        create_once_callable(
+                            lambda: callback(1)
+                        ),
+                        1000
+                    )
+                else:
+                    wrongEle = js.document.getElementById("wrongIcon")
+                    wrongEle.style.visibility = "visible"
+                    an3.clear()
+                    setTimeout(
+                        create_once_callable(
+                            lambda: callback(0)
+                        ),
+                        1000
+                    )
+            elif num == 4 :
+                an4 = pageNum = Element("answer4")
+                if (an4.value).strip() == "else" : 
+                    correctEle = js.document.getElementById("correctIcon")
+                    correctEle.style.visibility = "visible"
+                    setTimeout(
+                        create_once_callable(
+                            lambda: callback(1)
+                        ),
+                        1000
+                    )
+                else:
+                    wrongEle = js.document.getElementById("wrongIcon")
+                    wrongEle.style.visibility = "visible"
+                    an4.clear()
+                    setTimeout(
+                        create_once_callable(
+                            lambda: callback(0)
+                        ),
+                        1000
+                    )
 
-
-        def function_close_hint(*args):
-            #js.alert("창 닫기")
-            pageNum = Element("pageNum")
-            wordBook = Element("wordBook")
-            backIcon = Element("backIcon")
-
-            hintEle = js.document.getElementById("hint"+pageNum.value)
-            hintEle.style.display = "none"
-
-            wordBookEle = js.document.getElementById("wordBook")
-            wordBookEle.style.zIndex = 11
-
-            backEle = js.document.getElementById("backIcon")
-            backEle.style.zIndex = 11
-            
-            swiper_btnEleNext = js.document.getElementsByClassName("swiper-button-next")
-            swiper_btnEleNext[0].style.zIndex = 10
-            swiper_btnElePrev = js.document.getElementsByClassName("swiper-button-prev")
-            swiper_btnElePrev[0].style.zIndex = 10
-            swiper_pageEle = js.document.getElementsByClassName("swiper-pagination")
-            swiper_pageEle[0].style.zIndex = 10
-     
-            #"block"
-
-        def function_btn_detail(*args):
-            #js.alert("상세보기")
-            js.event.preventDefault();
-            js.event.stopPropagation();
-            pageNum = Element("pageNum")
-            wordBook = Element("wordBook")
-            backIcon = Element("backIcon")
-
-            hintEle = js.document.getElementById("hint"+pageNum.value)
-            hintEle.style.display = "block"
-
-            wordBookEle = js.document.getElementById("wordBook")
-            wordBookEle.style.zIndex = 9
-
-            backEle = js.document.getElementById("backIcon")
-            backEle.style.zIndex = 9
-
-            swiper_btnEleNext = js.document.getElementsByClassName("swiper-button-next")
-            swiper_btnEleNext[0].style.zIndex = 0
-            swiper_btnElePrev = js.document.getElementsByClassName("swiper-button-prev")
-            swiper_btnElePrev[0].style.zIndex = 0
-            swiper_pageEle = js.document.getElementsByClassName("swiper-pagination")
-            swiper_pageEle[0].style.zIndex = 0
-
-        def function_card(*args):
-            pageNum = Element("pageNum")
-
-            #js.alert("카드클릭!")
-            #js.alert(pageNum.value);
-
-            hintEle = js.document.getElementById("card"+pageNum.value)
-            hintEle_css = js.window.getComputedStyle(hintEle).transform
-
-            if "matrix3d" in hintEle_css:
-                #js.alert("앞면!")
-                hintEle.style.transform = "translate(-50%, -50%)"
-            elif "matrix" in hintEle_css:
-                #js.alert("뒷면!")    
-                hintEle.style.transform = "translate(-50%, -50%) rotateY(180deg)"
-            #js.alert(hintEle) 
-
-    
     </py-script>
-
  <!-- 북마크 시작 -->
    <div class="front2" style="overflow-y:scroll;">
    	Scroll test<br>11<br>12<br>13<br>7<br>11<br>12<br>13<br>
@@ -255,24 +290,26 @@
    	7<br>11<br>12<br>13<br>
    </div> 
 <!-- 북마크 끝 ! -->
-
-    <img id="wordBook" src="../static/img/wordBook.png" style="z-index:11;position: absolute;  right: 15%; top: 5%; height: 100px;transition: .4s;transform-style: preserve-3d;" width=6% height=12%;>
-    <a href="{{ url_for('root') }}"><img id="backIcon" src="../static/img/backIcon.png" style="z-index:11;position: absolute;  right: 10%; bottom: 5%; height: 100px;transition: .4s;transform-style: preserve-3d;" width=7% height=12%;></a>
-
-    <div class="container" style="z-index:9">
+    <img id="wordBook" src="../static/img/wordBook.png" style="z-index:11;position: absolute;  right: 15%; top: 2%; height: 130px;transition: .4s;transform-style: preserve-3d;" width=5% height=12%;>
+    <a href="{{ url_for('root') }}"><img id="backIcon" src="../static/img/backIcon.png" style="z-index:11;position: absolute;  right: 10%; bottom: 5%; height: 120px;transition: .4s;transform-style: preserve-3d;" width=6% height=12%;></a>
+    <a href="{{ url_for('root') }}"><img id="finishIcon"  src="../static/img/finishIcon.png" style="z-index:11;position: absolute;  right: 18%; bottom: 5%; height: 140px;transition: .4s;transform-style: preserve-3d;" width=6% height=12%;></a>    
+    <div class="div_container" style="z-index:9">
         <div class="wrapper" style="text-align:center">
             <div class="card"> 
                 <div style="margin-bottom: 10px;">
                     <span style="font-size: 35px;font-weight:bold;">문장 맞추기 게임</span><br>
                     <span>ROUND 2. 학생 정보와 성적 입력받아서 등급 산출하기</span>
                 </div>
-                <div style="background-color: #fff; height:92%;">
+                <div style="background-color: #e8d5b7; height:92%;">
+                    <img id="correctIcon" src="../static/img/correctIcon.png" style="visibility: hidden;position: absolute;top:25%;right:35%;z-index:9999;height:620px;" width=30%  >
+                    <img id="wrongIcon" src="../static/img/incorrectIcon.png" style="visibility: hidden;position: absolute;top:27%;right:35%;z-index:9999;height:610px;" width=30% >
+                              
                     <!--문제영역-->
-                    <div style="display:inline-block;width:40%;height:70%;">
+                    <div style="display:inline-block;width:45%;height:70%;">
                         <img id="final01" src="../static/img/final02/round2.png" style="width:100%;height:100%">
                     </div>
 
-                    <div style="text-align:left;width:60%;float:right;font-weight: normal">
+                    <div style="text-align:left;width:55%;float:right;font-weight: normal">
                         <py-repl>
                             
                         </py-repl>
@@ -281,12 +318,11 @@
                     <!--답안영역-->
                     <div style="display: inline-block;text-align:left;width:100%;">
                         <div style="margin:10px;">Q.왼쪽 카드 코드의 실행결과는 위와 같을 때, 빈칸에 들어가야할 코드의 내용을 입력해보세요!</div>
-                        <div style="margin-left:10px;width:100%;float:left;"> 
-
-                            <div><input class="answer_input" type="text" placeholder=" 빈칸에 들어갈 코드를 입력해보세요!" ></div>
-                            <div><input class="answer_input" type="text" placeholder=" 빈칸에 들어갈 코드를 입력해보세요!" ></div>
-                            <div><input class="answer_input" type="text" placeholder=" 빈칸에 들어갈 코드를 입력해보세요!" ></div>
-                            <div><input class="answer_input" type="text" placeholder=" 빈칸에 들어갈 코드를 입력해보세요!" ></div>
+                        <div style="margin-left:10px;width:100%;float:left;">                             
+                            <div><input id = "answer1" class="answer_input" type="text" placeholder=" 빈칸에 들어갈 코드를 입력해보세요!" ><button id="btn1" class="button" py-click="answer_chk(1)">확인</button></div>
+                            <div><input id = "answer2" class="answer_input" type="text" placeholder=" 빈칸에 들어갈 코드를 입력해보세요!" ><button id="btn2" class="button" py-click="answer_chk(2)">확인</button></div>
+                            <div><input id = "answer3" class="answer_input" type="text" placeholder=" 빈칸에 들어갈 코드를 입력해보세요!" ><button id="btn3" class="button" py-click="answer_chk(3)">확인</button></div>
+                            <div><input id = "answer4" class="answer_input" type="text" placeholder=" 빈칸에 들어갈 코드를 입력해보세요!" ><button id="btn4" class="button" py-click="answer_chk(4)">확인</button></div>
                         </div>  
                     </div>
                 </div>    
