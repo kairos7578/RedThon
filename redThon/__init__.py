@@ -52,6 +52,7 @@ def cardstudy():
         cursor = db.cursor()
         cursor.execute("SELECT * FROM card WHERE card_level = '%s' ORDER BY card_temp asc" % (request.args["stage"]))
         card = cursor.fetchall()
+
         for row in card:
             if(row['card_type'] == 2):
                 #문제카드 있으면 가져오기
@@ -80,16 +81,7 @@ def cardstudy():
                 row.update(bookmark='on')
             else:
                 row.update(bookmark='off')
-
-        """
-        cursor = db.cursor()
-                cursor.execute("SELECT * FROM card_back_problem WHERE card_no = '%s'" % (row["idx"]))
-                card_problem = cursor.fetchall()
-                for row2 in card_problem:
-                    print(row2["card_content"])
-        """
-
-    return render_template('cardStudy.html', title = "mainmap", card=card)
+    return render_template('cardStudy.html', title = "mainmap", card=card, temp_ck = request.args.get("temp", 0))
 
 @app.route("/bookmark_add", methods=['GET', 'POST'])
 def bookmark_add():
@@ -115,6 +107,25 @@ def bookmark_add():
             cursor.execute("INSERT INTO bookmark SET user_id = '%s', card_no = '%s'" % (session["userId"], request.args["card_no"]))
             db.commit()
             return "ADD"
+    else:
+        return "FAIL"
+
+@app.route("/bookmark_load", methods=['GET', 'POST'])
+def bookmark_load():
+    #북마크 모두 가져오기
+    if session_check():
+        db = mysql.connect()
+        #이미 북마크가 있는지 검색
+        bookmark_load = db.cursor()
+        bookmark_load.execute("SELECT card_no FROM bookmark WHERE user_id = '%s'" % (session["userId"]))
+        bl = bookmark_load.fetchall()
+        for row in bl:
+            #위치 가져오기 포맷 ex: 1-5, 2,8, 7-5...
+            card_load = db.cursor()
+            card_load.execute("SELECT * FROM card WHERE idx = '%s'" % (row["card_no"]))
+            cl = card_load.fetchone()
+            row.update(card=cl)
+        return bl
     else:
         return "FAIL"
 

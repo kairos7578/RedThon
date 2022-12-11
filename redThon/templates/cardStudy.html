@@ -198,28 +198,17 @@
      
             #"block"
 
-        def function_btn_bookmark(*args):
-            js.alert("북마크!DB에 저장!")
-            pageNum = Element("pageNum")
-            btn_mark = js.document.getElementById("btn_mark"+pageNum.value)
-            card_no = Element("card_no_"+pageNum.value)
-
-            #js.alert(card_no.value)
-            
-            #btn_mark.src = "../static/img/heart_on.png"
-            #btn_mark.src = "../static/img/heart_off.png"
-
-
         def function_btn_detail(*args):
-            js.alert("상세보기")
             #js.event.preventDefault();
             #js.event.stopPropagation();
             pageNum = Element("pageNum")
             #wordBook = Element("wordBook")
             #backIcon = Element("backIcon")
 
+            #js.alert("hint"+pageNum.value)
+
             hintEle = js.document.getElementById("hint"+pageNum.value)
-            hintEle.style.display = "block"
+            hintEle.style.display = "inline"
 
             wordBookEle = js.document.getElementById("wordBook")
             wordBookEle.style.zIndex = 9
@@ -294,18 +283,7 @@
             #js.alert(hintEle) 
 
         def function_bookMarkCardD(*args):
-            js.alert("카드 확대!")
-            #카드 확대시, seq(시퀀스)나 문제id값 불러와서 문제&답안 크게 뿌려주기
-            # "1강2번 문제", "1강5번 문제" 이런식으로 DB에 저장되면 문제관리하기 편할 것
-
-            #bookmarkDiv = js.document.getElementById("bookmarkDiv")
-            #bookmarkDiv.style.background = "black"
-
-            #maskHeight = js.document.getElementById("bookmarkDiv").scrollHeight;
-            #maskWidth = js.document.getElementById("bookmarkDiv").scrollWidth;
-
-            shadowEle = js.document.getElementById("shadow")
-            shadowEle.style.visibility = "visible"
+            js.alert("카드 있는 곳으로 이동!")
     
         def function_bookMarkBack(*args):
             shadowEle = js.document.getElementById("shadow")
@@ -318,61 +296,10 @@
         <!-- <div id="shadow" class="front2" style="visibility: hidden;background:black;top:50%;width:100%;height:100%;opacity: 0.8;"></div> -->
         <img id="closePop" onclick="close_pop()" src="../static/img/exit_Icon.png" style="position: absolute; right: 1%; top: 3%;" width=8% height=8% alt ="cookie1.png">
         <br><br><br>
-        <!-- 카드 유형1 -->
-        <div id="bookMarkCard1" class="card_mini" py-click ="function_bookMarkCardD()">
-             <div class="front" style="font-size:15px;">[1강 1번 카드]<br>int</div>
-        </div>
-
-        <!-- 카드 유형2 : 주관식문제일 경우.. -->
-        <div id="bookMarkCard2" class="card_mini" py-click ="function_bookMarkCardD()">
-            <div class="front" style="flex-direction:column; font-size:15px;text-align:left;">
-                <div>
-                    [1강 5번 카드]<br>
-                    다음 코드에서 변수 a의 자료형은 무엇일까요? a=12 a=파이썬
-                    <div>
-                        <input type="radio" id="ra1" name="sel_answer" value="ra1">
-                        <label for="ra1">int(정수형 변수)</label><br>
-                        <input type="radio" id="ra1" name="sel_answer" value="ra1">
-                        <label for="ra1">str(문자열)</label><br>
-                        <input type="radio" id="ra1" name="sel_answer" value="ra1">
-                        <label for="ra1">float(실수형 변수)</label>
-                    </div>
-                    
-                </div>
-            </div>
+        <!--북마크 나열 -->
+        <div id="bookmarkhtml">
         </div>
     </div>
-    <div id="shadow" class="front2" style="overflow-y:scroll;visibility: hidden;background: black;opacity: 0.9;">
-        <!-- (*)북마크-카드확대 시작 -->
-        <!-- ==================== 카드 시작 [1. 일반문제유형] ==================== -->
-        <div id="flip0" class="flip 0" style="z-index:900;"> 
-            <!-- 힌트 > 칠판모양 예정-->
-            <div id="hint0" class="hint 0" style="display:none;">
-                <div class="image_text_back" >
-                <img src="../static/img/chap01/1-1.png" style="width:70%;height:70%;"><br>
-                a = 10 으로 코드를 작성하면 a 라는 상자에 10이라는 값이 저장되어요 
-                </div>
-
-                <!-- <img id="cookie1-1" onclick="closeHint()" src="../static/img/cookie1_bak.png" style="position: absolute; right: 0%; top: 0%;" width=10% height=10% alt ="cookie1.png"> -->
-                <img id="closeHint0" py-click ="function_close_hint()" src="../static/img/exit_Icon.png" style="position: absolute; right: 0%; top: 0%;" width=10% height=10% alt ="cookie1.png">
-            </div> 
-
-            <div id="bookmarkcard0" class="bookmarkcard 0" py-click ="function_bookcard()">
-                <!-- 앞면 -->
-                <div class="front" style="font-size:30px;">변수</div>
-                <!-- 뒷면 -->
-                <div class="back"> 
-                    
-                    <div class="image_text_back">
-                        <img src="../static/img/chap01/1-1.png" style="width:50%;height:50%;"><br> 데이터 값을 저장하는 박스
-                    </div>
-                    <img id="btn_detail0" class="btn_detail" py-click ="function_btn_detail()" src="../static/img/detail.png" >
-                </div>
-            </div>
-        </div>
-        <img id="backIconTest" src="../static/img/backIcon.png" py-click ="function_bookMarkBack()" style="z-index:11;position: absolute;  right: 23%; bottom: 5%; height: 100px;transition: .4s;transform-style: preserve-3d;" width=7% height=12%;>
-		<!-- 확대카드 끝 -->
-    </div> 
     <!-- 북마크 끝 ! -->
 
 
@@ -382,18 +309,18 @@
    <a href="{{ url_for('root') }}"><img id="backIcon"  src="../static/img/backIcon.png" style="z-index:11;position: absolute;  right: 23%; bottom: 5%; height: 100px;transition: .4s;transform-style: preserve-3d;" width=6% height=12%;></a>
 
     <!-- 카드 순번 hidden값으로 저장 / id구분할때 사용 ex.card0, card1, card2 -->
-    <input id = "pageNum" name="pageNum" type="hidden" value="0"> 
+    <input id = "pageNum" name="pageNum" type="hidden" value="1"> 
 	<div class="swiper-container" style="z-index:9">
         <div class="swiper-wrapper">
             <!-- ==================== 카드 시작 ==================== -->
             {% for row in card %}
-            <input type="hidden" id="card_no_{{loop.index - 1}}" name="card_no_{{loop.index - 1}}" value="{{row['idx']}}"/>
+            <input type="hidden" id="card_no_{{loop.index}}" name="card_no_{{loop.index}}" value="{{row['idx']}}"/>
             {% if(row['card_type'] == 1) %}
             <!-- ==================== [1. 일반문제유형] ==================== -->
             <div class="swiper-slide"> <!-- middle -->
-                <div class="flip {{loop.index - 1}}" style="z-index:900"> 
+                <div class="flip {{loop.index}}" style="z-index:900"> 
                     <!-- 힌트 > 칠판모양 예정-->
-                    <div id="hint{{loop.index - 1}}" class="hint {{loop.index - 1}}" style="display:none;">
+                    <div id="hint{{loop.index}}" class="hint {{loop.index}}" style="display:none;">
                         <div class="image_text_back" style="top:45%;width:90%">
                         {% for row2 in row['card_image'] %}
                             <img src="{{row2['src']}}" style="width:70%;height:70%;"><br>
@@ -402,19 +329,19 @@
                         </div>
 
                         <!-- <img id="cookie1-1" onclick="closeHint()" src="../static/img/cookie1_bak.png" style="position: absolute; right: 0%; top: 0%;" width=10% height=10% alt ="cookie1.png"> -->
-                        <img id="closeHint{{loop.index - 1}}" py-click ="function_close_hint()" src="../static/img/exit_Icon.png" style="position: absolute; right: 5%; top: 7%;z-index:9999" width=8% height=8% alt ="cookie1.png">
+                        <img id="closeHint{{loop.index}}" py-click ="function_close_hint()" src="../static/img/exit_Icon.png" style="position: absolute; right: 5%; top: 7%;z-index:9999" width=8% height=8% alt ="cookie1.png">
                     </div> 
 
-                    <div id="card{{loop.index - 1}}" class="card {{loop.index - 1}}" py-click ="function_card_type1()">
+                    <div id="card{{loop.index}}" class="card {{loop.index}}" py-click ="function_card_type1()">
                         <!-- 앞면 -->
                         <div class="front" style="font-size:40px;">
                             {{row['card_front']|safe}}
                         </div>
                         <!-- 북마크 -->
                         {% if(row['bookmark'] == 'on') %}
-                            <img id="btn_mark{{loop.index - 1}}" src="../static/img/heart_on.png" onclick="function_btn_bookmark()"   style="position: absolute; right: 8%; top: 9%;" width=8% height=8% alt ="heart_off.png">
+                            <img id="btn_mark{{loop.index}}" src="../static/img/heart_on.png" onclick="function_btn_bookmark()"   style="position: absolute; right: 8%; top: 9%;" width=8% height=8% alt ="heart_off.png">
                         {% else %}
-                            <img id="btn_mark{{loop.index - 1}}" src="../static/img/heart_off.png" onclick="function_btn_bookmark()"   style="position: absolute; right: 8%; top: 9%;" width=8% height=8% alt ="heart_off.png">
+                            <img id="btn_mark{{loop.index}}" src="../static/img/heart_off.png" onclick="function_btn_bookmark()"   style="position: absolute; right: 8%; top: 9%;" width=8% height=8% alt ="heart_off.png">
                         {% endif %}
                             <!-- 뒷면 -->
                         <div class="back"> 
@@ -426,8 +353,8 @@
                             </div>
 
                             <!-- 추가 설명이 있을 때에만 추가 -->
-                            {% if row['card_text'] != '' %}
-                            <img id="btn_detail{{loop.index - 1}}" class="btn_detail" py-click ="function_btn_detail()" src="../static/img/detail.png" style="cursor:pointer">
+                            {% if row['card_text'] != '' and row['card_text'] != "None" %}
+                            <img id="btn_detail{{loop.index}}" class="btn_detail" py-click ="function_btn_detail()" src="../static/img/detail.png" style="cursor:pointer">
                             {% endif %}
                         </div>
                     </div>
@@ -436,9 +363,9 @@
             {% else %}
             <!-- ==================== [2. 선택check문제유형] ==================== -->
 			<div class="swiper-slide"> <!-- middle -->
-		        <div class="flip {{loop.index - 1}}">  
+		        <div class="flip {{loop.index}}">  
 		            <!-- 힌트 > 칠판모양 예정-->
-                    <div id="hint{{loop.index - 1}}" class="hint {{loop.index - 1}}" style="display:none;">
+                    <div id="hint{{loop.index}}" class="hint {{loop.index}}" style="display:none;">
                         <div class="image_text_back" style="top:45%;width:90%">
                         {% for row2 in row['card_image'] %}
                             <img src="{{row2['src']}}" style="width:70%;height:70%;"><br>
@@ -446,10 +373,10 @@
                         {{row['card_text']|safe}}
                         </div>
 
-                        <img id="closeHint{{loop.index - 1}}" py-click ="function_close_hint()" src="../static/img/exit_Icon.png" style="position: absolute; right: 5%; top: 7%;z-index:9999" width=8% height=8% alt ="cookie1.png">
+                        <img id="closeHint{{loop.index}}" py-click ="function_close_hint()" src="../static/img/exit_Icon.png" style="position: absolute; right: 5%; top: 7%;z-index:9999" width=8% height=8% alt ="cookie1.png">
                     </div> 
 
-                    <div id="card{{loop.index - 1}}" class="card {{loop.index - 1}}" py-click ="function_card_type2()">
+                    <div id="card{{loop.index}}" class="card {{loop.index}}" py-click ="function_card_type2()">
                         <!-- 앞면 -->
                         <div class="front" style="flex-direction:column; font-size:28px;text-align:left;">
                             <div>
@@ -466,9 +393,9 @@
                         </div>
                         <!-- 북마크 -->
                         {% if(row['bookmark'] == 'on') %}
-                            <img id="btn_mark{{loop.index - 1}}" src="../static/img/heart_on.png" onclick="function_btn_bookmark()"   style="position: absolute; right: 8%; top: 9%;" width=8% height=8% alt ="heart_off.png">
+                            <img id="btn_mark{{loop.index}}" src="../static/img/heart_on.png" onclick="function_btn_bookmark()"   style="position: absolute; right: 8%; top: 9%;" width=8% height=8% alt ="heart_off.png">
                         {% else %}
-                            <img id="btn_mark{{loop.index - 1}}" src="../static/img/heart_off.png" onclick="function_btn_bookmark()"   style="position: absolute; right: 8%; top: 9%;" width=8% height=8% alt ="heart_off.png">
+                            <img id="btn_mark{{loop.index}}" src="../static/img/heart_off.png" onclick="function_btn_bookmark()"   style="position: absolute; right: 8%; top: 9%;" width=8% height=8% alt ="heart_off.png">
                         {% endif %}
                         <!-- 뒷면 -->
                         <div class="back"> 
@@ -488,8 +415,8 @@
                                 {% endfor %}
                             </div>
                             <!-- 추가 설명이 있을 때에만 추가 -->
-                            {% if row['card_text'] != '' %}
-                            <img id="btn_detail{{loop.index - 1}}" class="btn_detail" py-click ="function_btn_detail()" src="../static/img/detail.png" >
+                            {% if row['card_text'] != ''  %}
+                            <img id="btn_detail{{loop.index}}" class="btn_detail" py-click ="function_btn_detail()" src="../static/img/detail.png" >
                             {% endif %}
                         </div>
                     </div>
@@ -507,16 +434,17 @@
         <div class="swiper-button-prev" style="left:20%"></div>
     </div>
   
-    <script>  
+    <script>
         var swiper = new Swiper('.swiper-container', {
             pagination: '.swiper-pagination',
             paginationClickable: true,
             nextButton: '.swiper-button-next',
             prevButton: '.swiper-button-prev',
-            spaceBetween: 30
-        });
+            spaceBetween: 30,
+            initialSlide: "{{temp_ck|int-1}}"
+        }); 
         swiper.on('transitionEnd', function() {
-            $('#pageNum').attr('value',swiper.realIndex);
+            $('#pageNum').attr('value',swiper.realIndex + 1);
             //alert("paging:"+ swiper.realIndex); //'now index :::', swiper.pagination); //  swiper.realIndex);
         });
         swiper.on('reachEnd', function () { //마지막 페이지
@@ -549,7 +477,6 @@
 				}
 			});
         }
-
         
         //radio 버튼 클릭 이벤트 
         $("input:radio[name=sel_answer]").click(function(){
@@ -564,7 +491,33 @@
         
 
         function open_pop(){
-            $("#bookmarkDiv").show();
+            //북마크 정보 갱신
+            $.ajax({
+				type: "GET",
+				url: "/bookmark_load",
+				cache: false,
+				async: false,
+				success: function(result) {
+                    $("#bookmarkhtml").html("");
+                    for(var i = 0; i < result.length; i++) {
+                        //alert("북마크"+i+": "+result[i]["card"]["card_level"]+"-"+result[i]["card"]["card_temp"]);
+                        //동적 추가
+                        if(result[i]["card"]["card_type"] == "1") {
+                            //카드 유형1
+                            $("#bookmarkhtml").append("<div id='bookMarkCard"+i+"' class='card_mini' py-click ='function_bookMarkCardD' onclick='location=\"/cardstudy?stage="+result[i]["card"]["card_level"]+"&temp="+result[i]["card"]["card_temp"]+"\";'><div class='front' style='font-size:15px;'>["+result[i]["card"]["card_level"]+"강 "+result[i]["card"]["card_temp"]+"번 카드]</div></div>");
+                        } else if(result[i]["card"]["card_type"] == "2") {
+                            //카드 유형2
+                            $("#bookmarkhtml").append("<div id='bookMarkCard"+i+"' class='card_mini' py-click ='function_bookMarkCardD' onclick='location=\"/cardstudy?stage="+result[i]["card"]["card_level"]+"&temp="+result[i]["card"]["card_temp"]+"\";'><div class='front' style='flex-direction:column; font-size:15px;text-align:left;'><div>["+result[i]["card"]["card_level"]+"강 "+result[i]["card"]["card_temp"]+"번 카드]");
+                        }
+                        
+                        $("#bookmarkDiv").show();
+                    }
+                    
+                    
+                    //이동
+				}
+			});
+
         }
 
         function close_pop(){
