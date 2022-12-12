@@ -304,7 +304,7 @@
 
 
    <img id="wordBook" onclick="open_pop()" src="../static/img/wordBook.png" style="z-index:11;position: absolute;  right: 25%; top: 5%; height: 130px;transition: .4s;transform-style: preserve-3d;" width=5% height=12%;>
-   <a href="{{ url_for('root') }}"><img id="finishIcon"  src="../static/img/finishIcon.png" style="display:none;z-index:11;position: absolute;  right: 23%; bottom: 5%; height: 140px;transition: .4s;transform-style: preserve-3d;" width=6% height=12%;></a>
+   <a href="{{ url_for('clear', stage=request.args.get('stage')) }}"><img id="finishIcon"  src="../static/img/finishIcon.png" style="display:none;z-index:11;position: absolute;  right: 23%; bottom: 5%; height: 140px;transition: .4s;transform-style: preserve-3d;" width=6% height=12%;></a>
 
    <a href="{{ url_for('root') }}"><img id="backIcon"  src="../static/img/backIcon.png" style="z-index:11;position: absolute;  right: 23%; bottom: 5%; height: 100px;transition: .4s;transform-style: preserve-3d;" width=5% height=12%;></a>
 

@@ -34,9 +34,38 @@ mysql.init_app(app)
 def root():
     print("로그인 상태 체크: %s" % (session_check()))
     if session_check():
-        return render_template('test_image.html', title = "mainmap")
+
+        #스테이지 정보 가져오기
+        db = mysql.connect()
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM clear_stage WHERE user_id = '%s'" % (session["userId"]))
+        cs = cursor.fetchone()
+        return render_template('test_image.html', title = "mainmap", clear_stage = cs)
     else:
         return render_template("index.html")
+
+@app.route("/clear", methods=['GET', 'POST'])
+def clear():
+    #request.args.get("stage", 0)
+    #DB에 저장하기
+
+    #DB 검색
+    db = mysql.connect()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM clear_stage WHERE user_id = '%s'" % (session["userId"]))
+    m = cursor.fetchone()
+    if m is not None:
+        #UPDATE
+        cursor2 = db.cursor()
+        cursor2.execute("UPDATE clear_stage SET stage%s = 1 WHERE user_id = '%s'" % (request.args.get("stage", 0), session["userId"]))
+        db.commit()
+    else:
+        #INSERT
+        cursor2 = db.cursor()
+        cursor2.execute("INSERT INTO clear_stage SET user_id = '%s', stage%s = 1" % (session["userId"], request.args.get("stage", 0)))
+        db.commit()
+
+    return redirect('/')
 
 @app.route("/mainmap")
 def mainmap():
