@@ -193,149 +193,179 @@
     style="position: absolute;  left: 19%; top: -5%;" 
     width=20% height=40% alt ="cookieHouse.png">
 
+    <a href="{{ url_for('cardstudy', stage=1) }}">
     {% if clear_stage['stage1'] == 1 %}
     <img id="cookie1-1" src="../static/img/cookie1-1.png"
     style="position: absolute;  left: 50%; top: 80%;" 
     width=6% height=12% alt ="cookie1.png">
     {% else %}
-    <a href="{{ url_for('cardstudy', stage=1) }}"><img id="cookie1" src="../static/img/cookie1.png" onClick="move_cookie1()"
+    <img id="cookie1" src="../static/img/cookie1.png" onClick="move_cookie1()"
         style="position: absolute;  left: 50%; top: 80%;" 
-        width=6% height=12% alt ="cookie1.png"></a>
+        width=6% height=12% alt ="cookie1.png">
     {% endif %}
+    </a>
 
+    <a href="{{ url_for('cardstudy', stage=2) }}">
     {% if clear_stage['stage2'] == 1 %}
     <img id="cookie2-1" src="../static/img/cookie2-1.png" 
     style="position: absolute;  left: 40%; top: 80%;" 
     width=6% height=12% alt ="cookie2.png">
     {% else %}
-    <a href="{{ url_for('cardstudy', stage=2) }}"><img id="cookie2" src="../static/img/cookie2.png" onClick="move_cookie2()"
+    <img id="cookie2" src="../static/img/cookie2.png" onClick="move_cookie2()"
         style="position: absolute;  left: 40%; top: 80%;" 
-        width=6% height=12% alt ="cookie2.png"></a>
+        width=6% height=12% alt ="cookie2.png">
     {% endif %}
+    </a>
 
+    <a href="{{ url_for('game', stage=3) }}">
     {% if clear_stage['stage3'] == 1 %}
     <img id="cookie3-1" src="../static/img/cookie3-1.png"
     style="position: absolute;  left: 31%; top: 70%;" 
     width=8% height=15% alt ="cookie3.png">
     {% else %}
-    <a href="{{ url_for('game') }}"><img id="cookie3" src="../static/img/cookie3.png" onClick="move_cookie3()"
+    <img id="cookie3" src="../static/img/cookie3.png" onClick="move_cookie3()"
         style="position: absolute;  left: 31%; top: 70%;" 
-        width=8% height=15% alt ="cookie3.png"></a>
+        width=8% height=15% alt ="cookie3.png">
     {% endif %}
+    </a>
 
+    <a href="{{ url_for('cardstudy', stage=4) }}">
     {% if clear_stage['stage4'] == 1 %}
     <img id="cookie4-1" src="../static/img/cookie4-1.png"
     style="position: absolute;  left: 42%; top: 61%;" 
     width=7% height=14% alt ="cookie4.png">
     {% else %}
-    <a href="{{ url_for('cardstudy', stage=4) }}"><img id="cookie4" src="../static/img/cookie4.png" onClick="move_cookie4()"
+    <img id="cookie4" src="../static/img/cookie4.png" onClick="move_cookie4()"
         style="position: absolute;  left: 42%; top: 61%;" 
-        width=7% height=14% alt ="cookie4.png"></a>
+        width=7% height=14% alt ="cookie4.png">
     {% endif %}
+    </a>
 
+    <a href="{{ url_for('cardstudy', stage=5) }}">
     {% if clear_stage['stage5'] == 1 %}
     <img id="cookie5-1" src="../static/img/cookie5-1.png"
     style="position: absolute;  left: 51%; top: 63%;" 
     width=6% height=12%  alt ="cookie5.png">
     {% else %}
-    <a href="{{ url_for('cardstudy', stage=5) }}"><img id="cookie5" src="../static/img/cookie5.png" onClick="move_cookie5()"
+    <img id="cookie5" src="../static/img/cookie5.png" onClick="move_cookie5()"
         style="position: absolute;  left: 51%; top: 63%;" 
-        width=6% height=12%  alt ="cookie5.png"></a>
+        width=6% height=12%  alt ="cookie5.png">
     {% endif %}
+    </a>
 
+    <a href="{{ url_for('game', stage=6) }}">
     {% if clear_stage['stage6'] == 1 %}
     <img id="cookie6-1" src="../static/img/cookie6-1.png"
     style="position: absolute;  left: 60%; top: 56%;" 
     width=9% height=15% alt ="cookie6.png">
     {% else %}
-    <a href="{{ url_for('game') }}"><img id="cookie6" src="../static/img/cookie6.png" onClick="move_cookie6()"
+    <img id="cookie6" src="../static/img/cookie6.png" onClick="move_cookie6()"
         style="position: absolute;  left: 60%; top: 56%;" 
-        width=9% height=15% alt ="cookie6.png"></a>
+        width=9% height=15% alt ="cookie6.png">
     {% endif %}
+    </a>
 
+    <a href="{{ url_for('cardstudy', stage=7) }}">
     {% if clear_stage['stage7'] == 1 %}
     <img id="cookie7-1" src="../static/img/cookie7-1.png"
     style="position: absolute;  left: 50%; top: 46%;" 
     width=7% height=14% alt ="cookie7.png">
     {% else %}
-    <a href="{{ url_for('cardstudy', stage=7) }}"><img id="cookie7" src="../static/img/cookie7.png" onClick="move_cookie7()"
+    <img id="cookie7" src="../static/img/cookie7.png" onClick="move_cookie7()"
         style="position: absolute;  left: 49%; top: 46%;" 
-        width=8% height=14% alt ="cookie7.png"></a>
+        width=8% height=14% alt ="cookie7.png">
     {% endif %}
+    </a>
 
+    <a href="{{ url_for('cardstudy', stage=8) }}">
     {% if clear_stage['stage8'] == 1 %}
     <img id="cookie8-1" src="../static/img/cookie8-1.png"
     style="position: absolute;  left: 40%; top: 48%;" 
     width=7% height=12.5% alt ="cookie8.png">
     {% else %}
-    <a href="{{ url_for('cardstudy', stage=8) }}"><img id="cookie8" src="../static/img/cookie8.png" onClick="move_cookie8()"
+    <img id="cookie8" src="../static/img/cookie8.png" onClick="move_cookie8()"
         style="position: absolute;  left: 40%; top: 48%;" 
-        width=7% height=12.5% alt ="cookie8.png"></a>
+        width=7% height=12.5% alt ="cookie8.png">
     {% endif %}
+    </a>
 
+    <a href="{{ url_for('game', stage=9) }}">
     {% if clear_stage['stage9'] == 1 %}
     <img id="cookie9-1" src="../static/img/cookie9-1.png"
     style="position: absolute;  left: 30%; top: 39%;" 
     width=8% height=15% alt ="cookie9.png">
     {% else %}
-    <a href="{{ url_for('game') }}"><img id="cookie9" src="../static/img/cookie9.png" onClick="move_cookie9()"
+    <img id="cookie9" src="../static/img/cookie9.png" onClick="move_cookie9()"
         style="position: absolute;  left: 30%; top: 39%;" 
-        width=8% height=15% alt ="cookie9.png"></a>
+        width=8% height=15% alt ="cookie9.png">
     {% endif %}
-
+    </a>
+    
+    <a href="{{ url_for('cardstudy', stage=10) }}">
     {% if clear_stage['stage10'] == 1 %}
     <img id="cookie10-1" src="../static/img/cookie10-1.png"
     style="position: absolute;  left: 40%; top: 30%;" 
     width=6.5% height=13%  alt ="cookie10.png">
     {% else %}
-    <a href="{{ url_for('cardstudy', stage=10) }}"><img id="cookie10" src="../static/img/cookie10.png" onClick="move_cookie10()"
+    <img id="cookie10" src="../static/img/cookie10.png" onClick="move_cookie10()"
         style="position: absolute;  left: 40%; top: 30%;" 
-        width=6.5% height=13%  alt ="cookie10.png"></a>
+        width=6.5% height=13%  alt ="cookie10.png">
     {% endif %}
+    </a>
 
+    <a href="{{ url_for('cardstudy', stage=11) }}">
     {% if clear_stage['stage11'] == 1 %}
     <img id="cookie11-1" src="../static/img/cookie11-1.png"
     style="position: absolute;  left: 50%; top: 32%;" 
     width=6% height=12%  alt ="cookie11.png">
     {% else %}
-    <a href="{{ url_for('cardstudy', stage=11) }}"><img id="cookie11" src="../static/img/cookie11.png" onClick="move_cookie11()"
+    <img id="cookie11" src="../static/img/cookie11.png" onClick="move_cookie11()"
         style="position: absolute;  left: 50%; top: 32%;" 
-        width=6% height=12%  alt ="cookie11.png"></a>
+        width=6% height=12%  alt ="cookie11.png">
     {% endif %}
+    </a>
 
+    <a href="{{ url_for('game', stage=12) }}">
     {% if clear_stage['stage12'] == 1 %}
     <img id="cookie12-1" src="../static/img/cookie12-1.png"
     style="position: absolute;  left: 58%; top: 30%;" 
     width=9.5% height=17%  alt ="cookie12.png">
     {% else %}
-    <a href="{{ url_for('game') }}"><img id="cookie12" src="../static/img/cookie12.png" onClick="move_cookie12()"
+    <img id="cookie12" src="../static/img/cookie12.png" onClick="move_cookie12()"
         style="position: absolute;  left: 58%; top: 30%;" 
-        width=9.5% height=17%  alt ="cookie12.png"></a>
+        width=9.5% height=17%  alt ="cookie12.png">
     {% endif %}
+    </a>
 
+    <a href="{{ url_for('finalStudy1') }}">
     {% if clear_stage['stage13'] == 1 %}
     <img id="cookie13-1" src="../static/img/cookie13-1.png"
     style="position: absolute; left: 57%; top: 15%;" 
     width=7% height=13%  alt ="cookie13.png">
     {% else %}
-    <a href="{{ url_for('finalStudy1') }}"><img id="cookie13" src="../static/img/cookie13.png" onClick="move_cookie13()"style="position: absolute; left: 57%; top: 15%;" width=7% height=13%  alt ="cookie13.png"></a>
+    <img id="cookie13" src="../static/img/cookie13.png" onClick="move_cookie13()"style="position: absolute; left: 57%; top: 15%;" width=7% height=13%  alt ="cookie13.png">
     {% endif %}
+    </a>
 
+    <a href="{{ url_for('finalStudy2') }}">
     {% if clear_stage['stage14'] == 1 %}
     <img id="cookie14-1" src="../static/img/cookie14-1.png"
     style="position: absolute;  left: 46%; top: 13%;" 
     width=7% height=14%  alt ="cookie14.png">
     {% else %}
-    <a href="{{ url_for('finalStudy2') }}"><img id="cookie14" src="../static/img/cookie14.png" onClick="move_cookie14()" style="position: absolute;  left: 46%; top: 13%;" width=7% height=14%  alt ="cookie14.png"></a>
+    <img id="cookie14" src="../static/img/cookie14.png" onClick="move_cookie14()" style="position: absolute;  left: 46%; top: 13%;" width=7% height=14%  alt ="cookie14.png">
     {% endif %}
+    </a>
 
+    <a href="{{ url_for('finalStudy3') }}">
     {% if clear_stage['stage15'] == 1 %}
     <img id="cookie15-1" src="../static/img/cookie15-1.png"
     style="position: absolute; left: 37%; top: 15%;" 
     width=7% height=12.5%  alt ="cookie15.png">
     {% else %}
-    <a href="{{ url_for('finalStudy3') }}"><img id="cookie15" src="../static/img/cookie15.png" onClick="move_cookie15()" style="position: absolute; left: 37%; top: 15%;" width=7% height=12.5%  alt ="cookie15.png"></a>
+    <img id="cookie15" src="../static/img/cookie15.png" onClick="move_cookie15()" style="position: absolute; left: 37%; top: 15%;" width=7% height=12.5%  alt ="cookie15.png">
     {% endif %}
+    </a>
     <!-- 각 강 별 진저맨 위치  -->
     <img id="gingerMan1" src="../static/img/gingerMan.png" 
     style="position: absolute;  left: 50%; top: 73%;" 

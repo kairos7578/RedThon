@@ -372,6 +372,23 @@ def logout():
 #류재범 추가
 @app.route("/game", methods=["GET", "POST"])
 def game():
+    #스테이지 클리어 처리
+    #DB 검색
+    db = mysql.connect()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM clear_stage WHERE user_id = '%s'" % (session["userId"]))
+    m = cursor.fetchone()
+    if m is not None:
+        #UPDATE
+        cursor2 = db.cursor()
+        cursor2.execute("UPDATE clear_stage SET stage%s = 1 WHERE user_id = '%s'" % (request.args.get("stage", 0), session["userId"]))
+        db.commit()
+    else:
+        #INSERT
+        cursor2 = db.cursor()
+        cursor2.execute("INSERT INTO clear_stage SET user_id = '%s', stage%s = 1" % (session["userId"], request.args.get("stage", 0)))
+        db.commit()
+        
     return render_template("/game.html")
 
 #류재범 추가

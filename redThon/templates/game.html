@@ -86,14 +86,17 @@
     <!-- 카드게임 로비-->
     <div class="card_lobby">
         <div class="card_lobby_content">
-            <img src="../static/img/memorygame_rule.png" style="width:500px;margin:20px;"/><br/>
+            <img src="../static/img/memorygame_logo.png" style="width:500px;margin:20px;"/><br/>
+            <img src="../static/img/memorygame_rule.png" style="width:900px;margin:20px;"/><br/>
             <img src="../static/img/start_btn.png" style="width:250px;" onclick="game_start();"/>
-            <img src="../static/img/myrank_btn.png" style="width:250px;" onclick="alert('작업 예정');"/>
+            <img src="../static/img/myrank_btn.png" style="width:250px;" onclick="alert('작업 예정');"/><br/>
+            <img src="../static/img/gamestop_btn.png" style="width:250px" onclick="location.href='/';"/>
         </div>
         <!-- <div class="card_lobby_skip"><button onclick="location.href='/';">건너뛰기</button></div> -->
     </div>
     <!-- 카드게임 -->
-    <div class="card_main" style="display:none;width:850px;height:1200px;float:left;">
+    <center>
+    <div class="card_main" style="display:none;width:850px;height:1200px;">
         <div class="flip 1">
             <div class="card 1">
                 <!-- 앞면 -->
@@ -222,13 +225,15 @@
                 <div class="back">?</div>
             </div>
         </div>
+        <img src="../static/img/restart_btn.png" style="width:250px;margin-top:30px;" onclick="location.reload();"/>
+        <img src="../static/img/gamestop_btn.png" style="width:250px" onclick="location.href='/';"/>
     </div>
-    <div class="card_main card_lobby_subject" style="display:none;width:300px;height:300px;float:left;">
+    </center>
+    <div class="card_main card_lobby_subject" style="display:none;position:fixed;left:0%;top:0%;font-size:25pt;font-weight: bold">
         소요 시간: <span id="time_count"></span><br/>
         클릭 횟수: <span id="click_count"></span><br/>
 
-        <img src="../static/img/restart_btn.png" style="width:250px" onclick="location.reload();"/>
-        <img src="../static/img/gamestop_btn.png" style="width:250px" onclick="location.href='/';"/>
+        
     </div>
     <script>
         var game_status = false;
