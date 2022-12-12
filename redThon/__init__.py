@@ -40,7 +40,7 @@ def root():
         cursor = db.cursor()
         cursor.execute("SELECT * FROM clear_stage WHERE user_id = '%s'" % (session["userId"]))
         cs = cursor.fetchone()
-        return render_template('test_image.html', title = "mainmap", clear_stage = cs)
+        return render_template('main_map.html', title = "mainmap", clear_stage = cs)
     else:
         return render_template("index.html")
 
@@ -69,7 +69,7 @@ def clear():
 
 @app.route("/mainmap")
 def mainmap():
-    return render_template('test_image.html', title = "mainmap")
+    return render_template('main_map.html', title = "mainmap")
 
 @app.route("/cardstudy")
 def cardstudy():

@@ -15,6 +15,7 @@
 
     <style>
     * {
+
         font-family: "GODO";
     }
 
@@ -33,25 +34,39 @@
         font-weight:bold;
     }
 
+    .card_mini {
+        width: 18%; 
+        height: 250px; 
+        position: relative;
+        transition: .4s;
+        transform-style: preserve-3d;
+        /* transform: translate(-50%, -50%); */
+        background-image: url(../static/img/wordCard-1.png);
+        background-size: 100% 100%;
+        background-repeat: repeat;
+        display: inline-block;
+    }
+
     .front2, .back2 {
         z-index:999;
+        padding:20px;
         position: absolute;
         left: 50%; top: 53%;
-        width: 80%; 
+        width: 75%; 
         height: 80%;
         backface-visibility: hidden;
-        display: flex;
-        visibility:hidden;
-        justify-content: center;
+        /* display: flex; */
+        /* visibility:hidden; */
+        /* justify-content: center; */
         align-items: center;
         color: #fff;
         transform: translate(-50%, -50%);
     }
         
     .front2 {
-        background: tomato; 
+        background: #e8d5b7; 
     }
-        
+ 
     .image_text_front, .image_text_back {
         color: white;
         position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);transition: .4s;transform-style: preserve-3d;
@@ -168,12 +183,13 @@
         background-color: #683810;
         border: none;
         color: white;
-        padding: 7px 32px;
+        padding: 10px 20px;
         text-align: center;
         text-decoration: none;
         display: inline-block;
         font-size: 16px;
         cursor: pointer;
+        margin-left:800px;
     }
     </style>
 </head>
@@ -183,60 +199,90 @@
         from js import document, setTimeout
         from pyodide.ffi.wrappers import create_once_callable
 
-        def callback(chk) :
-            if chk == 1 :
-                correctEle = js.document.getElementById("correctIcon")
-                correctEle.style.visibility = "hidden"
-            elif chk == 0 :
-                wrongEle = js.document.getElementById("wrongIcon")
-                wrongEle.style.visibility = "hidden"
-                
-        def answer_chk(num):
-            if num == 1 :
-                an1 = pageNum = Element("answer1")
-                
-                an1_convert = (an1.value).replace(" ","")
-                an1_convert = an1_convert.replace("\n","")
-                js.alert( an1_convert )
-                real_answer = "if"
-                
-                if an1_convert == real_answer : 
-                    correctEle = js.document.getElementById("correctIcon")
-                    correctEle.style.visibility = "visible"
-                    setTimeout(
-                        create_once_callable(
-                            lambda: callback(1)
-                        ),
-                        1000
-                    )
-                else:
-                    wrongEle = js.document.getElementById("wrongIcon")
-                    wrongEle.style.visibility = "visible"
-                    an1.clear()
-                    setTimeout(
-                        create_once_callable(
-                            lambda: callback(0)
-                        ),
-                        1000
-                    )
-    
+        def close_answer() :
+            answerEle = js.document.getElementById("r3_answer")
+            answerEle.style.visibility = "hidden"
+
+            btn1 = js.document.getElementById("btn1")
+            btn1.style.visibility = "visible"
+
+        def show_answer():
+            answerEle = js.document.getElementById("r3_answer")
+            answerEle.style.visibility = "visible"
+
+            btn1 = js.document.getElementById("btn1")
+            btn1.style.visibility = "hidden"
+
+        def complete():
+            js.alert("123")
+            completeEle = js.document.getElementById("completeBack")
+            completeEle.style.visibility = "visible"
+
+
     </py-script>
+    <script>
+        function open_pop(){
+            //북마크 정보 갱신
+            $.ajax({
+				type: "GET",
+				url: "/bookmark_load",
+				cache: false,
+				async: false,
+				success: function(result) {
+                    $("#bookmarkhtml").html("");
+                    for(var i = 0; i < result.length; i++) {
+                        //alert("북마크"+i+": "+result[i]["card"]["card_level"]+"-"+result[i]["card"]["card_temp"]);
+                        //동적 추가
+                        if(result[i]["card"]["card_type"] == "1") { 
+                            //카드 유형1
+                            $("#bookmarkhtml").append("<div id='bookMarkCard"+i+"' class='card_mini' style='margin-right:6px;' py-click ='function_bookMarkCardD' onclick='location=\"/cardstudy?stage="+result[i]["card"]["card_level"]+"&temp="+result[i]["card"]["card_temp"]+"\";'><div class='front' style='font-size:30px;'>[ "+result[i]["card"]["card_level"]+"강 "+result[i]["card"]["card_temp"]+"번 ]</div></div>");
+                        } else if(result[i]["card"]["card_type"] == "2") { 
+                            //카드 유형2
+                            $("#bookmarkhtml").append("<div id='bookMarkCard"+i+"' class='card_mini' style='margin-right:6px;' py-click ='function_bookMarkCardD' onclick='location=\"/cardstudy?stage="+result[i]["card"]["card_level"]+"&temp="+result[i]["card"]["card_temp"]+"\";'><div class='front' style='flex-direction:column; font-size:30px;text-align:left;'><div>[ "+result[i]["card"]["card_level"]+"강 "+result[i]["card"]["card_temp"]+"번 ]");
+                        }
+                        
+                        $("#bookmarkDiv").show();
+                    }
+                    
+                    
+                    //이동
+				}
+			});
+
+        }
+
+        function close_pop(){
+            $("#bookmarkDiv").hide();
+        }
+
+        $(document).ready(function() {
+            $("#finishIcon").click(function() {
+                $("#completeBack").show();
+            });
+        });
+        
+    </script>
 
 <main>
- <!-- 북마크 시작 -->
-   <div class="front2" style="overflow-y:scroll;">
-   	Scroll test<br>11<br>12<br>13<br>7<br>11<br>12<br>13<br>
-   	2<br>11<br>12<br>13<br>7<br>11<br>12<br>13<br>
-   	3<br>11<br>12<br>13<br>7<br>11<br>12<br>13<br>
-   	4<br>11<br>12<br>13<br>7<br>11<br>12<br>13<br>
-   	5<br>11<br>12<br>13<br>7<br>11<br>12<br>13<br>
-   	6<br>11<br>12<br>13<br>7<br>11<br>12<br>13<br>
-   	7<br>11<br>12<br>13<br>
-   </div> 
-<!-- 북마크 끝 ! -->
-    <img id="wordBook" src="../static/img/wordBook.png" style="z-index:11;position: absolute;  right: 15%; top: 2%; height: 130px;transition: .4s;transform-style: preserve-3d;" width=5% height=12%;>
+    <!-- 북마크 시작 -->
+    <div id="bookmarkDiv" class="front2" style="overflow-y:scroll;display:none;">
+        <!-- <div id="shadow" class="front2" style="visibility: hidden;background:black;top:50%;width:100%;height:100%;opacity: 0.8;"></div> -->
+        <img id="closePop" onclick="close_pop()" src="../static/img/exit_Icon.png" style="position: absolute; right: 1%; top: 3%;" width=5% height=8% alt ="cookie1.png">
+        <br><br><br>
+        <!--북마크 나열 -->
+        <div id="bookmarkhtml">
+        </div>
+    </div>
+    <!-- 북마크 끝 ! -->  
+    <img id="completeBack" class="card" src="../static/img/complete_img.png" style="display:none;background-repeat: repeat;z-index:11;width:100%;height:1300px;overflow-x:hidden;  overflow-y:hidden;" width="100%" height="100%">
+
+
+    <img id="wordBook" onclick="open_pop()" src="../static/img/message_card.png" style="z-index:11;position: absolute; right: 16%; top: 18%; height: 300px;transition: .4s;transform-style: preserve-3d;" width=15% height=40%;>
+    <button id="btn1" style="z-index:11;position: absolute; right: 21%; top: 44%; transition: .4s;transform-style: preserve-3d;"  class="button" py-click="show_answer()" >답안보기</button>
+
+    <img id="wordBook" onclick="open_pop()" src="../static/img/wordBook.png" style="z-index:11;position: absolute;  right: 15%; top: 2%; height: 130px;transition: .4s;transform-style: preserve-3d;" width=5% height=12%;>
     <a href="{{ url_for('root') }}"><img id="backIcon" src="../static/img/backIcon.png" style="z-index:11;position: absolute;  right: 16%; bottom: 5%; height: 120px;transition: .4s;transform-style: preserve-3d;" width=6% height=12%;></a>
-    <a href="{{ url_for('clear', stage=15) }}"><img id="finishIcon"  src="../static/img/finishIcon.png" style="z-index:11;position: absolute;  right: 23%; bottom: 5%; height: 140px;transition: .4s;transform-style: preserve-3d;" width=6% height=12%;></a>    
+    <a href="{{ url_for('clear', stage=15) }}" ><img id="finishIcon"  src="../static/img/finishIcon.png" style="z-index:11;position: absolute;  right: 23%; bottom: 5%; height: 140px;transition: .4s;transform-style: preserve-3d;" width=6% height=12%;></a> 
     <div class="container2" style="z-index:9">
         <div class="wrapper" style="text-align:center">
             <div class="card"> 
@@ -245,27 +291,17 @@
                     <span>ROUND 3. 홍길동의 성적구하기</span>
                 </div>
                 <div style="background-color: #e8d5b7; height:105%;">
-                    <img id="correctIcon" src="../static/img/correctIcon.png" style="visibility: hidden;position: absolute;top:25%;right:35%;z-index:9999;height:620px;" width=30%  >
-                    <img id="wrongIcon" src="../static/img/incorrectIcon.png" style="visibility: hidden;position: absolute;top:27%;right:35%;z-index:9999;height:610px;" width=30% >
-                         
+                    <img id="r3_answer" src="../static/img/final03/r3.png" py-click="close_answer()" style="border:2px solid #683810;visibility: hidden;position: absolute;top:14%;right:15%;z-index:9999;height:850px;" width=70% >
+                     
                     <!--문제영역-->
-                    <div style="display:inline-block;width:45%;height:80%;">
-                        <img id="final01" src="../static/img/final03/round3-2.png" style="width:100%;height:100%">
+                    <div>
+                        <img id="final01" src="../static/img/final03/round3-2.png" style="width:70%;height:850px">
                     </div>
 
-                    <div style="text-align:left;width:55%;float:right;font-weight: normal">
-                        <py-repl>
-                            
-                        </py-repl>
-                    </div>
-                    
+               
                     <!--답안영역-->
-                    <div style="display: inline-block;text-align:left;width:100%;">
-                        <div style="margin:10px;">Q.왼쪽 카드 코드의 실행결과는 위와 같을 때, 빈칸에 들어가야할 코드의 내용을 입력해보세요!</div>
-                        <div style="margin-left:10px;width:100%;float:left;"> 
-                            <textarea id = "answer1" rows="3" style="width: 65%;"></textarea><br>
-                            <button id="btn1" class="button" py-click="answer_chk(1)">확인</button>
-                        </div>  
+                    <div style="display: inline-block;text-align:left;width:100%;font-size:30px;text-align: center;">
+                        <div style="margin:10px;">코랩에서 동일한 결과가 나오는지 확인해보세요!<br><a href="https://colab.research.google.com/?hl=ko" onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">코랩 Go~Go~</a></div> 
                     </div>
                 </div>    
             </div>

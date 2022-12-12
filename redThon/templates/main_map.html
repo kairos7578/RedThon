@@ -1003,12 +1003,12 @@
                     for(var i = 0; i < result.length; i++) {
                         //alert("북마크"+i+": "+result[i]["card"]["card_level"]+"-"+result[i]["card"]["card_temp"]);
                         //동적 추가
-                        if(result[i]["card"]["card_type"] == "1") {
+                        if(result[i]["card"]["card_type"] == "1") { 
                             //카드 유형1
-                            $("#bookmarkhtml").append("<div id='bookMarkCard"+i+"' class='card_mini' py-click ='function_bookMarkCardD' onclick='location=\"/cardstudy?stage="+result[i]["card"]["card_level"]+"&temp="+result[i]["card"]["card_temp"]+"\";'><div class='front' style='font-size:15px;'>["+result[i]["card"]["card_level"]+"강 "+result[i]["card"]["card_temp"]+"번 카드]</div></div>");
+                            $("#bookmarkhtml").append("<div id='bookMarkCard"+i+"' class='card_mini' style='margin-bottom:6px;margin-right:6px;' py-click ='function_bookMarkCardD' onclick='location=\"/cardstudy?stage="+result[i]["card"]["card_level"]+"&temp="+result[i]["card"]["card_temp"]+"\";'><div class='front' style='font-size:30px;'>[ "+result[i]["card"]["card_level"]+"강 "+result[i]["card"]["card_temp"]+"번 ]</div></div>");
                         } else if(result[i]["card"]["card_type"] == "2") {
                             //카드 유형2
-                            $("#bookmarkhtml").append("<div id='bookMarkCard"+i+"' class='card_mini' py-click ='function_bookMarkCardD' onclick='location=\"/cardstudy?stage="+result[i]["card"]["card_level"]+"&temp="+result[i]["card"]["card_temp"]+"\";'><div class='front' style='flex-direction:column; font-size:15px;text-align:left;'><div>["+result[i]["card"]["card_level"]+"강 "+result[i]["card"]["card_temp"]+"번 카드]");
+                            $("#bookmarkhtml").append("<div id='bookMarkCard"+i+"' class='card_mini' style='margin-bottom:6px;margin-right:6px;' py-click ='function_bookMarkCardD' onclick='location=\"/cardstudy?stage="+result[i]["card"]["card_level"]+"&temp="+result[i]["card"]["card_temp"]+"\";'><div class='front' style='flex-direction:column; font-size:30px;text-align:left;'><div>[ "+result[i]["card"]["card_level"]+"강 "+result[i]["card"]["card_temp"]+"번 ]");
                         }
                         
                         $("#bookmarkDiv").show();
