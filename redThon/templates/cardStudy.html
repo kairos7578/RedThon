@@ -294,7 +294,7 @@
     <!-- 북마크 시작 -->
     <div id="bookmarkDiv" class="front2" style="overflow-y:scroll;display:none;">
         <!-- <div id="shadow" class="front2" style="visibility: hidden;background:black;top:50%;width:100%;height:100%;opacity: 0.8;"></div> -->
-        <img id="closePop" onclick="close_pop()" src="../static/img/exit_Icon.png" style="position: absolute; right: 1%; top: 3%;" width=8% height=8% alt ="cookie1.png">
+        <img id="closePop" onclick="close_pop()" src="../static/img/exit_Icon.png" style="position: absolute; right: 1%; top: 3%;" width=5% height=8% alt ="cookie1.png">
         <br><br><br>
         <!--북마크 나열 -->
         <div id="bookmarkhtml">
@@ -306,7 +306,7 @@
    <img id="wordBook" onclick="open_pop()" src="../static/img/wordBook.png" style="z-index:11;position: absolute;  right: 25%; top: 5%; height: 130px;transition: .4s;transform-style: preserve-3d;" width=5% height=12%;>
    <a href="{{ url_for('root') }}"><img id="finishIcon"  src="../static/img/finishIcon.png" style="display:none;z-index:11;position: absolute;  right: 23%; bottom: 5%; height: 140px;transition: .4s;transform-style: preserve-3d;" width=6% height=12%;></a>
 
-   <a href="{{ url_for('root') }}"><img id="backIcon"  src="../static/img/backIcon.png" style="z-index:11;position: absolute;  right: 23%; bottom: 5%; height: 100px;transition: .4s;transform-style: preserve-3d;" width=6% height=12%;></a>
+   <a href="{{ url_for('root') }}"><img id="backIcon"  src="../static/img/backIcon.png" style="z-index:11;position: absolute;  right: 23%; bottom: 5%; height: 100px;transition: .4s;transform-style: preserve-3d;" width=5% height=12%;></a>
 
     <!-- 카드 순번 hidden값으로 저장 / id구분할때 사용 ex.card0, card1, card2 -->
     <input id = "pageNum" name="pageNum" type="hidden" value="1"> 
@@ -329,12 +329,15 @@
                         </div>
 
                         <!-- <img id="cookie1-1" onclick="closeHint()" src="../static/img/cookie1_bak.png" style="position: absolute; right: 0%; top: 0%;" width=10% height=10% alt ="cookie1.png"> -->
-                        <img id="closeHint{{loop.index}}" py-click ="function_close_hint()" src="../static/img/exit_Icon.png" style="position: absolute; right: 5%; top: 7%;z-index:9999" width=8% height=8% alt ="cookie1.png">
+                        <img id="closeHint{{loop.index}}" py-click ="function_close_hint()" src="../static/img/exit_Icon.png" style="position: absolute; right: 5%; top: 7%;z-index:9999" width=6% height=8% alt ="cookie1.png">
                     </div> 
 
                     <div id="card{{loop.index}}" class="card {{loop.index}}" py-click ="function_card_type1()">
                         <!-- 앞면 -->
                         <div class="front" style="font-size:40px;">
+                            {% for row4 in row['card_front_image'] %}
+                                <img src="{{row4['src']}}" style="width:100%;height:30%;"><br>
+                            {% endfor %}
                             {{row['card_front']|safe}}
                         </div>
                         <!-- 북마크 -->
@@ -373,14 +376,16 @@
                         {{row['card_text']|safe}}
                         </div>
 
-                        <img id="closeHint{{loop.index}}" py-click ="function_close_hint()" src="../static/img/exit_Icon.png" style="position: absolute; right: 5%; top: 7%;z-index:9999" width=8% height=8% alt ="cookie1.png">
+                        <img id="closeHint{{loop.index}}" py-click ="function_close_hint()" src="../static/img/exit_Icon.png" style="position: absolute; right: 5%; top: 7%;z-index:9999" width=6% height=8% alt ="cookie1.png">
                     </div> 
 
                     <div id="card{{loop.index}}" class="card {{loop.index}}" py-click ="function_card_type2()">
                         <!-- 앞면 -->
                         <div class="front" style="flex-direction:column; font-size:28px;text-align:left;">
                             <div>
-                                
+                                {% for row4 in row['card_front_image'] %}
+                                    <img src="{{row4['src']}}" style="width:100%;height:30%;"><br>
+                                {% endfor %}
                                 {{row['card_front']|safe}} <br><br>
                                 {% for row2 in row['card_problem'] %}
                                 <div> 

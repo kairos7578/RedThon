@@ -47,7 +47,7 @@
           }
 
           .back { 
-            background-image: url('../static/img/cardGame.png');
+            background-image: url('../static/img/cardGame2.png');
             background-size: cover; 
             background-repeat: no-repeat;
             transform: rotateY(180deg);
@@ -84,7 +84,7 @@
 </head>
 <body>
     <!-- 뒤로가기 -->
-    <a href="{{ url_for('root') }}"><img id="backIcon" src="../static/img/backIcon.png" style="z-index:11;position: absolute;  right: 23%; bottom: 5%; height: 100px;transition: .4s;transform-style: preserve-3d;" width=7% height=12%;></a>
+    <a href="{{ url_for('root') }}"><img id="backIcon" src="../static/img/backIcon.png" style="z-index:11;position: absolute;  right: 23%; bottom: 5%; height: 100px;transition: .4s;transform-style: preserve-3d;" width=5% height=12%;></a>
 
     <!-- 카드게임 로비-->
     <div class="card_lobby">
@@ -298,7 +298,9 @@
                 if(click_element[0].attr('class').split(" ")[1] == click_element[1].attr('class').split(" ")[1]) {
                     //정답 카운트
                     success_num++;
+                    click_element[0].children(".front").html("");
                     click_element[0].children(".front").css("background-image", "url('../static/img/success_img"+success_num+".png')");
+                    click_element[1].children(".front").html("");
                     click_element[1].children(".front").css("background-image", "url('../static/img/success_img"+success_num+".png')");
                     //click_element[0].children(".front").css("background", "green");
                     //click_element[1].children(".front").css("background", "green");
