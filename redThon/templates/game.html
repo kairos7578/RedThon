@@ -83,20 +83,12 @@
     </style>
 </head>
 <body>
-    <!-- 뒤로가기 -->
-    <a href="{{ url_for('root') }}"><img id="backIcon" src="../static/img/backIcon.png" style="z-index:11;position: absolute;  right: 23%; bottom: 5%; height: 100px;transition: .4s;transform-style: preserve-3d;" width=5% height=12%;></a>
-
     <!-- 카드게임 로비-->
     <div class="card_lobby">
-        <div class="card_lobby_subject">카드 뒤집기 게임!</div>
         <div class="card_lobby_content">
-            [카드 뒤집기 게임 규칙]<br/>
-            1. 화면에 16개의 카드가 보여진다.<br/>
-            2. 3초 후 카드가 모두 뒤집힌다.<br/>
-            3. 짝(문제-답)을 맞춘다.<br/>
-
-            <button onclick="game_start();">게임 시작</button>
-            <button onclick="alert('작업 예정');">랭킹 보기</button>
+            <img src="../static/img/memorygame_rule.png" style="width:500px;margin:20px;"/><br/>
+            <img src="../static/img/start_btn.png" style="width:250px;" onclick="game_start();"/>
+            <img src="../static/img/myrank_btn.png" style="width:250px;" onclick="alert('작업 예정');"/>
         </div>
         <!-- <div class="card_lobby_skip"><button onclick="location.href='/';">건너뛰기</button></div> -->
     </div>
@@ -235,8 +227,8 @@
         소요 시간: <span id="time_count"></span><br/>
         클릭 횟수: <span id="click_count"></span><br/>
 
-        <button onclick="location.reload();">다시 하기</button>
-        <button onclick="location.href='/';">게임 종료</button>
+        <img src="../static/img/restart_btn.png" style="width:250px" onclick="location.reload();"/>
+        <img src="../static/img/gamestop_btn.png" style="width:250px" onclick="location.href='/';"/>
     </div>
     <script>
         var game_status = false;

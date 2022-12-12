@@ -2,10 +2,166 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
     <script> num=1; 
         console.log(num);
     </script>
+    <style>
+    * {
+        font-family: "GODO";
+    }
+    .swiper-container {
+        width: 100%;
+        height: 100%;
+        
+    }
+
+    body,html {
+        position: relative;
+        height: 100%; 
+        margin: auto; /* 화면 축소시 스크롤 방지 */
+        background-image : url(../static/img/background.png);
+        background-repeat: repeat;
+    }
+
+    .front2, .back2 {
+        z-index:999;
+        padding:20px;
+        position: absolute;
+        left: 50%; top: 53%;
+        width: 75%; 
+        height: 80%;
+        backface-visibility: hidden;
+        /* display: flex; */
+        /* visibility:hidden; */
+        /* justify-content: center; */
+        align-items: center;
+        color: #fff;
+        transform: translate(-50%, -50%);
+    }
+        
+    .front2 {
+        background: #e8d5b7; 
+    }
+        
+    .image_text_front, .image_text_back {
+        color: white;
+        position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);transition: .4s;transform-style: preserve-3d;
+        z-index:999;
+        word-break:keep-all;
+        text-align:center;
+        display:table-cell;
+        vertical-align:middle;
+        font-weight:bold;
+        font-size:80px;
+    }
+
+    .image_text_back {
+        font-size:30px;
+    }
+
+    .hint {
+        width: 100%; 
+        height: 100%; 
+        position: relative;
+        transition: .4s;
+        transform-style: preserve-3d;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 60%;
+        height: 80%;
+        border-radius: 20px;
+        /* background-color : green; */
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-image: url(../static/img/classBoard.png);
+        background-size: 100% 100%;
+        background-repeat: repeat;
+    }
+
+    .card {
+        width: 100%; 
+        height: 100%; 
+        position: relative;
+        transition: .4s;
+        transform-style: preserve-3d;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 35%;
+        height: 60%;
+        background-image: url(../static/img/wordCard-1.png);
+        background-size: 100% 100%;
+        background-repeat: repeat;
+    } 
+
+    .bookmarkcard {
+        width: 100%; 
+        height: 100%; 
+        position: relative;
+        transition: .4s;
+        transform-style: preserve-3d;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 40%;
+        height: 65%;
+        background-image: url(../static/img/wordCard-1.png);
+        background-size: 100% 100%;
+        background-repeat: repeat;
+    } 
+
+    .card_mini {
+        width: 18%; 
+        height: 250px; 
+        position: relative;
+        transition: .4s;
+        transform-style: preserve-3d;
+        /* transform: translate(-50%, -50%); */
+        background-image: url(../static/img/wordCard-1.png);
+        background-size: 100% 100%;
+        background-repeat: repeat;
+        display: inline-block;
+    }
+
+    .front, .back {
+        font-weight : bold;
+        position: absolute;
+        margin-left: 10%;
+        margin-right: 10%;
+        width: 80%;
+        height: 100%;
+        backface-visibility: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+    }
+
+    .back { 
+        transform: rotateY(180deg);
+    }
+    
+    .btn_detail {
+        width:10%; height:10%;transform:none;position:absolute;top:85%;left:95%
+    }
+
+    [type=radio] {
+        border:5px solid brown;
+    }
+
+    .swiper-pagination-bullet {
+        width : 20px;
+        height : 20px;
+    }
+    </style>
 </head>
 <body>
     <div style="background-image: url('../static/img/background.png');background-repeat: repeat;width: 100%;height: 100%;"></div>
@@ -19,12 +175,20 @@
     style="position: absolute;  right: 20%; top: 5%;" 
     width=5.8% height=10%; height:100px;">
 
-    <img id="wordBook" src="../static/img/wordBook.png" 
-    style="position: absolute;  right: 28%; top: 5%;" 
-    width=5% height=12%; height: 100px;">
+    <!-- 북마크 시작 -->
+    <div id="bookmarkDiv" class="front2" style="overflow-y:scroll;display:none">
+        <!-- <div id="shadow" class="front2" style="visibility: hidden;background:black;top:50%;width:100%;height:100%;opacity: 0.8;"></div> -->
+        <img id="closePop" onclick="close_pop()" src="../static/img/exit_Icon.png" style="position: absolute; right: 1%; top: 3%;" width=5% height=8% alt ="cookie1.png">
+        <br><br><br>
+        <!--북마크 나열 -->
+        <div id="bookmarkhtml">
+        </div>
+    </div>
+    <!-- 북마크 끝 ! -->
+    <img id="wordBook" src="../static/img/wordBook.png" onclick="open_pop()" style="position: absolute;  right: 28%; top: 5%;" width="5%" height="12%";/>
     <img id="gingerMan0" src="../static/img/gingerMan.png" 
     style="position: absolute;  left: 60%; top: 77%;" 
-    width=6% height=15%;">
+    width="6%" height="15%;">
     <img src="../static/img/cookieHouse.png" 
     style="position: absolute;  left: 19%; top: -5%;" 
     width=20% height=40% alt ="cookieHouse.png">
@@ -796,5 +960,39 @@
           output_text.element.innerText = input_text.value
       </py-script>    
 
- 
+      <script>
+        function open_pop(){
+            //북마크 정보 갱신
+            $.ajax({
+				type: "GET",
+				url: "/bookmark_load",
+				cache: false,
+				async: false,
+				success: function(result) {
+                    $("#bookmarkhtml").html("");
+                    for(var i = 0; i < result.length; i++) {
+                        //alert("북마크"+i+": "+result[i]["card"]["card_level"]+"-"+result[i]["card"]["card_temp"]);
+                        //동적 추가
+                        if(result[i]["card"]["card_type"] == "1") {
+                            //카드 유형1
+                            $("#bookmarkhtml").append("<div id='bookMarkCard"+i+"' class='card_mini' py-click ='function_bookMarkCardD' onclick='location=\"/cardstudy?stage="+result[i]["card"]["card_level"]+"&temp="+result[i]["card"]["card_temp"]+"\";'><div class='front' style='font-size:15px;'>["+result[i]["card"]["card_level"]+"강 "+result[i]["card"]["card_temp"]+"번 카드]</div></div>");
+                        } else if(result[i]["card"]["card_type"] == "2") {
+                            //카드 유형2
+                            $("#bookmarkhtml").append("<div id='bookMarkCard"+i+"' class='card_mini' py-click ='function_bookMarkCardD' onclick='location=\"/cardstudy?stage="+result[i]["card"]["card_level"]+"&temp="+result[i]["card"]["card_temp"]+"\";'><div class='front' style='flex-direction:column; font-size:15px;text-align:left;'><div>["+result[i]["card"]["card_level"]+"강 "+result[i]["card"]["card_temp"]+"번 카드]");
+                        }
+                        
+                        $("#bookmarkDiv").show();
+                    }
+                    
+                    
+                    //이동
+				}
+			});
+
+        }
+
+        function close_pop(){
+            $("#bookmarkDiv").hide();
+        }
+      </script>
 </body>
