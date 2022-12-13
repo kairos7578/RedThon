@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template, request, session, flash
+from flask import Flask, redirect, render_template, request, session, flash, url_for
 from flaskext.mysql import MySQL
 from dotenv import load_dotenv
 from datetime import date, datetime, timedelta
@@ -34,13 +34,12 @@ mysql.init_app(app)
 def root():
     print("로그인 상태 체크: %s" % (session_check()))
     if session_check():
-
         #스테이지 정보 가져오기
         db = mysql.connect()
         cursor = db.cursor()
         cursor.execute("SELECT * FROM clear_stage WHERE user_id = '%s'" % (session["userId"]))
         cs = cursor.fetchone()
-        return render_template('main_map.html', title = "mainmap", clear_stage = cs)
+        return render_template('main_map.html', title = "mainmap", clear_stage = cs, last_stage=request.args.get('last_stage', 0))
     else:
         return render_template("index.html")
 
@@ -65,7 +64,7 @@ def clear():
         cursor2.execute("INSERT INTO clear_stage SET user_id = '%s', stage%s = 1" % (session["userId"], request.args.get("stage", 0)))
         db.commit()
 
-    return redirect('/')
+    return redirect(url_for("root", last_stage=request.args.get("stage", 0)))
 
 @app.route("/mainmap")
 def mainmap():

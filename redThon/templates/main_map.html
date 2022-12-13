@@ -195,7 +195,7 @@
 
     <a href="{{ url_for('cardstudy', stage=1) }}">
     {% if clear_stage['stage1'] == 1 %}
-    <img id="cookie1-1" src="../static/img/cookie1-1.png"
+    <img id="cookie1-1" src="../static/img/cookie1-1.png" onClick="move_cookie1()"
     style="position: absolute;  left: 50%; top: 80%;" 
     width=6% height=12% alt ="cookie1.png">
     {% else %}
@@ -207,7 +207,7 @@
 
     <a href="{{ url_for('cardstudy', stage=2) }}">
     {% if clear_stage['stage2'] == 1 %}
-    <img id="cookie2-1" src="../static/img/cookie2-1.png" 
+    <img id="cookie2-1" src="../static/img/cookie2-1.png" onClick="move_cookie2()"
     style="position: absolute;  left: 40%; top: 80%;" 
     width=6% height=12% alt ="cookie2.png">
     {% else %}
@@ -219,7 +219,7 @@
 
     <a href="{{ url_for('game', stage=3) }}">
     {% if clear_stage['stage3'] == 1 %}
-    <img id="cookie3-1" src="../static/img/cookie3-1.png"
+    <img id="cookie3-1" src="../static/img/cookie3-1.png" onClick="move_cookie3()"
     style="position: absolute;  left: 31%; top: 70%;" 
     width=8% height=15% alt ="cookie3.png">
     {% else %}
@@ -231,7 +231,7 @@
 
     <a href="{{ url_for('cardstudy', stage=4) }}">
     {% if clear_stage['stage4'] == 1 %}
-    <img id="cookie4-1" src="../static/img/cookie4-1.png"
+    <img id="cookie4-1" src="../static/img/cookie4-1.png" onClick="move_cookie4()"
     style="position: absolute;  left: 42%; top: 61%;" 
     width=7% height=14% alt ="cookie4.png">
     {% else %}
@@ -243,7 +243,7 @@
 
     <a href="{{ url_for('cardstudy', stage=5) }}">
     {% if clear_stage['stage5'] == 1 %}
-    <img id="cookie5-1" src="../static/img/cookie5-1.png"
+    <img id="cookie5-1" src="../static/img/cookie5-1.png" onClick="move_cookie5()"
     style="position: absolute;  left: 51%; top: 63%;" 
     width=6% height=12%  alt ="cookie5.png">
     {% else %}
@@ -255,7 +255,7 @@
 
     <a href="{{ url_for('game', stage=6) }}">
     {% if clear_stage['stage6'] == 1 %}
-    <img id="cookie6-1" src="../static/img/cookie6-1.png"
+    <img id="cookie6-1" src="../static/img/cookie6-1.png" onClick="move_cookie6()"
     style="position: absolute;  left: 60%; top: 56%;" 
     width=9% height=15% alt ="cookie6.png">
     {% else %}
@@ -267,7 +267,7 @@
 
     <a href="{{ url_for('cardstudy', stage=7) }}">
     {% if clear_stage['stage7'] == 1 %}
-    <img id="cookie7-1" src="../static/img/cookie7-1.png"
+    <img id="cookie7-1" src="../static/img/cookie7-1.png" onClick="move_cookie7()"
     style="position: absolute;  left: 50%; top: 46%;" 
     width=7% height=14% alt ="cookie7.png">
     {% else %}
@@ -279,7 +279,7 @@
 
     <a href="{{ url_for('cardstudy', stage=8) }}">
     {% if clear_stage['stage8'] == 1 %}
-    <img id="cookie8-1" src="../static/img/cookie8-1.png"
+    <img id="cookie8-1" src="../static/img/cookie8-1.png" onClick="move_cookie8()"
     style="position: absolute;  left: 40%; top: 48%;" 
     width=7% height=12.5% alt ="cookie8.png">
     {% else %}
@@ -291,7 +291,7 @@
 
     <a href="{{ url_for('game', stage=9) }}">
     {% if clear_stage['stage9'] == 1 %}
-    <img id="cookie9-1" src="../static/img/cookie9-1.png"
+    <img id="cookie9-1" src="../static/img/cookie9-1.png" onClick="move_cookie9()"
     style="position: absolute;  left: 30%; top: 39%;" 
     width=8% height=15% alt ="cookie9.png">
     {% else %}
@@ -303,7 +303,7 @@
     
     <a href="{{ url_for('cardstudy', stage=10) }}">
     {% if clear_stage['stage10'] == 1 %}
-    <img id="cookie10-1" src="../static/img/cookie10-1.png"
+    <img id="cookie10-1" src="../static/img/cookie10-1.png" onClick="move_cookie10()"
     style="position: absolute;  left: 40%; top: 30%;" 
     width=6.5% height=13%  alt ="cookie10.png">
     {% else %}
@@ -315,7 +315,7 @@
 
     <a href="{{ url_for('cardstudy', stage=11) }}">
     {% if clear_stage['stage11'] == 1 %}
-    <img id="cookie11-1" src="../static/img/cookie11-1.png"
+    <img id="cookie11-1" src="../static/img/cookie11-1.png" onClick="move_cookie11()"
     style="position: absolute;  left: 50%; top: 32%;" 
     width=6% height=12%  alt ="cookie11.png">
     {% else %}
@@ -327,7 +327,7 @@
 
     <a href="{{ url_for('game', stage=12) }}">
     {% if clear_stage['stage12'] == 1 %}
-    <img id="cookie12-1" src="../static/img/cookie12-1.png"
+    <img id="cookie12-1" src="../static/img/cookie12-1.png" onClick="move_cookie12()"
     style="position: absolute;  left: 58%; top: 30%;" 
     width=9.5% height=17%  alt ="cookie12.png">
     {% else %}
@@ -339,7 +339,7 @@
 
     <a href="{{ url_for('finalStudy1') }}">
     {% if clear_stage['stage13'] == 1 %}
-    <img id="cookie13-1" src="../static/img/cookie13-1.png"
+    <img id="cookie13-1" src="../static/img/cookie13-1.png" onClick="move_cookie13()"
     style="position: absolute; left: 57%; top: 15%;" 
     width=7% height=13%  alt ="cookie13.png">
     {% else %}
@@ -349,7 +349,7 @@
 
     <a href="{{ url_for('finalStudy2') }}">
     {% if clear_stage['stage14'] == 1 %}
-    <img id="cookie14-1" src="../static/img/cookie14-1.png"
+    <img id="cookie14-1" src="../static/img/cookie14-1.png" onClick="move_cookie14()"
     style="position: absolute;  left: 46%; top: 13%;" 
     width=7% height=14%  alt ="cookie14.png">
     {% else %}
@@ -359,7 +359,7 @@
 
     <a href="{{ url_for('finalStudy3') }}">
     {% if clear_stage['stage15'] == 1 %}
-    <img id="cookie15-1" src="../static/img/cookie15-1.png"
+    <img id="cookie15-1" src="../static/img/cookie15-1.png" onClick="move_cookie15()"
     style="position: absolute; left: 37%; top: 15%;" 
     width=7% height=12.5%  alt ="cookie15.png">
     {% else %}
@@ -369,49 +369,49 @@
     <!-- 각 강 별 진저맨 위치  -->
     <img id="gingerMan1" src="../static/img/gingerMan.png" 
     style="position: absolute;  left: 50%; top: 73%;" 
-    width=6% height=15%;">
+    width=6% height="15%;">
     <img id="gingerMan2" src="../static/img/gingerMan.png" 
     style="position: absolute;  left: 41%; top: 73%;" 
-    width=6% height=15%;">
+    width=6% height="15%;">
     <img id="gingerMan3" src="../static/img/gingerMan.png" 
     style="position: absolute;  left: 32%; top: 63%;" 
-    width=6% height=15%;">
+    width=6% height="15%;">
     <img id="gingerMan4" src="../static/img/gingerMan.png" 
     style="position: absolute;  left: 42.5%; top: 55%;" 
-    width=6% height=15%;">
+    width=6% height="15%;">
     <img id="gingerMan5" src="../static/img/gingerMan.png" 
     style="position: absolute;  left: 52%; top: 56%;" 
-    width=6% height=15%;">
+    width=6% height="15%;">
     <img id="gingerMan6" src="../static/img/gingerMan.png" 
     style="position: absolute;  left: 61.5%; top: 50%;" 
-    width=6% height=15%;">
+    width=6% height="15%;">
     <img id="gingerMan7" src="../static/img/gingerMan.png" 
     style="position: absolute;  left: 51%; top: 40%;" 
-    width=6% height=15%;">
+    width=6% height="15%;">
     <img id="gingerMan8" src="../static/img/gingerMan.png" 
     style="position: absolute;  left: 40.5%; top: 41%;" 
-    width=6% height=15%;">
+    width=6% height="15%;">
     <img id="gingerMan9" src="../static/img/gingerMan.png" 
     style="position: absolute;  left: 31%; top: 33%;" 
-    width=6% height=15%;">
+    width=6% height="15%;">
     <img id="gingerMan10" src="../static/img/gingerMan.png" 
     style="position: absolute;  left: 40%; top: 24%;" 
-    width=6% height=15%;">
+    width=6% height="15%;">
     <img id="gingerMan11" src="../static/img/gingerMan.png" 
     style="position: absolute;  left: 50%; top: 25%;" 
-    width=6% height=15%;">
+    width=6% height="15%;">
     <img id="gingerMan12" src="../static/img/gingerMan.png" 
     style="position: absolute;  left: 60.5%; top: 25%;" 
-    width=6% height=15%;">
+    width=6% height="15%;">
     <img id="gingerMan13" src="../static/img/gingerMan.png" 
     style="position: absolute;  left: 57.5%; top: 8%;" 
-    width=6% height=15%;">
+    width=6% height="15%;">
     <img id="gingerMan14" src="../static/img/gingerMan.png" 
     style="position: absolute;  left: 47%; top: 7%;" 
-    width=6% height=15%;">
+    width=6% height="15%;">
     <img id="gingerMan15" src="../static/img/gingerMan.png" 
     style="position: absolute;  left: 37.5%; top: 7%;" 
-    width=6% height=15%;">
+    width=6% height="15%;">
 
     <!-- 클릭마다 강 별 진저맨 위치 변경 및 쿠키색 변경  -->
     <script>
@@ -1025,4 +1025,10 @@
             $("#bookmarkDiv").hide();
         }
       </script>
+      {% if last_stage != 0 %}
+      <script>
+          document.getElementById("gingerMan0").style.visibility = "hidden"; 
+          document.getElementById("gingerMan{{last_stage}}").style.visibility = "visible"; 
+      </script>
+      {% endif %}
 </body>
