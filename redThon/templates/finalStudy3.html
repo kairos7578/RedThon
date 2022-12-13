@@ -257,7 +257,11 @@
 
         $(document).ready(function() {
             $("#finishIcon").click(function() {
-                $("#completeBack").show();
+                $("#completeBack").show(); 
+                setTimeout(function() {   
+                      $("#completeAll").attr("href", "{{ url_for('clear', stage=15) }}");
+                      $("#completeAll").get(0).click();
+                }, 2000);
             });
         });
         
@@ -282,7 +286,7 @@
 
     <img id="wordBook" onclick="open_pop()" src="../static/img/wordBook.png" style="z-index:11;position: absolute;  right: 15%; top: 2%; height: 130px;transition: .4s;transform-style: preserve-3d;" width=5% height=12%;>
     <a href="{{ url_for('root') }}"><img id="backIcon" src="../static/img/backIcon.png" style="z-index:11;position: absolute;  right: 16%; bottom: 5%; height: 120px;transition: .4s;transform-style: preserve-3d;" width=6% height=12%;></a>
-    <a href="{{ url_for('clear', stage=15) }}" ><img id="finishIcon"  src="../static/img/finishIcon.png" style="z-index:11;position: absolute;  right: 23%; bottom: 5%; height: 140px;transition: .4s;transform-style: preserve-3d;" width=6% height=12%;></a> 
+    <a id="completeAll"><img id="finishIcon"  src="../static/img/finishIcon.png" style="z-index:11;position: absolute;  right: 23%; bottom: 5%; height: 140px;transition: .4s;transform-style: preserve-3d;" width=6% height=12%;></a> 
     <div class="container2" style="z-index:9">
         <div class="wrapper" style="text-align:center">
             <div class="card"> 
