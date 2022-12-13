@@ -396,11 +396,6 @@ def game():
 
 @app.route("/game_rank_add", methods=["GET", "POST"])
 def game_rank_add():
-    print("게임 랭크 add 들어옴")
-    print(session["userId"])
-    print(request.args.get("speed", 0))
-    print(request.args.get("click", 0))
-    print(request.args.get("stage", 0))
     #랭킹 넣기
     db = mysql.connect()
     cursor = db.cursor()
@@ -411,8 +406,10 @@ def game_rank_add():
 @app.route("/rank_load", methods=["GET", "POST"])
 def rank_load():
     #랭킹 가져오기
+    print()
     db = mysql.connect()
     cursor = db.cursor()
+    print(request.args.get("stage", 0))
     cursor.execute("SELECT * FROM game_rank WHERE 1 ORDER BY speed asc, click asc LIMIT 10")
     rk = cursor.fetchall()
     return rk
