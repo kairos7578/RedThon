@@ -84,15 +84,56 @@
             background-image : url(../static/img/background.png);
             background-repeat: repeat;
         }
+
+        .front3, .back2 {
+            z-index:999;
+            padding:20px;
+            position: absolute;
+            left: 50%; top: 53%;
+            width: 75%; 
+            height: 80%;
+            backface-visibility: hidden;
+            /* display: flex; */
+            /* visibility:hidden; */
+            /* justify-content: center; */
+            align-items: center;
+            color: #fff;
+            transform: translate(-50%, -50%);
+        }
+            
+        .front3 {
+            background: #e8d5b7; 
+        }
     </style>
 </head>
 <body>
+    <div id="bookmarkDiv" class="front3" style="overflow-y:scroll;display:none;">
+        <!-- <div id="shadow" class="front2" style="visibility: hidden;background:black;top:50%;width:100%;height:100%;opacity: 0.8;"></div> -->
+        <img id="closePop" onclick="close_pop()" src="../static/img/exit_Icon.png" style="position: absolute; right: 1%; top: 3%;" width=5% height=8% alt ="cookie1.png">
+        <br><br><br>
+        <!--북마크 나열 -->
+        <div id="bookmarkhtml">
+            <center><h1 style="color:black">RANKING</h1></center>
+            <table style="width:100%;color:black;text-align:center;" border="1">
+                <tr>
+                    <th>등수</th>
+                    <th>스테이지</th>
+                    <th>아이디</th>
+                    <th>소요시간</th>
+                    <th>클릭횟수</th>
+                </tr>
+                <tbody id="rank_div">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
     <!-- 카드게임 로비-->
     <div class="card_lobby">
         <div class="card_lobby_content">
             <img src="../static/img/memorygame_logo.png" style="width:500px;margin:20px;"/><br/>
             <img src="../static/img/start_btn.png" style="width:250px;" onclick="game_start();"/>
-            <img src="../static/img/myrank_btn.png" style="width:250px;" onclick="alert('작업 예정');"/><br/>
+            <img src="../static/img/myrank_btn.png" style="width:250px;" onclick="open_pop();"/><br/>
             <img src="../static/img/gamestop_btn.png" style="width:250px" onclick="location.href='/';"/><br/>
             <img src="../static/img/memorygame_rule.png" style="width:900px;margin:20px;"/><br/>
         </div>
@@ -101,134 +142,23 @@
     <!-- 카드게임 -->
     <center>
     <div class="card_main" style="display:none;width:850px;height:1200px;">
-        <div class="flip 1">
-            <div class="card 1">
+        {% for row in game_card %}
+        <div class="flip {{row['pair']}}">
+            <div class="card {{row['pair']}}">
                 <!-- 앞면 -->
-                <div class="front">변수</div>
+                <div class="front">
+                    {% if(row['type'] == 1) %}
+                        {{row['etc']}}
+                    {% else %}
+                        <img src="{{row['etc']}}" style="width:100%;"/>
+                    {% endif %}
+
+                </div>
                 <!-- 뒷면 -->
                 <div class="back">?</div>
             </div>
         </div>
-        <div class="flip 3">  
-            <div class="card 3">
-                <!-- 앞면 -->
-                <div class="front">실수형 변수</div>
-                <!-- 뒷면 -->
-                <div class="back">?</div>
-            </div>
-        </div>
-        <div class="flip 3">  
-            <div class="card 3">
-                <!-- 앞면 -->
-                <div class="front">float</div>
-                <!-- 뒷면 -->
-                <div class="back">?</div>
-            </div>
-        </div>
-        <div class="flip 8">  
-            <div class="card 8">
-                <!-- 앞면 -->
-                <div class="front">&nbsp;B 를 A 에 저장한다&nbsp;</div>
-                <!-- 뒷면 -->
-                <div class="back">?</div>
-            </div>
-        </div>
-        <div class="flip 2">  
-            <div class="card 2">
-                <!-- 앞면 -->
-                <div class="front">int</div>
-                <!-- 뒷면 -->
-                <div class="back">?</div>
-            </div>
-        </div>
-        <div class="flip 5">  
-            <div class="card 5">
-                <!-- 앞면 -->
-                <div class="front">함수</div>
-                <!-- 뒷면 -->
-                <div class="back">?</div>
-            </div>
-        </div>
-        <div class="flip 6">  
-            <div class="card 6">
-                <!-- 앞면 -->
-                <div class="front">출력 함수</div>
-                <!-- 뒷면 -->
-                <div class="back">?</div>
-            </div>
-        </div>
-        <div class="flip 1">  
-            <div class="card 1">
-                <!-- 앞면 -->
-                <div class="front">&nbsp;데이터 값을 저장하는 박스&nbsp;</div>
-                <!-- 뒷면 -->
-                <div class="back">?</div>
-            </div>
-        </div>
-        <div class="flip 8">  
-            <div class="card 8">
-                <!-- 앞면 -->
-                <div class="front">대입연산자<br/>A = B</div>
-                <!-- 뒷면 -->
-                <div class="back">?</div>
-            </div>
-        </div>
-        <div class="flip 7">  
-            <div class="card 7">
-                <!-- 앞면 -->
-                <div class="front">&nbsp;print() 함수의 줄바꿈 문자&nbsp;</div>
-                <!-- 뒷면 -->
-                <div class="back">?</div>
-            </div>
-        </div>
-        <div class="flip 2">  
-            <div class="card 2">
-                <!-- 앞면 -->
-                <div class="front">정수형 변수</div>
-                <!-- 뒷면 -->
-                <div class="back">?</div>
-            </div>
-        </div>
-        <div class="flip 4">  
-            <div class="card 4">
-                <!-- 앞면 -->
-                <div class="front">str</div>
-                <!-- 뒷면 -->
-                <div class="back">?</div>
-            </div>
-        </div>
-        <div class="flip 5">  
-            <div class="card 5">
-                <!-- 앞면 -->
-                <div class="front">&nbsp;일정한 동작을 수행하는 코드&nbsp;</div>
-                <!-- 뒷면 -->
-                <div class="back">?</div>
-            </div>
-        </div>
-        <div class="flip 6">  
-            <div class="card 6">
-                <!-- 앞면 -->
-                <div class="front">print()</div>
-                <!-- 뒷면 -->
-                <div class="back">?</div>
-            </div>
-        </div>
-        <div class="flip 4">  
-            <div class="card 4">
-                <!-- 앞면 -->
-                <div class="front">문자열</div>
-                <!-- 뒷면 -->
-                <div class="back">?</div>
-            </div>
-        </div>
-        <div class="flip 7">  
-            <div class="card 7">
-                <!-- 앞면 -->
-                <div class="front">end = ''</div>
-                <!-- 뒷면 -->
-                <div class="back">?</div>
-            </div>
-        </div>
+        {% endfor %}
         <img src="../static/img/restart_btn.png" style="width:250px;margin-top:30px;" onclick="location.reload();"/>
         <img src="../static/img/gamestop_btn.png" style="width:250px" onclick="location.href='/';"/>
     </div>
@@ -308,7 +238,25 @@
                     
                     
                     if(success_num == 8) {
-                        alert("GAME CLEAR!");
+                        $.ajax({
+                            type: "GET",
+                            url: "/game_rank_add",
+                            data: {
+                                "speed" : total_time,
+                                "click" : total_click,
+                                "stage" : "{{request.args.get('stage', 0)}}"
+                            },
+                            cache: false,
+                            async: false,
+                            success: function(result) {
+                                if(result == "SUCCESS") {
+                                    alert("GAME CLEAR!");
+                                    open_pop();
+                                } else {
+                                    alert("ERROR");
+                                }
+                            }
+                        });
                         clearTimeout(game_timer);
                         total_time = 0;
                     }
@@ -322,6 +270,32 @@
 
                 double_check = true;
             }, 1000);
+        }
+
+        function open_pop(){
+            //북마크 정보 갱신            
+            $.ajax({
+				type: "GET",
+				url: "/rank_load",
+				cache: false,
+				async: false,
+				success: function(result) {
+                    $("#rank_div").html("");
+                    var rank=1;
+                    for(var i = 0; i < result.length; i++) {
+                        $("#rank_div").append("<tr><td>"+rank+"</td><td>"+result[i]["stage"]+"</td><td>"+result[i]["user_id"]+"</td><td>"+result[i]["speed"]+"</td><td>"+result[i]["click"]+"</td></tr>");
+                        $("#bookmarkDiv").show();
+                        rank++;
+                    }
+                    
+                    
+                    //이동
+				}
+			});
+        }
+
+        function close_pop(){
+            $("#bookmarkDiv").hide();
         }
 
     </script>

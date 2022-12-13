@@ -388,8 +388,35 @@ def game():
         cursor2 = db.cursor()
         cursor2.execute("INSERT INTO clear_stage SET user_id = '%s', stage%s = 1" % (session["userId"], request.args.get("stage", 0)))
         db.commit()
-        
-    return render_template("/game.html")
+
+    game = db.cursor()
+    game.execute("SELECT * FROM game WHERE stage = '%s' ORDER BY RAND();" % (request.args.get("stage", 0)))
+    game = game.fetchall()
+
+    return render_template("/game.html", game_card=game)
+
+@app.route("/game_rank_add", methods=["GET", "POST"])
+def game_rank_add():
+    print("게임 랭크 add 들어옴")
+    print(session["userId"])
+    print(request.args.get("speed", 0))
+    print(request.args.get("click", 0))
+    print(request.args.get("stage", 0))
+    #랭킹 넣기
+    db = mysql.connect()
+    cursor = db.cursor()
+    cursor.execute("INSERT INTO game_rank SET user_id = '%s', speed = '%s', click = '%s', stage = '%s'" % (session["userId"], request.args.get("speed", 0), request.args.get("click", 0), request.args.get("stage", 0)))
+    db.commit()
+    return "SUCCESS"
+
+@app.route("/rank_load", methods=["GET", "POST"])
+def rank_load():
+    #랭킹 가져오기
+    db = mysql.connect()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM game_rank WHERE 1 ORDER BY speed asc, click asc LIMIT 10")
+    rk = cursor.fetchall()
+    return rk
 
 #류재범 추가
 @app.route("/curriculum", methods=["GET", "POST"])
